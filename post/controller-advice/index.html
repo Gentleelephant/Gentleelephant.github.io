@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>关于 | Gridea</title>
+        <title>@Controller注解的使用 | Gridea</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,20 +56,44 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">关于</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2019-01-25 19:09:48">2019-01-25 / 1 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                                    <div class="post-title  mdui-m-b-1">@Controller注解的使用</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-14 16:58:08">2020-03-14 / 2 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h3 id="controlleradvice注解的使用">@ControllerAdvice注解的使用</h3>
+<p>@ControllerAdvice ，这是一个非常有用的注解，顾名思义，这是一个增强的 Controller。使用这个 Controller ，可以实现三个方面的功能：</p>
+<ol>
+<li>全局异常处理</li>
+<li>全局数据绑定</li>
+<li>全局数据预处理</li>
+</ol>
+<p>灵活使用这三个功能，可以帮助我们简化很多工作，需要注意的是，这是 SpringMVC 提供的功能，在 Spring Boot 中可以直接使用，下面分别来看。</p>
+<p><font color="green" size=5> <strong>一、全局异常处理</strong></font></p>
+<p>使用 @ControllerAdvice 实现全局异常处理，只需要定义类，添加该注解即可：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314190538.png" alt="" loading="lazy"></figure>
+<p>在该类中，可以定义多个方法，不同的方法处理不同的异常，，也可以直接向上面一样，在一个方法中处理所有的异常信息。</p>
+<p><font color="green" size=5> <strong>二、全局数据绑定</strong></font></p>
+<p>全局数据绑定功能可以用来做一些初始化的数据操作，我们可以将一些公共的数据定义在添加了 @ControllerAdvice 注解的类中，这样，在每一个 Controller 的接口中，就都能够访问导致这些数据。具体使用：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191033.png" alt="" loading="lazy"></figure>
+<p>使用 @ModelAttribute 注解标记该方法的返回数据是一个全局数据，默认情况下，这个全局数据的 key 就是返回的变量名，value 就是方法返回值，当然开发者可以通过 @ModelAttribute 注解的 name 属性去重新指定 key。</p>
+<p>定义完成后，在任何一个Controller 的接口中，都可以获取到这里定义的数据：</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191136.png" alt="" loading="lazy"></figure>
+<p><font color="green" size=5> <strong>三、全局数据预处理</strong></font></p>
+<p>考虑我有两个实体类，Book 和 Author，分别定义如下：</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191423.png" alt="" loading="lazy"></figure>
+<p>此时，如果我定义一个数据添加接口，如下：</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191514.png" alt="" loading="lazy"></figure>
+<p>这个时候，添加操作就会有问题，因为两个实体类都有一个 name 属性，从前端传递时 ，无法区分。此时，通过 @ControllerAdvice 的全局数据预处理可以解决这个问题</p>
+<p>解决步骤如下:</p>
+<p>1.给接口中的变量取别名：</p>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191625.png" alt="" loading="lazy"></figure>
+<p>2.进行请求数据预处理<br>
+在 @ControllerAdvice 标记的类中添加如下代码:</p>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191712.png" alt="" loading="lazy"></figure>
+<p>@InitBinder(&quot;b&quot;) 注解表示该方法用来处理和Book和相关的参数,在方法中,给参数添加一个 b 前缀,即请求参数要有b前缀.</p>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> </div>
+                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/mybatis-one/">第一个Mybatis程序</a></div></div>
                                         
 
                                         
