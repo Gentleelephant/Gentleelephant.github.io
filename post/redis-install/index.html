@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-            <head>
+        <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>Aboy</title>
+        <title>Redis安装 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -54,63 +54,71 @@
         </header>
         <div class="mdui-container ">
                 <div class="mdui-row">
-                        <div class="mdui-col-md-10 mdui-col-offset-md-1 mdui-m-t-1">
-                            <div class="mdui-row-md-2 mdui-row-xs-1">
-                                
-                                
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">Redis安装</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-15 11:23:30">2020-03-15 / 1 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h3 id="一-编译安装前提要有gccg环境">一、编译安装(前提要有gcc/g++环境)</h3>
+<ol>
+<li>
+<p>进入官网复制链接：<a href="http://download.redis.io/releases/redis-5.0.8.tar.gz">http://download.redis.io/releases/redis-5.0.8.tar.gz</a></p>
+</li>
+<li>
+<p>在Linux下使用wget http://download.redis.io/releases/redis-5.0.8.tar.gz 命令下载Redis</p>
+</li>
+<li>
+<p>然后使用tar -zxvf redis-5.0.5.tar.gz命令解压</p>
+</li>
+<li>
+<p>执行make</p>
+</li>
+<li>
+<p>执行meke install</p>
+</li>
+<li>
+<p>安装完成后启动redis：redis-server redis-conf</p>
+</li>
+</ol>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> </div>
+                                        
 
-                    
-                              
-                               
-                                <article class="animated fadeIn" style="animation-delay:1s;animation-duration: 2s">
-                                        <div class="mdui-col mdui-p-a-1">
-                                          <div class="archives mdui-p-a-3">
-                                            <div class="mdui-typo-body-2 mdui-m-b-1">2020-03-15</div>
-                                            <div class="mdui-m-b-2 archives-title"><a href="https://Gentleelephant.github.io/post/redis-install/">Redis安装</a></div>
-                                            <div class="mdui-typo-subheading mdui-m-b-1 mdui-text-truncate"></div>
-                                          </div>
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/springboot-exception/">SpringBoot异常处理策略</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
                                 </article>
-                                
-                                
-                               
-                                <article class="animated fadeIn" style="animation-delay:1.3s;animation-duration: 2s">
-                                        <div class="mdui-col mdui-p-a-1">
-                                          <div class="archives mdui-p-a-3">
-                                            <div class="mdui-typo-body-2 mdui-m-b-1">2020-03-14</div>
-                                            <div class="mdui-m-b-2 archives-title"><a href="https://Gentleelephant.github.io/post/springboot-exception/">SpringBoot异常处理策略</a></div>
-                                            <div class="mdui-typo-subheading mdui-m-b-1 mdui-text-truncate"></div>
-                                          </div>
-                                </article>
-                                
-                                
-                               
-                                <article class="animated fadeIn" style="animation-delay:1.6s;animation-duration: 2s">
-                                        <div class="mdui-col mdui-p-a-1">
-                                          <div class="archives mdui-p-a-3">
-                                            <div class="mdui-typo-body-2 mdui-m-b-1">2020-03-14</div>
-                                            <div class="mdui-m-b-2 archives-title"><a href="https://Gentleelephant.github.io/post/mybatis-one/">第一个Mybatis程序</a></div>
-                                            <div class="mdui-typo-subheading mdui-m-b-1 mdui-text-truncate"></div>
-                                          </div>
-                                </article>
-                                
-                                
-                               
-                                <article class="animated fadeIn" style="animation-delay:1.9s;animation-duration: 2s">
-                                        <div class="mdui-col mdui-p-a-1">
-                                          <div class="archives mdui-p-a-3">
-                                            <div class="mdui-typo-body-2 mdui-m-b-1">2020-03-14</div>
-                                            <div class="mdui-m-b-2 archives-title"><a href="https://Gentleelephant.github.io/post/controller-advice/">@Controller注解的使用</a></div>
-                                            <div class="mdui-typo-subheading mdui-m-b-1 mdui-text-truncate"></div>
-                                          </div>
-                                </article>
-                                
-                                
-                                
-                              </div>
-                                                            <nav class="mdui-m-t-5">
-                                
-                                
-                                </nav>     
+
                                     
                         </div>
                       </div>
@@ -118,7 +126,7 @@
                 
 
               </div>
-                     <footer class="footer mdui-m-t-5 mdui-text-center">
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
                <nav class="social-links">
                       <ul>
                       

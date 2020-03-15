@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-03-14T15:19:18.474Z</updated>
+    <updated>2020-03-15T03:26:03.475Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,35 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[Redis安装]]></title>
+        <id>https://Gentleelephant.github.io/post/redis-install/</id>
+        <link href="https://Gentleelephant.github.io/post/redis-install/">
+        </link>
+        <updated>2020-03-15T03:23:30.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-编译安装前提要有gccg环境">一、编译安装(前提要有gcc/g++环境)</h3>
+<ol>
+<li>
+<p>进入官网复制链接：<a href="http://download.redis.io/releases/redis-5.0.8.tar.gz">http://download.redis.io/releases/redis-5.0.8.tar.gz</a></p>
+</li>
+<li>
+<p>在Linux下使用wget http://download.redis.io/releases/redis-5.0.8.tar.gz 命令下载Redis</p>
+</li>
+<li>
+<p>然后使用tar -zxvf redis-5.0.5.tar.gz命令解压</p>
+</li>
+<li>
+<p>执行make</p>
+</li>
+<li>
+<p>执行meke install</p>
+</li>
+<li>
+<p>安装完成后启动redis：redis-server redis-conf</p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot异常处理策略]]></title>
         <id>https://Gentleelephant.github.io/post/springboot-exception/</id>
