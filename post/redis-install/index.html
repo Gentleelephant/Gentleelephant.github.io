@@ -67,18 +67,25 @@
 <p>在Linux下使用wget http://download.redis.io/releases/redis-5.0.8.tar.gz 命令下载Redis</p>
 </li>
 <li>
-<p>然后使用tar -zxvf redis-5.0.5.tar.gz命令解压</p>
+<p>然后使用<code>tar -zxvf redis-5.0.5.tar.gz</code>命令解压</p>
 </li>
 <li>
-<p>执行make</p>
+<p>执行<code>make</code></p>
 </li>
 <li>
-<p>执行meke install</p>
+<p>执行<code>meke install</code></p>
 </li>
 <li>
-<p>安装完成后启动redis：redis-server redis-conf</p>
+<p>安装完成后启动redis：<code>redis-server redis-conf</code></p>
 </li>
 </ol>
+<h3 id="二-通过docker安装centos">二、通过docker安装(centos)</h3>
+<p>docker安装好之后，先启动docker，然后直接运行命令：</p>
+<p><code>docker run --name codezp-redis -d -p 6379:6379 redis --requirepass root</code></p>
+<p>docker上的redis启动成功后，<strong>在宿主机器上有redis-cli的情况下</strong>可以直接运行命令连接：</p>
+<p><code>redis-cli -a 123</code></p>
+<p>如果宿主机器没有redis-cli也可以运行命令：</p>
+<p><code>docker exec -it codezp-redis redis-cli -a root</code></p>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
