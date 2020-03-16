@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-03-16T05:57:04.255Z</updated>
+    <updated>2020-03-16T09:57:42.307Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -44,6 +44,27 @@
 <p><code>redis-cli -a 123</code></p>
 <p>如果宿主机器没有redis-cli也可以运行命令：</p>
 <p><code>docker exec -it codezp-redis redis-cli -a root</code></p>
+<h3 id="三-通过命令直接安装ubuntu">三、通过命令直接安装(Ubuntu)</h3>
+<ol>
+<li>
+<p><code>apt-get update</code>(root用户，不是root用户需要先su，或者sudo)</p>
+</li>
+<li>
+<p><code>apt-get install redis-server</code></p>
+</li>
+<li>
+<p>启动redis<code>redis-server</code></p>
+</li>
+<li>
+<p>客户端连接<code>redis-cli</code></p>
+</li>
+<li>
+<p>出现：127.0.0.1:6379&gt; 就成功了</p>
+</li>
+<li>
+<p>可以在  /etc/redis目录下修改redis.conf文件</p>
+</li>
+</ol>
 ]]></content>
     </entry>
     <entry>

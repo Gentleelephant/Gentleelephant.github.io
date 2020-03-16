@@ -57,7 +57,7 @@
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
                                     <div class="post-title  mdui-m-b-1">Redis安装</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-15 11:23:30">2020-03-15 / 1 min read</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-15 11:23:30">2020-03-15 / 2 min read</div>
                                     <div class="mdui-m-b-2 mdui-typo post-neirong"><h3 id="一-编译安装前提要有gccg环境">一、编译安装(前提要有gcc/g++环境)</h3>
 <ol>
 <li>
@@ -86,6 +86,27 @@
 <p><code>redis-cli -a 123</code></p>
 <p>如果宿主机器没有redis-cli也可以运行命令：</p>
 <p><code>docker exec -it codezp-redis redis-cli -a root</code></p>
+<h3 id="三-通过命令直接安装ubuntu">三、通过命令直接安装(Ubuntu)</h3>
+<ol>
+<li>
+<p><code>apt-get update</code>(root用户，不是root用户需要先su，或者sudo)</p>
+</li>
+<li>
+<p><code>apt-get install redis-server</code></p>
+</li>
+<li>
+<p>启动redis<code>redis-server</code></p>
+</li>
+<li>
+<p>客户端连接<code>redis-cli</code></p>
+</li>
+<li>
+<p>出现：127.0.0.1:6379&gt; 就成功了</p>
+</li>
+<li>
+<p>可以在  /etc/redis目录下修改redis.conf文件</p>
+</li>
+</ol>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
