@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>Redis安装 | Aboy</title>
+        <title>SpringBoot整合Redis | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,66 +56,103 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">Redis安装</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-15 11:23:30">2020-03-15 / 2 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h3 id="一-编译安装前提要有gccg环境">一、编译安装(前提要有gcc/g++环境)</h3>
+                                    <div class="post-title  mdui-m-b-1">SpringBoot整合Redis</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-17 13:43:23">2020-03-17 / 2 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><ol>
+<li>
+<p>SpringBoot整合Redis前提要先进行配置</p>
+</li>
+<li>
+<ul>
+<li>配置让所有主机都可以访问</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131655.png" alt="配置让所有主机都可以访问" loading="lazy"></figure>
+<ul>
+<li>
+<p>配置密码，requirepass不要变，后面的root可以换为你自己设置的密码</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131952.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>需要导入的依赖：</p>
+<pre><code class="language-xml">     &lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+     &lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+</code></pre>
+<p><em>因为springboot现在要求必须使用springboot security所以redis才要设置密码</em></p>
 <ol>
-<li>
-<p>进入官网复制链接：<a href="http://download.redis.io/releases/redis-5.0.8.tar.gz">http://download.redis.io/releases/redis-5.0.8.tar.gz</a></p>
+<li>编写配置文件</li>
+</ol>
+<pre><code class="language-yaml">spring:
+  redis:
+    host: 192.168.202.132
+    database: 0
+    port: 6379
+    password: root
+
+</code></pre>
 </li>
 <li>
-<p>在Linux下使用wget http://download.redis.io/releases/redis-5.0.8.tar.gz 命令下载Redis</p>
-</li>
-<li>
-<p>然后使用<code>tar -zxvf redis-5.0.5.tar.gz</code>命令解压</p>
-</li>
-<li>
-<p>执行<code>make</code></p>
-</li>
-<li>
-<p>执行<code>meke install</code></p>
-</li>
-<li>
-<p>安装完成后启动redis：<code>redis-server redis-conf</code></p>
+<p>查看RedisAutoConfiguration类</p>
 </li>
 </ol>
-<h3 id="二-通过docker安装centos">二、通过docker安装(centos)</h3>
-<p>docker安装好之后，先启动docker，然后直接运行命令：</p>
-<p><code>docker run --name codezp-redis -d -p 6379:6379 redis --requirepass root</code></p>
-<p>docker上的redis启动成功后，<strong>在宿主机器上有redis-cli的情况下</strong>可以直接运行命令连接：</p>
-<p><code>redis-cli -a 123</code></p>
-<p>如果宿主机器没有redis-cli也可以运行命令：</p>
-<p><code>docker exec -it codezp-redis redis-cli -a root</code></p>
-<h3 id="三-通过命令直接安装ubuntu">三、通过命令直接安装(Ubuntu)</h3>
-<ol>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317132526.png" alt="" loading="lazy"></figure>
+<p>这个类为我们准备了两个Template，第一个Template顾名思义，键-值都是Object类型的，而第二个的键-值都是String类型的。我们使用第二个。</p>
+<ol start="6">
 <li>
-<p><code>apt-get update</code>(root用户，不是root用户需要先su，或者sudo)</p>
-</li>
+<p>编写一个测试的Controller</p>
+<pre><code class="language-java">@RestController
+public class HelloController {
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+    @GetMapping(&quot;/set&quot;)
+    public void set(){
+        // 注意对值的操作需要用opsXXX操作获取，而对键的操作就用stringRedisTemplate就可以了
+        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
+        stringStringValueOperations.set(&quot;name&quot;, &quot;codezp&quot;);
+
+    }
+    @GetMapping(&quot;/get&quot;)
+    public void get(){
+        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
+        System.out.println(stringStringValueOperations.get(&quot;name&quot;));
+    }
+
+}
+</code></pre>
+<ol start="7">
 <li>
-<p><code>apt-get install redis-server</code></p>
-</li>
-<li>
-<p>启动redis<code>redis-server</code></p>
-</li>
-<li>
-<p>客户端连接<code>redis-cli</code></p>
-</li>
-<li>
-<p>出现：127.0.0.1:6379&gt; 就成功了</p>
-</li>
-<li>
-<p>可以在  /etc/redis目录下修改redis.conf文件</p>
+<p>启动项目，并访问localhost:8080/set</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133157.png" alt="" loading="lazy"></figure>
 </li>
 </ol>
+</li>
+</ol>
+<p>密码在控制台：</p>
+<p>​		<img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133439.png" alt="" loading="lazy"></p>
+<p>访问成功我们在redis上看看：</p>
+<p>可以看到我们的数据已经存储上去了</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317134034.png" alt="" loading="lazy"></figure>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/springboot-zheng-he-redis/">SpringBoot整合Redis</a></div></div>
+                                        <div class="mdui-col"> </div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/springboot-exception/">SpringBoot异常处理策略</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/redis-install/">Redis安装</a></div> </div>
                                        
                                       </div>
                                    

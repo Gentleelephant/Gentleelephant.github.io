@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-03-16T09:57:42.307Z</updated>
+    <updated>2020-03-17T05:47:04.961Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,100 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[SpringBoot整合Redis]]></title>
+        <id>https://Gentleelephant.github.io/post/springboot-zheng-he-redis/</id>
+        <link href="https://Gentleelephant.github.io/post/springboot-zheng-he-redis/">
+        </link>
+        <updated>2020-03-17T05:43:23.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>
+<p>SpringBoot整合Redis前提要先进行配置</p>
+</li>
+<li>
+<ul>
+<li>配置让所有主机都可以访问</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131655.png" alt="配置让所有主机都可以访问" loading="lazy"></figure>
+<ul>
+<li>
+<p>配置密码，requirepass不要变，后面的root可以换为你自己设置的密码</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131952.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>需要导入的依赖：</p>
+<pre><code class="language-xml">     &lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+     &lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+</code></pre>
+<p><em>因为springboot现在要求必须使用springboot security所以redis才要设置密码</em></p>
+<ol>
+<li>编写配置文件</li>
+</ol>
+<pre><code class="language-yaml">spring:
+  redis:
+    host: 192.168.202.132
+    database: 0
+    port: 6379
+    password: root
+
+</code></pre>
+</li>
+<li>
+<p>查看RedisAutoConfiguration类</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317132526.png" alt="" loading="lazy"></figure>
+<p>这个类为我们准备了两个Template，第一个Template顾名思义，键-值都是Object类型的，而第二个的键-值都是String类型的。我们使用第二个。</p>
+<ol start="6">
+<li>
+<p>编写一个测试的Controller</p>
+<pre><code class="language-java">@RestController
+public class HelloController {
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+    @GetMapping(&quot;/set&quot;)
+    public void set(){
+        // 注意对值的操作需要用opsXXX操作获取，而对键的操作就用stringRedisTemplate就可以了
+        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
+        stringStringValueOperations.set(&quot;name&quot;, &quot;codezp&quot;);
+
+    }
+    @GetMapping(&quot;/get&quot;)
+    public void get(){
+        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
+        System.out.println(stringStringValueOperations.get(&quot;name&quot;));
+    }
+
+}
+</code></pre>
+<ol start="7">
+<li>
+<p>启动项目，并访问localhost:8080/set</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133157.png" alt="" loading="lazy"></figure>
+</li>
+</ol>
+</li>
+</ol>
+<p>密码在控制台：</p>
+<p>​		<img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133439.png" alt="" loading="lazy"></p>
+<p>访问成功我们在redis上看看：</p>
+<p>可以看到我们的数据已经存储上去了</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317134034.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Redis安装]]></title>
         <id>https://Gentleelephant.github.io/post/redis-install/</id>
