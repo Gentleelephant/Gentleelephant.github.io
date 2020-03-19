@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>SpringBoot整合Redis | Aboy</title>
+        <title>SpringBoot实现session共享 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,31 +56,14 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">SpringBoot整合Redis</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-17 13:43:23">2020-03-17 / 2 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><ol>
-<li>
-<p>SpringBoot整合Redis前提要先进行配置</p>
-</li>
-<li>
-<ul>
-<li>配置让所有主机都可以访问</li>
-</ul>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131655.png" alt="配置让所有主机都可以访问" loading="lazy"></figure>
-<ul>
-<li>
-<p>配置密码，requirepass不要变，后面的root可以换为你自己设置的密码</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131952.png" alt="" loading="lazy"></figure>
-</li>
-</ul>
-</li>
-<li>
-<p>需要导入的依赖：</p>
-<pre><code class="language-xml">     &lt;dependency&gt;
+                                    <div class="post-title  mdui-m-b-1">SpringBoot实现session共享</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-19 21:12:46">2020-03-19 / 3 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h4 id="第一步导入依赖">第一步：导入依赖</h4>
+<pre><code class="language-xml">&lt;dependency&gt;
 			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 			&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-     &lt;/dependency&gt;
-     &lt;dependency&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
 			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 			&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
 		&lt;/dependency&gt;
@@ -88,71 +71,68 @@
 			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
 		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;
+		&lt;/dependency&gt;
 </code></pre>
-<p><em>因为springboot现在要求必须使用springboot security所以redis才要设置密码</em></p>
-<ol>
-<li>编写配置文件</li>
-</ol>
+<h4 id="第二步编写配置文件">第二步：编写配置文件</h4>
 <pre><code class="language-yaml">spring:
   redis:
     host: 192.168.202.132
-    database: 0
     port: 6379
     password: root
-
+    database: 0
+server:
+  # 这里指定端口是因为等一下要早controller中取到port方便测试
+  port: 8085
 </code></pre>
-</li>
-<li>
-<p>查看RedisAutoConfiguration类</p>
-</li>
-</ol>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317132526.png" alt="" loading="lazy"></figure>
-<p>这个类为我们准备了两个Template，第一个Template顾名思义，键-值都是Object类型的，而第二个的键-值都是String类型的。我们使用第二个。</p>
-<ol start="6">
-<li>
-<p>编写一个测试的Controller</p>
+<h4 id="第三步编写controller测式">第三步：编写controller测式</h4>
 <pre><code class="language-java">@RestController
 public class HelloController {
 
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
+    @Value(&quot;${server.port}&quot;)
+    Integer port;
+
     @GetMapping(&quot;/set&quot;)
-    public void set(){
-        // 注意对值的操作需要用opsXXX操作获取，而对键的操作就用stringRedisTemplate就可以了
-        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
-        stringStringValueOperations.set(&quot;name&quot;, &quot;codezp&quot;);
-
+    public String set(HttpSession session){
+        session.setAttribute(&quot;name&quot;, &quot;codezp&quot;);
+        return String.valueOf(port);
     }
+
     @GetMapping(&quot;/get&quot;)
-    public void get(){
-        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
-        System.out.println(stringStringValueOperations.get(&quot;name&quot;));
+    public String get(HttpSession session){
+        return (String) session.getAttribute(&quot;name&quot;) + port;
     }
-
 }
 </code></pre>
-<ol start="7">
-<li>
-<p>启动项目，并访问localhost:8080/set</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133157.png" alt="" loading="lazy"></figure>
-</li>
-</ol>
-</li>
-</ol>
-<p>密码在控制台：</p>
-<p>​		<img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133439.png" alt="" loading="lazy"></p>
-<p>访问成功我们在redis上看看：</p>
-<p>可以看到我们的数据已经存储上去了</p>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317134034.png" alt="" loading="lazy"></figure>
+<h4 id="第四步启动项目开始测试">第四步：启动项目开始测试</h4>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319205646.png" alt="" loading="lazy"></figure>
+<p>先把maven的test关掉，然后再点击package进行打包。</p>
+<p>打包成功后：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319205900.png" alt="" loading="lazy"></figure>
+<p>我们控制台启动项目，注意一个可以不指定端口，但另一个需要指定端口(方便查看效果)</p>
+<p><code>java -jar demosessionshare-0.0.1-SNAPSHOT.jar --server.port=8088</code></p>
+<p><code>java -jar demosessionshare-0.0.1-SNAPSHOT.jar</code></p>
+<p>项目启动后我们在浏览器进行测试：</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210318.png" alt="" loading="lazy"></figure>
+<p>需要先登录，我们根据访问的端口取控制台查看密码，username默认是user</p>
+<p>输入密码之后：</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210540.png" alt="" loading="lazy"></figure>
+<p>我们再访问另一个项目的get方法：</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210646.png" alt="" loading="lazy"></figure>
+<p>这一次访问可以取到session的值，而且还不需要输入密码。再去redis上查看：已经有东西了。</p>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210849.png" alt="" loading="lazy"></figure>
+<p>总结：SpringBoot实现session其实就是做了一些自动化的配置，如果想要在SpringMVC中做也是可以实现的，配置也没有那么麻烦。在SpringBoot中实现session跟平常使用session没什么两样。</p>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/springboot-session/">SpringBoot实现session共享</a></div></div>
+                                        <div class="mdui-col"> </div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/redis-install/">Redis安装</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/springboot-zheng-he-redis/">SpringBoot整合Redis</a></div> </div>
                                        
                                       </div>
                                    

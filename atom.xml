@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-03-17T05:47:04.961Z</updated>
+    <updated>2020-03-19T13:16:02.609Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,80 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[SpringBoot实现session共享]]></title>
+        <id>https://Gentleelephant.github.io/post/springboot-session/</id>
+        <link href="https://Gentleelephant.github.io/post/springboot-session/">
+        </link>
+        <updated>2020-03-19T13:12:46.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="第一步导入依赖">第一步：导入依赖</h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+</code></pre>
+<h4 id="第二步编写配置文件">第二步：编写配置文件</h4>
+<pre><code class="language-yaml">spring:
+  redis:
+    host: 192.168.202.132
+    port: 6379
+    password: root
+    database: 0
+server:
+  # 这里指定端口是因为等一下要早controller中取到port方便测试
+  port: 8085
+</code></pre>
+<h4 id="第三步编写controller测式">第三步：编写controller测式</h4>
+<pre><code class="language-java">@RestController
+public class HelloController {
+
+    @Value(&quot;${server.port}&quot;)
+    Integer port;
+
+    @GetMapping(&quot;/set&quot;)
+    public String set(HttpSession session){
+        session.setAttribute(&quot;name&quot;, &quot;codezp&quot;);
+        return String.valueOf(port);
+    }
+
+    @GetMapping(&quot;/get&quot;)
+    public String get(HttpSession session){
+        return (String) session.getAttribute(&quot;name&quot;) + port;
+    }
+}
+</code></pre>
+<h4 id="第四步启动项目开始测试">第四步：启动项目开始测试</h4>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319205646.png" alt="" loading="lazy"></figure>
+<p>先把maven的test关掉，然后再点击package进行打包。</p>
+<p>打包成功后：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319205900.png" alt="" loading="lazy"></figure>
+<p>我们控制台启动项目，注意一个可以不指定端口，但另一个需要指定端口(方便查看效果)</p>
+<p><code>java -jar demosessionshare-0.0.1-SNAPSHOT.jar --server.port=8088</code></p>
+<p><code>java -jar demosessionshare-0.0.1-SNAPSHOT.jar</code></p>
+<p>项目启动后我们在浏览器进行测试：</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210318.png" alt="" loading="lazy"></figure>
+<p>需要先登录，我们根据访问的端口取控制台查看密码，username默认是user</p>
+<p>输入密码之后：</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210540.png" alt="" loading="lazy"></figure>
+<p>我们再访问另一个项目的get方法：</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210646.png" alt="" loading="lazy"></figure>
+<p>这一次访问可以取到session的值，而且还不需要输入密码。再去redis上查看：已经有东西了。</p>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210849.png" alt="" loading="lazy"></figure>
+<p>总结：SpringBoot实现session其实就是做了一些自动化的配置，如果想要在SpringMVC中做也是可以实现的，配置也没有那么麻烦。在SpringBoot中实现session跟平常使用session没什么两样。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot整合Redis]]></title>
         <id>https://Gentleelephant.github.io/post/springboot-zheng-he-redis/</id>
