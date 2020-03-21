@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>基于数据库的认证 | Aboy</title>
+        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">文章</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">分类</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">基于数据库的认证</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-21 22:11:28">2020-03-21 / 6 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h4 id="一-创建数据库以及表">一、创建数据库以及表</h4>
+<p>数据库中有三张表，role(角色)，user(用户)，user_role（关联）</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321213935.png" alt="" loading="lazy"></figure>
+<p>role表：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321214028.png" alt="" loading="lazy"></figure>
+<p>其中id为主键且自增，name是角色的name，namezh是中文名。</p>
+<p>user表：</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321214143.png" alt="" loading="lazy"></figure>
+<p>user是用户名，password是在SpringSecurity中用BCryptPasswordEncoder生成的密码，enable表示账户是否可用，locked表示账户是否被锁定。</p>
+<p>user_role表：</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321214523.png" alt="" loading="lazy"></figure>
+<p>uid是user的id，rid是role的id，一个用户可能有多个角色。</p>
+<h4 id="二-创建项目">二、创建项目</h4>
+<ul>
+<li>导入依赖</li>
+</ul>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.1.10&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>编写配置：</p>
+<pre><code class="language-yaml">spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/codezp?serverTimezone=GMT&amp;useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+</code></pre>
+<ul>
+<li>
+<p>创建User和Role实体类</p>
+<p>User类：</p>
+<pre><code class="language-java">public class User implements UserDetails {
+
+    private Integer id;
+
+    private String username;
+
+    private String password;
+
+    private Boolean enable;
+
+    private Boolean locked;
+
+    private List&lt;Role&gt; roles;
+
+    public List&lt;Role&gt; getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List&lt;Role&gt; roles) {
+        this.roles = roles;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+
+    // 账户是否未过期
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    // 账户是否未锁定
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    // 凭证是否未过期(密码)
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enable;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // 返回用户的所有角色
+    @Override
+    public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() {
+        List&lt;SimpleGrantedAuthority&gt; authorities = new ArrayList&lt;&gt;();
+        for (Role role : roles) {
+            // role必须以&quot;ROLE_&quot;开始
+            authorities.add(new SimpleGrantedAuthority(&quot;ROLE_&quot; + role.getName()));
+
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+}
+</code></pre>
+<p>我们的类要想到时候能被SpringSecurity使用，必须实现UserDetails。</p>
+<p>Role类：</p>
+<pre><code class="language-java">public class Role {
+
+    private Integer id;
+
+    private String name;
+
+    private String namezh;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNamezh() {
+        return namezh;
+    }
+
+    public void setNamezh(String namezh) {
+        this.namezh = namezh;
+    }
+}
+
+</code></pre>
+</li>
+</ul>
+<h4 id="第三步-编写mybatis的mapper接口和实现">第三步、编写Mybatis的Mapper接口和实现</h4>
+<p>UserMapper:</p>
+<pre><code class="language-java">@Mapper
+public interface UserMapper {
+	// 根据用户名获得用户对象
+    User loadUserByUsername(String username);
+	// 根据用户id获得用户的Role
+    List&lt;Role&gt; getUserRolesById(Integer id);
+
+}
+
+</code></pre>
+<p>UserMapper.xml</p>
+<pre><code class="language-xml">&lt;!DOCTYPE mapper
+        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+&lt;mapper namespace=&quot;com.codezp.mapper.UserMapper&quot;&gt;
+    &lt;select id=&quot;loadUserByUsername&quot; resultType=&quot;com.codezp.bean.User&quot;&gt;
+        select * from user where username=#{username}
+    &lt;/select&gt;
+
+    &lt;select id=&quot;getUserRolesById&quot; resultType=&quot;com.codezp.bean.Role&quot;&gt;
+        select * from role where id in (select rid from user_role where uid=#{id})
+    &lt;/select&gt;
+
+&lt;/mapper&gt;
+</code></pre>
+<h4 id="第四步-编写userservice类以及security配置类">第四步、编写Userservice类以及Security配置类</h4>
+<p>这个类到时候要交给SpringSecurity的配置类使用。</p>
+<pre><code class="language-java">@Service
+public class UserService implements UserDetailsService {
+
+    @Autowired
+    UserMapper userMapper;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        User user = userMapper.loadUserByUsername(username);
+        if (user == null){
+            throw new UsernameNotFoundException(&quot;user not found&quot;);
+        }
+        user.setRoles(userMapper.getUserRolesById(user.getId()));
+        return user;
+    }
+}
+</code></pre>
+<p>SpringSecurity的配置类</p>
+<pre><code class="language-java">@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserService userService;
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 刚才写的UserService类的对象
+        auth.userDetailsService(userService);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers(&quot;/dba/**&quot;).hasRole(&quot;dba&quot;)
+                .antMatchers(&quot;/admin/**&quot;).hasRole(&quot;admin&quot;)
+                .antMatchers(&quot;/user/**&quot;).hasRole(&quot;user&quot;)
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .csrf().disable();
+    }
+}
+</code></pre>
+<h5 id="第五步-编写controller进行测试">第五步、编写Controller进行测试</h5>
+<pre><code class="language-java">@RestController
+public class HelloController {
+
+    @GetMapping(&quot;/hello&quot;)
+    public String hello(){
+        return &quot;hello serurity&quot;;
+    }
+
+    @GetMapping(&quot;/dba/hello&quot;)
+    public String dba(){
+        return &quot;hello dba&quot;;
+    }
+
+    @GetMapping(&quot;/admin/hello&quot;)
+    public String root(){
+        return &quot;hello admin&quot;;
+    }
+
+    @GetMapping(&quot;/user/hello&quot;)
+    public String user(){
+        return &quot;hello user&quot;;
+    }
+
+}
+</code></pre>
+<p>root有dba和admin的权限，它应该能访问到dba和admin下的资源。</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321220908.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321221002.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321221037.png" alt="" loading="lazy"></figure>
+<p>可以看到在使用root用户登录之后可以访问到dba和admin下的资源，但是访问不到user下的资源。</p>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> </div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/httpsecurity-custom/">SpringSecurity的配置（自定义拦截规则）</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                    <div class="copyright">
+                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
+</html>
