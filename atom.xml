@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-03-21T14:15:55.953Z</updated>
+    <updated>2020-03-23T12:15:33.783Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,178 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[项目第一步：数据库及Security配置]]></title>
+        <id>https://Gentleelephant.github.io/post/Project-001/</id>
+        <link href="https://Gentleelephant.github.io/post/Project-001/">
+        </link>
+        <updated>2020-03-23T12:12:51.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="一-数据库表">一、数据库表</h4>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/%E7%AC%AC15%E9%A1%B5.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/%E7%AC%AC16%E9%A1%B5.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/%E7%AC%AC17%E9%A1%B5.jpg" alt="" loading="lazy"></figure>
+<h4 id="二-springsecurity配置">二、SpringSecurity配置</h4>
+<p>pom依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.1.10&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
+            &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>application.yml配置文件中的配置</p>
+<pre><code class="language-yaml">server:
+  port: 8888
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/vhr?serverTimezone=GMT&amp;useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+</code></pre>
+<p>实体类:</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200323200722.png" alt="" loading="lazy"></figure>
+<p>Mapper接口和Mapper.xml:</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200323200932.png" alt="" loading="lazy"></figure>
+<p>HrService类：</p>
+<pre><code class="language-java">@Service
+public class HrService implements UserDetailsService {
+
+    @Autowired
+    HrMapper hrMapper;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Hr hr = hrMapper.loadUserByUsername(username);
+        if (hr == null){
+            System.out.println(&quot;没有查询到用户&quot;);
+            throw new UsernameNotFoundException(&quot;用户不存在!&quot;);
+        }
+        return hr;
+    }
+}
+</code></pre>
+<p>SecurityConfig配置类：</p>
+<pre><code class="language-java">@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    HrService hrService;
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(hrService);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .usernameParameter(&quot;username&quot;)
+                .passwordParameter(&quot;password&quot;)
+                .loginProcessingUrl(&quot;/doLogin&quot;)     // 表单登录提交请求
+                .loginPage(&quot;/login&quot;)                // 登陆页面
+                .successHandler(new AuthenticationSuccessHandler() {    // 登陆成功的方法
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        response.setContentType(&quot;application/json;charset=utf-8&quot;);
+                        PrintWriter out = response.getWriter();
+                        Hr principal = (Hr) authentication.getPrincipal();
+                        RespBean ok = RespBean.ok(&quot;登陆成功&quot;,principal);
+                        String string = new ObjectMapper().writeValueAsString(ok);
+                        out.write(string);
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+                        response.setContentType(&quot;application/json;charset=utf-8&quot;);
+                        PrintWriter out = response.getWriter();
+                        RespBean respBean = RespBean.error(&quot;登陆失败&quot;);
+                        if (e instanceof LockedException){
+                            respBean.setMsg(&quot;账户被锁定,请联系管理员&quot;);
+                        }else if (e instanceof CredentialsExpiredException){
+                            respBean.setMsg(&quot;密码过期,请联系管理员&quot;);
+                        }else if (e instanceof AccountExpiredException){
+                            respBean.setMsg(&quot;账户过期,请联系管理员&quot;);
+                        }else if (e instanceof DisabledException){
+                            respBean.setMsg(&quot;账户被禁用,请联系管理员&quot;);
+                        }else if (e instanceof BadCredentialsException){
+                            respBean.setMsg(&quot;用户名或者密码输入错误&quot;);
+                        }
+                        String string = new ObjectMapper().writeValueAsString(respBean);
+                        out.write(string);
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessHandler(new LogoutSuccessHandler() {
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+                    }
+                })
+                .permitAll()
+                .and()
+                .csrf().disable();
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[基于数据库的认证]]></title>
         <id>https://Gentleelephant.github.io/post/SpringSecurity-db/</id>
