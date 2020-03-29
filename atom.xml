@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-03-23T12:15:33.783Z</updated>
+    <updated>2020-03-29T09:09:24.384Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,125 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[ 项目第二步：前后端接口对接]]></title>
+        <id>https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/</id>
+        <link href="https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/">
+        </link>
+        <updated>2020-03-29T09:07:50.000Z</updated>
+        <content type="html"><![CDATA[<p>网络请求使用axios，首先安装axios，在控制台下输入<code>npm install axios</code>如果在package.js中看到:</p>
+<pre><code class="language-json"> &quot;dependencies&quot;: {
+    &quot;axios&quot;: &quot;^0.19.2&quot;, // axios已经安装成功
+    &quot;core-js&quot;: &quot;^3.6.4&quot;,
+    &quot;element-ui&quot;: &quot;^2.13.0&quot;,
+    &quot;vue&quot;: &quot;^2.6.11&quot;,
+    &quot;vue-router&quot;: &quot;^3.1.5&quot;
+  },
+</code></pre>
+<p>编写网络请求方法：</p>
+<p>api.js</p>
+<pre><code class="language-javascript">import axios from 'axios'
+import {Message} from 'element-ui';
+
+axios.interceptors.response.use(success =&gt; {
+    if (success.status &amp;&amp; success.status == 200 &amp;&amp; success.data.status == 500) {
+        Message.error({message: success.data.msg})
+        return;
+    }
+    return success.data;
+}, error =&gt; {
+    if (error.response.status == 504 || error.response.status == 404) {
+        alert(error.response.data)
+        Message.error(&quot;服务器被吃了&quot;);
+    } else if (error.response.status == 403) {
+        Message.error(&quot;权限不足&quot;)
+    } else if (error.response.status == 401) {
+        Message.error(&quot;没有登陆&quot;)
+    } else {
+
+        if (error.response.data.msg) {
+            Message.error({message: error.response.data.msg});
+        } else {
+            Message.error(&quot;未知错误&quot;);
+        }
+    }
+
+    return;
+})
+
+
+let base = '';
+
+export const postKeyValueRequest = (url, params) =&gt; {
+    return axios({
+        method: 'post',
+        url: url,
+        data: params,
+        transformRequest: [function (data) {
+            let ret = '';
+            for (let i in data) {
+                ret += encodeURIComponent(i) + '=' + encodeURIComponent(data[i]) + '&amp;'
+                // console.log(i + &quot;:&quot; + data[i])
+            }
+            ret = ret.substring(0, ret.length - 1)
+            console.log(ret);
+            return ret;
+        }],
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+}
+
+</code></pre>
+<p>这里编写完成之后还不能使用因为存在跨域问题，因此我们还要编写配置</p>
+<p>vue.config.js(项目目录下)</p>
+<pre><code class="language-javascript">let proxyObj = {};
+proxyObj['/'] = {
+    ws: false,
+    target: 'http://localhost:8081',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/': ''
+    }
+}
+
+module.exports = {
+    devServer: {
+        host: 'localhost',
+        port: 8080,	// 本项目的端口
+        proxy: proxyObj	// 代理配置
+    }
+}
+</code></pre>
+<p>实现submitLogin提交按钮的方法：</p>
+<pre><code class="language-javascript">methods: {
+            submitLogin() {
+                this.$refs.login.validate((valid) =&gt; {
+                    if (valid) {
+                        postKeyValueRequest('/doLogin',this.loginForm).then(resp=&gt;{
+                            if (resp) { // 服务端返回的数据
+                                window.sessionStorage.setItem(&quot;user&quot;,JSON.stringify(resp.obj));
+                                // 页面跳转
+                                this.$router.replace('/home')
+                                // alert(JSON.stringify(resp));
+                            }
+                        })
+                    } else {
+                        this.$message.error(&quot;请输入所有参数&quot;);
+                        return false;
+                    }
+                });
+            }
+        }
+</code></pre>
+<p>测试访问：</p>
+<p>登录页：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170543.png" alt="" loading="lazy"></figure>
+<p>登陆成功，页面跳转：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170649.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[项目第一步：数据库及Security配置]]></title>
         <id>https://Gentleelephant.github.io/post/Project-001/</id>
@@ -1367,44 +1486,6 @@ public interface UserMapper {
 </ol>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[@ControllerAdvice注解的使用]]></title>
-        <id>https://Gentleelephant.github.io/post/controller-advice/</id>
-        <link href="https://Gentleelephant.github.io/post/controller-advice/">
-        </link>
-        <updated>2020-03-14T08:58:08.000Z</updated>
-        <content type="html"><![CDATA[<p>@ControllerAdvice ，这是一个非常有用的注解，顾名思义，这是一个增强的 Controller。使用这个 Controller ，可以实现三个方面的功能：</p>
-<ol>
-<li>全局异常处理</li>
-<li>全局数据绑定</li>
-<li>全局数据预处理</li>
-</ol>
-<p>灵活使用这三个功能，可以帮助我们简化很多工作，需要注意的是，这是 SpringMVC 提供的功能，在 Spring Boot 中可以直接使用，下面分别来看。</p>
-<p><font color="green" size=5> <strong>一、全局异常处理</strong></font></p>
-<p>使用 @ControllerAdvice 实现全局异常处理，只需要定义类，添加该注解即可：</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314190538.png" alt="" loading="lazy"></figure>
-<p>在该类中，可以定义多个方法，不同的方法处理不同的异常，，也可以直接向上面一样，在一个方法中处理所有的异常信息。</p>
-<p><font color="green" size=5> <strong>二、全局数据绑定</strong></font></p>
-<p>全局数据绑定功能可以用来做一些初始化的数据操作，我们可以将一些公共的数据定义在添加了 @ControllerAdvice 注解的类中，这样，在每一个 Controller 的接口中，就都能够访问导致这些数据。具体使用：</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191033.png" alt="" loading="lazy"></figure>
-<p>使用 @ModelAttribute 注解标记该方法的返回数据是一个全局数据，默认情况下，这个全局数据的 key 就是返回的变量名，value 就是方法返回值，当然开发者可以通过 @ModelAttribute 注解的 name 属性去重新指定 key。</p>
-<p>定义完成后，在任何一个Controller 的接口中，都可以获取到这里定义的数据：</p>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191136.png" alt="" loading="lazy"></figure>
-<p><font color="green" size=5> <strong>三、全局数据预处理</strong></font></p>
-<p>考虑我有两个实体类，Book 和 Author，分别定义如下：</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191423.png" alt="" loading="lazy"></figure>
-<p>此时，如果我定义一个数据添加接口，如下：</p>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191514.png" alt="" loading="lazy"></figure>
-<p>这个时候，添加操作就会有问题，因为两个实体类都有一个 name 属性，从前端传递时 ，无法区分。此时，通过 @ControllerAdvice 的全局数据预处理可以解决这个问题</p>
-<p>解决步骤如下:</p>
-<p>1.给接口中的变量取别名：</p>
-<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191625.png" alt="" loading="lazy"></figure>
-<p>2.进行请求数据预处理<br>
-在 @ControllerAdvice 标记的类中添加如下代码:</p>
-<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314191712.png" alt="" loading="lazy"></figure>
-<p>@InitBinder(&quot;b&quot;) 注解表示该方法用来处理和Book和相关的参数,在方法中,给参数添加一个 b 前缀,即请求参数要有b前缀.</p>
 ]]></content>
     </entry>
 </feed>

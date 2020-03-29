@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title> 项目第二步：前后端接口对接 | Aboy</title>
+        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">文章</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">分类</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1"> 项目第二步：前后端接口对接</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-29 17:07:50">2020-03-29 / 3 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p>网络请求使用axios，首先安装axios，在控制台下输入<code>npm install axios</code>如果在package.js中看到:</p>
+<pre><code class="language-json"> &quot;dependencies&quot;: {
+    &quot;axios&quot;: &quot;^0.19.2&quot;, // axios已经安装成功
+    &quot;core-js&quot;: &quot;^3.6.4&quot;,
+    &quot;element-ui&quot;: &quot;^2.13.0&quot;,
+    &quot;vue&quot;: &quot;^2.6.11&quot;,
+    &quot;vue-router&quot;: &quot;^3.1.5&quot;
+  },
+</code></pre>
+<p>编写网络请求方法：</p>
+<p>api.js</p>
+<pre><code class="language-javascript">import axios from 'axios'
+import {Message} from 'element-ui';
+
+axios.interceptors.response.use(success =&gt; {
+    if (success.status &amp;&amp; success.status == 200 &amp;&amp; success.data.status == 500) {
+        Message.error({message: success.data.msg})
+        return;
+    }
+    return success.data;
+}, error =&gt; {
+    if (error.response.status == 504 || error.response.status == 404) {
+        alert(error.response.data)
+        Message.error(&quot;服务器被吃了&quot;);
+    } else if (error.response.status == 403) {
+        Message.error(&quot;权限不足&quot;)
+    } else if (error.response.status == 401) {
+        Message.error(&quot;没有登陆&quot;)
+    } else {
+
+        if (error.response.data.msg) {
+            Message.error({message: error.response.data.msg});
+        } else {
+            Message.error(&quot;未知错误&quot;);
+        }
+    }
+
+    return;
+})
+
+
+let base = '';
+
+export const postKeyValueRequest = (url, params) =&gt; {
+    return axios({
+        method: 'post',
+        url: url,
+        data: params,
+        transformRequest: [function (data) {
+            let ret = '';
+            for (let i in data) {
+                ret += encodeURIComponent(i) + '=' + encodeURIComponent(data[i]) + '&amp;'
+                // console.log(i + &quot;:&quot; + data[i])
+            }
+            ret = ret.substring(0, ret.length - 1)
+            console.log(ret);
+            return ret;
+        }],
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+}
+
+</code></pre>
+<p>这里编写完成之后还不能使用因为存在跨域问题，因此我们还要编写配置</p>
+<p>vue.config.js(项目目录下)</p>
+<pre><code class="language-javascript">let proxyObj = {};
+proxyObj['/'] = {
+    ws: false,
+    target: 'http://localhost:8081',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/': ''
+    }
+}
+
+module.exports = {
+    devServer: {
+        host: 'localhost',
+        port: 8080,	// 本项目的端口
+        proxy: proxyObj	// 代理配置
+    }
+}
+</code></pre>
+<p>实现submitLogin提交按钮的方法：</p>
+<pre><code class="language-javascript">methods: {
+            submitLogin() {
+                this.$refs.login.validate((valid) =&gt; {
+                    if (valid) {
+                        postKeyValueRequest('/doLogin',this.loginForm).then(resp=&gt;{
+                            if (resp) { // 服务端返回的数据
+                                window.sessionStorage.setItem(&quot;user&quot;,JSON.stringify(resp.obj));
+                                // 页面跳转
+                                this.$router.replace('/home')
+                                // alert(JSON.stringify(resp));
+                            }
+                        })
+                    } else {
+                        this.$message.error(&quot;请输入所有参数&quot;);
+                        return false;
+                    }
+                });
+            }
+        }
+</code></pre>
+<p>测试访问：</p>
+<p>登录页：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170543.png" alt="" loading="lazy"></figure>
+<p>登陆成功，页面跳转：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170649.png" alt="" loading="lazy"></figure>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> </div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/Project-001/">项目第一步：数据库及Security配置</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                    <div class="copyright">
+                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
+</html>
