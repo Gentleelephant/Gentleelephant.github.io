@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-03-29T09:24:53.867Z</updated>
+    <updated>2020-04-01T17:27:05.200Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,76 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[Swagger的简单使用]]></title>
+        <id>https://Gentleelephant.github.io/post/swagger-de-jian-dan-shi-yong/</id>
+        <link href="https://Gentleelephant.github.io/post/swagger-de-jian-dan-shi-yong/">
+        </link>
+        <updated>2020-04-01T17:20:24.000Z</updated>
+        <content type="html"><![CDATA[<p>SpringBoot继承Swagger只需要导入两个依赖</p>
+<pre><code class="language-xml">		&lt;dependency&gt;
+			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
+			&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+			&lt;version&gt;2.9.2&lt;/version&gt;
+		&lt;/dependency&gt;
+
+		&lt;dependency&gt;
+			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
+			&lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+			&lt;version&gt;2.9.2&lt;/version&gt;
+		&lt;/dependency&gt;
+</code></pre>
+<p>然后在编写一个Swagger的配置类，Swagger是用Docket对象来进行配置的，所有的配置都在Docket中进行设置</p>
+<pre><code class="language-java">@Configuration
+public class SwaggerConfig {
+
+    /*配置Swagger的Docket实例*/
+    @Bean
+    public Docket docket(Environment environment){
+
+        // 设置要显示的Swagger环境,可以根据不同的环境设置Swagger是否显示
+        Profiles dev = Profiles.of(&quot;dev&quot;);
+        // 通过environment.acceptsProfiles判断是否处在自己设定的环境中
+        boolean flag = environment.acceptsProfiles(dev);
+        
+        return new Docket(DocumentationType.SPRING_WEB)
+                .apiInfo(apiInfo())
+//                .enable(flag)       是否启动Swagger，如果为false则不能访问
+                    .select()
+                    // RequestHandlerSelectors：配置要扫描接口的方式
+                    // basePackage：基于某个包进行扫描
+                    // any：扫描全部
+                    // none：不扫描
+                    // withClassAnnotation：扫描类上的注解
+                    // .apis(RequestHandlerSelectors.basePackage(&quot;com.zhang.controller&quot;))
+                    .apis(RequestHandlerSelectors.withMethodAnnotation(GetMapping.class))
+                    // path() 过滤某路径
+                    //.paths(PathSelectors.ant(&quot;com&quot;))
+                    .build();
+    }
+
+    // 当前Api的一些基本信息
+    @Bean
+    public ApiInfo apiInfo(){
+        // 作者信息
+        Contact contact = new Contact(&quot;codezp&quot;, &quot;http://www.codezp.club&quot;, &quot;moon0hello@gmail&quot;);  
+
+        return new ApiInfo(
+                &quot;Vhr Api Documentation&quot;,
+                &quot;Vhr项目的API文档&quot;,
+                &quot;1.0&quot;,
+                &quot;&quot;,
+                contact,
+                &quot;Apache 2.0&quot;,
+                &quot;&quot;,
+                new ArrayList&lt;VendorExtension&gt;());
+    }
+
+}
+</code></pre>
+<p>然后再控制台访问http://localhost:8080/swagger-ui.html就可以了！</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[项目第三步：前端请求方法的封装]]></title>
         <id>https://Gentleelephant.github.io/post/xiang-mu-di-san-bu-qian-duan-qing-qiu-fang-fa-de-feng-zhuang/</id>
@@ -1105,204 +1175,6 @@ public class HelloController {
 <p>可以在  /etc/redis目录下修改redis.conf文件</p>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringBoot异常处理策略]]></title>
-        <id>https://Gentleelephant.github.io/post/springboot-exception/</id>
-        <link href="https://Gentleelephant.github.io/post/springboot-exception/">
-        </link>
-        <updated>2020-03-14T13:47:10.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="自定义异常处理">自定义异常处理</h2>
-<p>在 Spring Boot 项目中 ，异常统一处理，可以使用 Spring 中 @ControllerAdvice 来统一处理，也可以自己来定义异常处理方案。Spring Boot 中，对异常的处理有一些默认的策略，我们分别来看。默认情况下，Spring Boot 中的异常页面 是这样的：</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314210105.png" alt="" loading="lazy"></figure>
-<p>之所以用户看到这个页面，是因为开发者没有明确提供一个 /error 路径，如果开发者提供了 /error 路径 ，这个页面就不会展示出来，不过在 Spring Boot 中，提供 /error 路径实际上是下下策，Spring Boot 本身在处理异常时，也是当所有条件都不满足时，才会去找 /error 路径。那么我们就先来看看，在 Spring Boot 中，如何自定义 error 页面，整体上来说，可以分为两种，一种是静态页面，另一种是动态页面。</p>
-<p><font color="green" size=5>一、静态异常页面</font></p>
-<p>自定义静态异常页面，又分为两种，第一种 是使用 HTTP 响应码来命名页面，例如 404.html、405.html、500.html ....，另一种就是直接定义一个 4xx.html，表示400-499 的状态都显示这个异常页面，5xx.html 表示 500-599 的状态显示这个异常页面。默认是<code>classpath:/static/error/</code> 路径下定义相关页面：</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314210334.png" alt="" loading="lazy"></figure>
-<p>此时，启动项目，如果项目抛出 500 请求错误，就会自动展示 500.html 这个页面，发生 404 就会展示 404.html 页面。如果异常展示页面既存在 5xx.html，也存在 500.html ，此时，发生500异常时，优先展示 500.html 页面。</p>
-<p><font color="green" size=5>二、动态异常页面</font></p>
-<p>动态的异常页面定义方式和静态的基本 一致，可以采用的页面模板有 jsp、freemarker、thymeleaf。动态异常页面，也支持 404.html 或者 4xx.html ，但是一般来说，由于动态异常页面可以直接展示异常详细信息，所以就没有必要挨个枚举错误了 ，直接定义 4xx.html（这里使用thymeleaf模板）或者 5xx.html 即可。</p>
-<p><em><strong>注意，动态页面模板，不需要开发者自己去定义控制器，直接定义异常页面即可 ，Spring Boot 中自带的异常处理器会自动查找到异常页面。</strong></em></p>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314210533.png" alt="" loading="lazy"></figure>
-<pre><code class="language-html">    &lt;!DOCTYPE html&gt;
-
-    &lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
-
-    &lt;head&gt;
-
-        &lt;meta charset=&quot;UTF-8&quot;&gt;
-
-        &lt;title&gt;Title&lt;/title&gt;
-
-    &lt;/head&gt;
-
-    &lt;body&gt;
-
-    &lt;h1&gt;5xx&lt;/h1&gt;
-
-    &lt;table border=&quot;1&quot;&gt;
-
-        &lt;tr&gt;
-
-            &lt;td&gt;path&lt;/td&gt;
-
-            &lt;td th:text=&quot;${path}&quot;&gt;&lt;/td&gt;
-
-        &lt;/tr&gt;
-
-        &lt;tr&gt;
-
-            &lt;td&gt;error&lt;/td&gt;
-
-            &lt;td th:text=&quot;${error}&quot;&gt;&lt;/td&gt;
-
-        &lt;/tr&gt;
-
-        &lt;tr&gt;
-
-            &lt;td&gt;message&lt;/td&gt;
-
-            &lt;td th:text=&quot;${message}&quot;&gt;&lt;/td&gt;
-
-        &lt;/tr&gt;
-
-        &lt;tr&gt;
-
-            &lt;td&gt;timestamp&lt;/td&gt;
-
-            &lt;td th:text=&quot;${timestamp}&quot;&gt;&lt;/td&gt;
-
-        &lt;/tr&gt;
-
-        &lt;tr&gt;
-
-            &lt;td&gt;status&lt;/td&gt;
-
-            &lt;td th:text=&quot;${status}&quot;&gt;&lt;/td&gt;
-
-        &lt;/tr&gt;
-
-    &lt;/table&gt;
-
-    &lt;/body&gt;
-
-    &lt;/html&gt;
-</code></pre>
-<p>默认情况下，完整的异常信息就是这5条，展示 效果如下 ：</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314210825.png" alt="" loading="lazy"></figure>
-<p>如果动态页面和静态页面同时定义了异常处理页面，例如 <code>classpath:/static/error/404.html</code> 和 <code>classpath:/templates/error/404.html</code> 同时存在时，默认使用动态页面。即完整的错误页面查找方式应该是这样：</p>
-<p><em>发生了500错误--&gt;查找动态 500.html 页面--&gt;查找静态 500.html --&gt; 查找动态 5xx.html--&gt;查找静态 5xx.html。</em></p>
-<p><font color="green" size=5>三、自定义异常数据</font></p>
-<p>默认情况下，在Spring Boot 中，所有的异常数据其实就是上文所展示出来的5条数据，这5条数据定义在 <code>org.springframework.boot.web.reactive.error.DefaultErrorAttributes</code> 类中，具体定义在 <code>getErrorAttributes</code> 方法中 ：</p>
-<pre><code class="language-java">    @Override
-
-    public Map&lt;String, Object&gt; getErrorAttributes(ServerRequest request,
-
-                    boolean includeStackTrace) {
-
-            Map&lt;String, Object&gt; errorAttributes = new LinkedHashMap&lt;&gt;();
-
-            errorAttributes.put(&quot;timestamp&quot;, new Date());
-
-            errorAttributes.put(&quot;path&quot;, request.path());
-
-            Throwable error = getError(request);
-
-            HttpStatus errorStatus = determineHttpStatus(error);
-
-            errorAttributes.put(&quot;status&quot;, errorStatus.value());
-
-            errorAttributes.put(&quot;error&quot;, errorStatus.getReasonPhrase());
-
-            errorAttributes.put(&quot;message&quot;, determineMessage(error));
-
-            handleException(errorAttributes, determineException(error), includeStackTrace);
-
-            return errorAttributes;
-
-    }
-</code></pre>
-<p>DefaultErrorAttributes 类本身则是在org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration 异常自动配置类中定义的，如果开发者没有自己提供一个 ErrorAttributes 的实例的话，那么 Spring Boot 将自动提供一个ErrorAttributes 的实例，也就是 DefaultErrorAttributes 。</p>
-<p><strong>基于此 ，开发者自定义 ErrorAttributes 有两种方式 ：</strong></p>
-<ol>
-<li>直接实现 ErrorAttributes 接口</li>
-<li>继承 DefaultErrorAttributes（推荐），因为 DefaultErrorAttributes 中对异常数据的处理已经完成，开发者可以直接使用。</li>
-</ol>
-<p>具体定义如下：</p>
-<pre><code class="language-java">    @Component
-    public class MyErrorAttributes  extends DefaultErrorAttributes {
-        @Override
-        public Map&lt;String, Object&gt; getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
-            Map&lt;String, Object&gt; map = super.getErrorAttributes(webRequest, includeStackTrace);
-            if ((Integer)map.get(&quot;status&quot;) == 500) {
-                map.put(&quot;message&quot;, &quot;服务器内部错误!&quot;);
-            }
-            return map;
-        }
-
-    }
-</code></pre>
-<p>定义好的 ErrorAttributes 一定要注册成一个 Bean ，这样，Spring Boot 就不会使用默认的 DefaultErrorAttributes 了，运行效果如下图：</p>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314211458.png" alt="" loading="lazy"></figure>
-<p><font color="green" size=5>四、自定义异常视图</font></p>
-<p>异常视图默认就是前面所说的静态或者动态页面，这个也是可以自定义的，首先 ，默认的异常视图加载逻辑在 org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController 类的 errorHtml 方法中，这个方法用来返回异常页面+数据，还有另外一个 error 方法，这个方法用来返回异常数据（如果是 ajax 请求，则该方法会被触发）。</p>
-<pre><code class="language-java">    @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
-
-    public ModelAndView errorHtml(HttpServletRequest request,
-
-                    HttpServletResponse response) {
-
-            HttpStatus status = getStatus(request);
-
-            Map&lt;String, Object&gt; model = Collections.unmodifiableMap(getErrorAttributes(
-
-                            request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));
-
-            response.setStatus(status.value());
-
-            ModelAndView modelAndView = resolveErrorView(request, response, status, model);
-
-            return (modelAndView != null) ? modelAndView : new ModelAndView(&quot;error&quot;, model);
-
-    }
-</code></pre>
-<p>在该方法中 ，首先会通过 getErrorAttributes 方法去获取异常数据（实际上会调用到 ErrorAttributes 的实例 的 getErrorAttributes 方法），然后调用 resolveErrorView 去创建一个 ModelAndView ，如果这里创建失败，那么用户将会看到默认的错误提示页面。正常情况下， resolveErrorView 方法会来到 DefaultErrorViewResolver 类的 resolveErrorView 方法中：</p>
-<pre><code class="language-java">@RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
-
-    public ModelAndView errorHtml(HttpServletRequest request,
-
-                    HttpServletResponse response) {
-
-            HttpStatus status = getStatus(request);
-
-            Map&lt;String, Object&gt; model = Collections.unmodifiableMap(getErrorAttributes(
-
-                            request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));
-
-            response.setStatus(status.value());
-
-            ModelAndView modelAndView = resolveErrorView(request, response, status, model);
-
-            return (modelAndView != null) ? modelAndView : new ModelAndView(&quot;error&quot;, model);
-
-    }   
-</code></pre>
-<p>在这里，首先以异常响应码作为视图名分别去查找动态页面和静态页面，如果没有查找到，则再以 4xx 或者 5xx 作为视图名再去分别查找动态或者静态页面。要自定义异常视图解析，也很容易 ，由于 DefaultErrorViewResolver 是在 ErrorMvcAutoConfiguration 类中提供的实例，即开发者没有提供相关实例时，会使用默认的 DefaultErrorViewResolver ，开发者提供了自己的 ErrorViewResolver 实例后，默认的配置就会失效，因此，自定义异常视图，只需要提供 一个 ErrorViewResolver 的实例即可：</p>
-<pre><code class="language-java">@Componentpublic 
-class MyErrorViewResolver extendsDefaultErrorViewResolver {    
-    public MyErrorViewResolver(ApplicationContext applicationContext, ResourceProperties resourceProperties) {        
-        super(applicationContext, resourceProperties);    
-    }    
-    @Override    
-    public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map&lt;String, Object&gt; model) 
-    {        
-        return new ModelAndView(&quot;/aaa/123&quot;, model);    
-    }
-}
-</code></pre>
-<p>实际上，开发者也可以在这里定义异常数据（直接在 resolveErrorView 方法重新定义一个 model ，将参数中的model 数据拷贝过去并修改，注意参数中的 model 类型为 UnmodifiableMap，即不可以直接修改），而不需要自定义MyErrorAttributes。定义完成后，提供一个名为123的视图，如下图：</p>
-<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200314212941.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>

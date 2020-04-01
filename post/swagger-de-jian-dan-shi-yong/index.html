@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>项目第三步：前端请求方法的封装 | Aboy</title>
+        <title>Swagger的简单使用 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,67 +56,79 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">项目第三步：前端请求方法的封装</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-29 17:22:38">2020-03-29 / 2 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p>如果我们不封装方法，那么我们每次都要import，所以我们可以把方法制作成Vue插件</p>
-<p>首先在api.js中编写出剩下的方法：</p>
-<pre><code class="language-javascript">export const postRequest=(url,params)=&gt;{
-    return axios({
-        method: 'post',
-        url: `${url}`,
-        data: params
-    })
-}
+                                    <div class="post-title  mdui-m-b-1">Swagger的简单使用</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-04-02 01:20:24">2020-04-02 / 2 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p>SpringBoot继承Swagger只需要导入两个依赖</p>
+<pre><code class="language-xml">		&lt;dependency&gt;
+			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
+			&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+			&lt;version&gt;2.9.2&lt;/version&gt;
+		&lt;/dependency&gt;
 
-export const putRequest=(url,params)=&gt;{
-    return axios({
-        method: 'put',
-        url: `${url}`,
-        data: params
-    })
-}
+		&lt;dependency&gt;
+			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
+			&lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+			&lt;version&gt;2.9.2&lt;/version&gt;
+		&lt;/dependency&gt;
+</code></pre>
+<p>然后在编写一个Swagger的配置类，Swagger是用Docket对象来进行配置的，所有的配置都在Docket中进行设置</p>
+<pre><code class="language-java">@Configuration
+public class SwaggerConfig {
 
-export const getRequest=(url,params)=&gt;{
-    return axios({
-        method: 'get',
-        url: `${url}`,
-        data: params
-    })
-}
+    /*配置Swagger的Docket实例*/
+    @Bean
+    public Docket docket(Environment environment){
 
-export const deleteRequest=(url,params)=&gt;{
-    return axios({
-        method: 'delete',
-        url: `${url}`,
-        data: params
-    })
+        // 设置要显示的Swagger环境,可以根据不同的环境设置Swagger是否显示
+        Profiles dev = Profiles.of(&quot;dev&quot;);
+        // 通过environment.acceptsProfiles判断是否处在自己设定的环境中
+        boolean flag = environment.acceptsProfiles(dev);
+        
+        return new Docket(DocumentationType.SPRING_WEB)
+                .apiInfo(apiInfo())
+//                .enable(flag)       是否启动Swagger，如果为false则不能访问
+                    .select()
+                    // RequestHandlerSelectors：配置要扫描接口的方式
+                    // basePackage：基于某个包进行扫描
+                    // any：扫描全部
+                    // none：不扫描
+                    // withClassAnnotation：扫描类上的注解
+                    // .apis(RequestHandlerSelectors.basePackage(&quot;com.zhang.controller&quot;))
+                    .apis(RequestHandlerSelectors.withMethodAnnotation(GetMapping.class))
+                    // path() 过滤某路径
+                    //.paths(PathSelectors.ant(&quot;com&quot;))
+                    .build();
+    }
+
+    // 当前Api的一些基本信息
+    @Bean
+    public ApiInfo apiInfo(){
+        // 作者信息
+        Contact contact = new Contact(&quot;codezp&quot;, &quot;http://www.codezp.club&quot;, &quot;moon0hello@gmail&quot;);  
+
+        return new ApiInfo(
+                &quot;Vhr Api Documentation&quot;,
+                &quot;Vhr项目的API文档&quot;,
+                &quot;1.0&quot;,
+                &quot;&quot;,
+                contact,
+                &quot;Apache 2.0&quot;,
+                &quot;&quot;,
+                new ArrayList&lt;VendorExtension&gt;());
+    }
+
 }
 </code></pre>
-<p>然后再main.js中导入这些方法并且制作插件：</p>
-<pre><code class="language-javascript">// 导入
-import {postKeyValueRequest} from &quot;../utils/api&quot;;
-import {postRequest} from &quot;../utils/api&quot;;
-import {putRequest} from &quot;../utils/api&quot;;
-import {getRequest} from &quot;../utils/api&quot;;
-import {deleteRequest} from &quot;../utils/api&quot;;
-
-// 制作插件
-Vue.prototype.postRequest = postRequest;
-Vue.prototype.putRequest = putRequest;
-Vue.prototype.getRequest = getRequest;
-Vue.prototype.deleteRequest = deleteRequest;
-Vue.prototype.postKeyValueRequest = postKeyValueRequest;
-</code></pre>
-<p>这样在我们想用这些方法的时候是需要用 this. 的形式调用了</p>
+<p>然后再控制台访问http://localhost:8080/swagger-ui.html就可以了！</p>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/swagger-de-jian-dan-shi-yong/">Swagger的简单使用</a></div></div>
+                                        <div class="mdui-col"> </div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/"> 项目第二步：前后端接口对接</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/xiang-mu-di-san-bu-qian-duan-qing-qiu-fang-fa-de-feng-zhuang/">项目第三步：前端请求方法的封装</a></div> </div>
                                        
                                       </div>
                                    
