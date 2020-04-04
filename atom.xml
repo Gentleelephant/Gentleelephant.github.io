@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-04-01T17:27:05.200Z</updated>
+    <updated>2020-04-04T03:29:18.520Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,1376 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[ES6字符串、数组、对象的扩展]]></title>
+        <id>https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/">
+        </link>
+        <updated>2020-04-04T03:25:44.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="字符串的扩展">字符串的扩展</h2>
+<p>ES6中的字符串扩展，用得少，而且逻辑相对简单。如下：</p>
+<ul>
+<li>
+<p><code>includes(str)</code>：判断是否包含指定的字符串</p>
+</li>
+<li>
+<p><code>startsWith(str)</code>：判断是否以指定字符串开头</p>
+</li>
+<li>
+<p><code>endsWith(str)</code>：判断是否以指定字符串结尾</p>
+</li>
+<li>
+<p><code>repeat(count)</code>：重复指定次数</p>
+</li>
+</ul>
+<p>举例如下：</p>
+<pre><code class="language-javascript">    let str = 'abcdefg';
+
+    console.log(str.includes('a'));//true
+    console.log(str.includes('h'));//false
+
+    //startsWith(str) : 判断是否以指定字符串开头
+    console.log(str.startsWith('a'));//true
+    console.log(str.startsWith('d'));//false
+
+    //endsWith(str) : 判断是否以指定字符串结尾
+    console.log(str.endsWith('g'));//true
+    console.log(str.endsWith('d'));//false
+
+    //repeat(count) : 重复指定次数a
+    console.log(str.repeat(5));
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180402_1050.png" alt="" loading="lazy"></figure>
+<h2 id="number-的扩展">Number 的扩展</h2>
+<ul>
+<li>二进制与八进制数值表示法: 二进制用<code>0b</code>, 八进制用<code>0o</code>。</li>
+</ul>
+<p>举例：</p>
+<pre><code class="language-javascript">    console.log(0b1010);//10
+    console.log(0o56);//46
+</code></pre>
+<ul>
+<li>
+<p><code>Number.isFinite(i)</code>：判断是否为有限大的数。比如<code>Infinity</code>这种无穷大的数，返回的就是false。</p>
+</li>
+<li>
+<p><code>Number.isNaN(i)</code>：判断是否为NaN。</p>
+</li>
+<li>
+<p><code>Number.isInteger(i)</code>：判断是否为整数。</p>
+</li>
+<li>
+<p><code>Number.parseInt(str)</code>：将字符串转换为对应的数值。</p>
+</li>
+<li>
+<p><code>Math.trunc(i)</code>：去除小数部分。</p>
+</li>
+</ul>
+<p>举例：</p>
+<pre><code class="language-javascript">    //Number.isFinite(i) : 判断是否是有限大的数
+    console.log(Number.isFinite(NaN)); //false
+    console.log(Number.isFinite(5)); //true
+    console.log(Number.isFinite(Infinity)); //false
+
+    //Number.isNaN(i) : 判断是否是NaN
+    console.log(Number.isNaN(NaN));//true
+    console.log(Number.isNaN(5));//falsse
+
+    //Number.isInteger(i) : 判断是否是整数
+    console.log(Number.isInteger(5.23));//false
+    console.log(Number.isInteger(5.0));//true
+    console.log(Number.isInteger(5));//true
+
+    //Number.parseInt(str) : 将字符串转换为对应的数值
+    console.log(Number.parseInt('123abc'));//123
+    console.log(Number.parseInt('a123abc'));//NaN
+
+    // Math.trunc(i) : 直接去除小数部分
+    console.log(Math.trunc(13.123));//13
+</code></pre>
+<h2 id="数组的扩展">数组的扩展</h2>
+<blockquote>
+<p>下面提到的数组的几个方法，更详细的内容，可以看《04-JavaScript基础/17-数组的常见方法.md》。</p>
+</blockquote>
+<h3 id="扩展1arrayfrom">扩展1：Array.from()</h3>
+<pre><code class="language-javascript">	Array.from(伪数组/可遍历的对象)
+</code></pre>
+<p><strong>作用</strong>：将<strong>伪数组</strong>或可遍历对象转换为<strong>真数组</strong>。</p>
+<h3 id="扩展2arrayof">扩展2：Array.of()</h3>
+<pre><code class="language-javascript">	Array.of(value1, value2, value3)
+</code></pre>
+<p><strong>作用</strong>：将一系列值转换成数组。</p>
+<h3 id="扩展3find-和-findindex">扩展3：find() 和 findIndex()</h3>
+<p><strong>方法1</strong>：</p>
+<pre><code class="language-javascript">	find(function(item, index, arr){return true})
+</code></pre>
+<p><strong>作用</strong>：找出<strong>第一个</strong>满足「指定条件返回true」的元素。</p>
+<p><strong>方法2</strong>：</p>
+<pre><code class="language-javascript">	findIndex(function(item, index, arr){return true})
+</code></pre>
+<p><strong>作用</strong>：找出第一个满足「指定条件返回true」的元素的index。</p>
+<h2 id="对象的扩展">对象的扩展</h2>
+<h3 id="扩展1">扩展1</h3>
+<pre><code class="language-javascript">	Object.is(v1, v2)
+</code></pre>
+<p><strong>作用：<strong>判断两个数据是否完全相等。底层是通过</strong>字符串</strong>来判断的。</p>
+<p>我们先来看下面这两行代码的打印结果：</p>
+<pre><code class="language-javascript">        console.log(0 == -0);
+        console.log(NaN == NaN);
+</code></pre>
+<p>打印结果：</p>
+<pre><code>	true
+	false
+</code></pre>
+<p>上方代码中，第一行代码的打印结果为true，这个很好理解。第二行代码的打印结果为false，因为NaN和任何值都不相等。</p>
+<p>但是，如果换成下面这种方式来比较：</p>
+<pre><code class="language-javascript">        console.log(Object.is(0, -0));
+        console.log(Object.is(NaN, NaN));
+</code></pre>
+<p>打印结果却是：</p>
+<pre><code>	false
+	true
+</code></pre>
+<p>代码解释：还是刚刚说的那样，<code>Object.is(v1, v2)</code>比较的是字符串是否相等。</p>
+<h3 id="扩展2重要">扩展2（重要）</h3>
+<pre><code class="language-javascript">	Object.assign(目标对象, 源对象1, 源对象2...)
+</code></pre>
+<p><strong>作用：</strong> 将源对象的属性追加到目标对象上。如果对象里属性名相同，会被覆盖。</p>
+<p>其实可以理解成：将多个对象<strong>合并</strong>为一个新的对象。</p>
+<p>举例：</p>
+<pre><code class="language-javascript">        let obj1 = { name: 'smyhvae', age: 26 };
+        let obj2 = { city: 'shenzhen' };
+        let obj3 = {};
+
+        Object.assign(obj3, obj1, obj2);
+        console.log(obj3);
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="2"><img src="http://img.smyhvae.com/20180404_2240.png" alt="" loading="lazy"></figure>
+<p>上图显示，成功将obj1和obj2的属性复制给了obj3。</p>
+<h3 id="扩展3__proto__属性">扩展3：<code>__proto__</code>属性</h3>
+<p>举例：</p>
+<pre><code class="language-javascript">       let obj1 = {name:'smyhvae'};
+       let obj2 = {};
+
+       obj2.__proto__ = obj1;
+
+       console.log(obj1);
+       console.log(obj2);
+       console.log(obj2.name);
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180404_2251.png" alt="" loading="lazy"></figure>
+<p>上方代码中，obj2本身是没有属性的，但是通过<code>__proto__</code>属性和obj1产生关联，于是就可以获得obj1里的属性。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ES6的promise、async等]]></title>
+        <id>https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">
+        </link>
+        <updated>2020-04-04T03:24:49.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>文本主要内容：</p>
+<ul>
+<li>
+<p>Promise（比较重要）</p>
+</li>
+<li>
+<p>Symbol</p>
+</li>
+<li>
+<p>async函数</p>
+</li>
+</ul>
+<h2 id="promise">Promise</h2>
+<h3 id="概述">概述</h3>
+<p>Promise对象: 代表了未来某个将要发生的事件(通常是一个异步操作)。</p>
+<p>ES6中的promise对象, 可以<strong>将异步操作以同步的流程表达出来，<strong>很好地解决了</strong>回调地狱</strong>的问题（避免了层层嵌套的回调函数）。在使用ES5的时候，在多层嵌套回调时，写完的代码层次过多，很难进行维护和二次开发。</p>
+<h3 id="回调地狱的举例">回调地狱的举例</h3>
+<p>假设买菜、做饭、洗碗都是异步的。</p>
+<p>现在的流程是：买菜成功之后，才能开始做饭。做饭成功后，才能开始洗碗。这里面就涉及到了回调的嵌套。</p>
+<p>ES6的Promise是一个构造函数, 用来生成promise实例。</p>
+<h3 id="promise对象的3个状态">promise对象的3个状态</h3>
+<ul>
+<li>
+<p>初始化状态（等待状态）：pending</p>
+</li>
+<li>
+<p>成功状态：fullfilled</p>
+</li>
+<li>
+<p>失败状态：rejected</p>
+</li>
+</ul>
+<h3 id="使用promise的基本步骤">使用promise的基本步骤</h3>
+<p>（1）创建promise对象</p>
+<p>（2）调用promise的<strong>回调函数</strong>then()</p>
+<p>代码格式如下：</p>
+<pre><code class="language-javascript">    let promise = new Promise((resolve, reject) =&gt; {
+        //进来之后，状态为pending
+        console.log('111');  //这一行代码是同步的
+        //开始执行异步操作（这里开始，写异步的代码，比如ajax请求 or 开启定时器）
+        if (异步的ajax请求成功) {
+            console.log('333');
+            resolve();//如果请求成功了，请写resolve()，此时，promise的状态会被自动修改为fullfilled
+        } else {
+            reject();//如果请求失败了，请写reject()，此时，promise的状态会被自动修改为rejected
+        }
+    })
+    console.log('222');
+
+    //调用promise的then()
+    promise.then(() =&gt; {
+            //如果promise的状态为fullfilled，则执行这里的代码
+            console.log('成功了');
+        }
+        , () =&gt; {
+            //如果promise的状态为rejected，则执行这里的代码
+            console.log('失败了');
+
+        }
+    )
+</code></pre>
+<p>代码解释：</p>
+<p>（1）当new Promise()执行之后，promise对象的状态会被初始化为<code>pending</code>，这个状态是初始化状态。<code>new Promise()</code>这行代码，括号里的内容是同步执行的。括号里定义一个function，function有两个参数：resolve和reject。如下：</p>
+<ul>
+<li>
+<p>如果请求成功了，请写resolve()，此时，promise的状态会被自动修改为fullfilled。</p>
+</li>
+<li>
+<p>如果请求失败了，请写reject()，此时，promise的状态会被自动修改为rejected</p>
+</li>
+</ul>
+<p>（2）promise.then()方法，括号里面有两个参数，分别代表两个函数 function1 和 function2：</p>
+<ul>
+<li>
+<p>如果promise的状态为fullfilled（意思是：如果请求成功），则执行function1里的内容</p>
+</li>
+<li>
+<p>如果promise的状态为rejected（意思是，如果请求失败），则执行function2里的内容</p>
+</li>
+</ul>
+<p>另外，resolve()和reject()这两个方法，是可以给promise.then()传递参数的。如下：</p>
+<pre><code class="language-javascript">    let promise = new Promise((resolve, reject) =&gt; {
+        //进来之后，状态为pending
+        console.log('111');  //这行代码是同步的
+        //开始执行异步操作（这里开始，写异步的代码，比如ajax请求 or 开启定时器）
+        if (异步的ajax请求成功) {
+            console.log('333');
+            resolve('haha');//如果请求成功了，请写resolve()，此时，promise的状态会被自动修改为fullfilled
+        } else {
+            reject('555');//如果请求失败了，请写reject()，此时，promise的状态会被自动修改为rejected
+        }
+    })
+    console.log('222');
+
+    //调用promise的then()
+    promise.then((successMsg) =&gt; {
+            //如果promise的状态为fullfilled，则执行这里的代码
+            console.log(successMsg, '成功了');
+        }
+        , (errorMsg) =&gt; {
+            //如果promise的状态为rejected，则执行这里的代码
+            console.log(errorMsg, '失败了');
+
+        }
+    )
+</code></pre>
+<h3 id="ajax请求的举例涉及到嵌套的回调">ajax请求的举例（涉及到嵌套的回调）</h3>
+<pre><code class="language-javascript">    //定义一个请求news的方法
+    function getNews(url) {
+        //创建一个promise对象
+        let promise = new Promise((resolve, reject) =&gt; {
+            //初始化promise状态为pending
+            //启动异步任务
+            let request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        let news = request.response;
+                        resolve(news);
+                    } else {
+                        reject('请求失败了。。。');
+                    }
+                }
+            };
+            request.responseType = 'json';//设置返回的数据类型
+            request.open(&quot;GET&quot;, url);//规定请求的方法，创建链接
+            request.send();//发送
+        })
+        return promise;
+    }
+
+    getNews('http://localhost:3000/news?id=2')
+        .then((news) =&gt; {
+            console.log(news);
+            document.write(JSON.stringify(news));
+            console.log('http://localhost:3000' + news.commentsUrl);
+            return getNews('http://localhost:3000' + news.commentsUrl);
+        }, (error) =&gt; {
+            alert(error);
+        })
+        .then((comments) =&gt; {
+            console.log(comments);
+            document.write('&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;' + JSON.stringify(comments));
+        }, (error) =&gt; {
+            alert(error);
+        })
+
+</code></pre>
+<h2 id="symbol">Symbol</h2>
+<h3 id="概述-2">概述</h3>
+<p>背景：ES5中对象的属性名都是字符串，容易造成重名，污染环境。</p>
+<p><strong>概念</strong>：ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>
+<p>Symbol属性对应的值是唯一的，解决<strong>命名冲突问题</strong></p>
+</li>
+<li>
+<p>Symbol值不能与其他数据进行计算，包括同字符串拼串</p>
+</li>
+<li>
+<p>for in、for of 遍历时不会遍历Symbol属性。</p>
+</li>
+</ul>
+<h3 id="创建symbol属性值">创建Symbol属性值</h3>
+<p>Symbol是函数，但并不是构造函数。创建一个Symbol数据类型：</p>
+<pre><code class="language-javascript">    let mySymbol = Symbol();
+
+    console.log(typeof mySymbol);  //打印结果：symbol
+    console.log(mySymbol);         //打印结果：Symbol()
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
+<p>下面来讲一下Symbol的使用。</p>
+<h3 id="1-将symbol作为对象的属性值">1、将Symbol作为对象的属性值</h3>
+<pre><code class="language-javascript">    let mySymbol = Symbol();
+
+    let obj = {
+        name: 'smyhvae',
+        age: 26
+    };
+
+    //obj.mySymbol = 'male'; //错误：不能用 . 这个符号给对象添加 Symbol 属性。
+    obj[mySymbol] = 'hello';    //正确：通过**属性选择器**给对象添加 Symbol 属性。后面的属性值随便写。
+
+    console.log(obj);
+</code></pre>
+<p>上面的代码中，我们尝试给obj添加一个Symbol类型的属性值，但是添加的时候，不能采用<code>.</code>这个符号，而是应该用<code>属性选择器</code>的方式。打印结果：</p>
+<figure data-type="image" tabindex="2"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
+<p>现在我们用for in尝试对上面的obj进行遍历：</p>
+<pre><code class="language-javascript">    let mySymbol = Symbol();
+
+    let obj = {
+        name: 'smyhvae',
+        age: 26
+    };
+
+    obj[mySymbol] = 'hello';
+
+    console.log(obj);
+
+    //遍历obj
+    for (let i in obj) {
+        console.log(i);
+    }
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
+<p>从打印结果中可以看到：for in、for of 遍历时不会遍历Symbol属性。</p>
+<h3 id="创建symbol属性值时传参作为标识">创建Symbol属性值时，传参作为标识</h3>
+<p>如果我通过 Symbol()函数创建了两个值，这两个值是不一样的：</p>
+<pre><code class="language-javascript">    let mySymbol1 = Symbol();
+    let mySymbol2 = Symbol();
+
+    console.log(mySymbol1 == mySymbol2); //打印结果：false
+    console.log(mySymbol1);         //打印结果：Symbol()
+    console.log(mySymbol2);         //打印结果：Symbol()
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
+<p>上面代码中，倒数第三行的打印结果也就表明了，二者的值确实是不相等的。</p>
+<p>最后两行的打印结果却发现，二者的打印输出，肉眼看到的却相同。那该怎么区分它们呢？</p>
+<p>既然Symbol()是函数，函数就可以传入参数，我们可以通过参数的不同来作为<strong>标识</strong>。比如：</p>
+<pre><code class="language-javascript">    //在括号里加入参数，来标识不同的Symbol
+    let mySymbol1 = Symbol('one');
+    let mySymbol2 = Symbol('two');
+
+    console.log(mySymbol1 == mySymbol2); //打印结果：false
+    console.log(mySymbol1);         //打印结果：Symbol(one)
+    console.log(mySymbol2);         //打印结果：Symbol(two)。颜色为红色。
+    console.log(mySymbol2.toString());//打印结果：Symbol(two)。颜色为黑色。
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="5"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
+<h3 id="定义常量">定义常量</h3>
+<p>Symbol 可以用来定义常量：</p>
+<pre><code class="language-javascript">    const MY_NAME = Symbol('my_name');
+</code></pre>
+<h2 id="async函数异步函数">async函数（异步函数）</h2>
+<h3 id="概述-3">概述</h3>
+<blockquote>
+<p>async 函数是在 ES2017 引入的。</p>
+</blockquote>
+<p>概念：真正意义上去解决异步回调的问题，同步流程表达异步操作。</p>
+<p>本质： Generator 的语法糖。</p>
+<p>async比之前的 Promise、Generator要好用一些。</p>
+<p>语法：</p>
+<pre><code class="language-javascript">    async function foo() {
+        await 异步操作;
+        await 异步操作；
+    }
+</code></pre>
+<p>我们在普通的函数前面加上 async 关键字，就成了 async 函数。</p>
+<h3 id="async-promise-generator的对比async的特点">async、Promise、Generator的对比（async的特点）</h3>
+<p>1、不需要像Generator去调用next方法，遇到await等待，当前的异步操作完成就往下执行。</p>
+<p>2、async返回的总是Promise对象，可以用then方法进行下一步操作。</p>
+<p>3、async取代Generator函数的星号*，await取代Generator的yield。</p>
+<p>4、语意上更为明确，使用简单，经临床验证，暂时没有任何副作用。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ES6函数扩展]]></title>
+        <id>https://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/">
+        </link>
+        <updated>2020-04-04T03:24:11.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>ES6在<strong>函数扩展</strong>方面，新增了很多特性。例如：</p>
+<ul>
+<li>
+<p>箭头函数</p>
+</li>
+<li>
+<p>参数默认值</p>
+</li>
+<li>
+<p>参数结构赋值</p>
+</li>
+<li>
+<p>扩展运算符</p>
+</li>
+<li>
+<p>rest参数</p>
+</li>
+<li>
+<p>this绑定</p>
+</li>
+<li>
+<p>尾调用</p>
+</li>
+</ul>
+<h2 id="箭头函数">箭头函数</h2>
+<p>定义和调用函数：（传统写法）</p>
+<pre><code class="language-javascript">function fn1(a, b) {
+    return a + b;
+}
+
+console.log(fn1(1, 2));  //输出结果：3
+</code></pre>
+<p>定义和调用函数：（ES6中的写法）</p>
+<pre><code class="language-javascript">	var fn2 = (a, b) =&gt; a + b;
+
+	console.log(fn2(1, 2));  //输出结果：3
+
+</code></pre>
+<p>二者的效果是一样的。</p>
+<p>在箭头函数中，如果方法体内有两句话，那就需要在方法体外边加上{}括号。如下：</p>
+<pre><code class="language-javascript">	var fn2 = (a, b) =&gt; {
+	    console.log('haha');
+	    return a + b;
+	};
+	console.log(fn2(1, 2));  //输出结果：3
+
+</code></pre>
+<p>从上面的箭头函数中，我们可以很清晰地找到函数名、参数名、方法体。</p>
+<p>上方代码中：</p>
+<ul>
+<li>
+<p>如果有且仅有1个参数，则<code>()</code>可以省略</p>
+</li>
+<li>
+<p>如果方法体内有且仅有1条语句，则<code>{}</code>可以省略，但前提是，这条语句必须是 return。</p>
+</li>
+</ul>
+<h3 id="this的指向">this的指向</h3>
+<blockquote>
+<p>箭头函数只是为了让函数写起来更优雅吗？当然不是，还有一个很大的作用是与this的指向有关。</p>
+</blockquote>
+<p>ES5 中，this指向的是函数被调用的对象；而 ES6 的箭头函数中，this指向的是函数被定义时。</p>
+<p>简单来说，箭头函数中的this，是不会变的，是永远绑定在当前的环境下。</p>
+<h2 id="参数默认值">参数默认值</h2>
+<p><strong>传统写法</strong>：</p>
+<pre><code class="language-javascript">    function fn(param) {
+        let p = param || 'hello';
+        console.log(p);
+    }
+</code></pre>
+<p>上方代码中，函数体内的写法是：如果 param 不存在，就用 <code>hello</code>字符串做兜底。这样写比较啰嗦。</p>
+<p><strong>ES6 写法</strong>：（参数默认值的写法，很简洁）</p>
+<pre><code class="language-javascript">    function fn(param = 'hello') {
+        console.log(param);
+    }
+</code></pre>
+<p>在 ES6 中定义方法时，我们可以给方法里的参数加一个<strong>默认值</strong>（缺省值）：</p>
+<ul>
+<li>
+<p>方法被调用时，如果没有给参数赋值，那就是用默认值；</p>
+</li>
+<li>
+<p>方法被调用时，如果给参数赋值了新的值，那就用新的值。</p>
+</li>
+</ul>
+<p>如下：</p>
+<pre><code class="language-javascript">	var fn2 = (a, b = 5) =&gt; {
+	    console.log('haha');
+	    return a + b;
+	};
+	console.log(fn2(1));     //第二个参数使用默认值 5。输出结果：6
+
+	console.log(fn2(1, 8));  //输出结果：9
+
+</code></pre>
+<p><strong>提醒1</strong>：默认值的后面，不能再有<strong>没有默认值的变量</strong>。比如<code>(a,b,c)</code>这三个参数，如果我给b设置了默认值，那么就一定要给c设置默认值。</p>
+<p><strong>提醒2</strong>：</p>
+<p>我们来看下面这段代码：</p>
+<pre><code class="language-javascript">    let x = 'smyh';
+    function fn(x, y = x) {
+        console.log(x, y);
+    }
+    fn('vae');
+</code></pre>
+<p>注意第二行代码，我们给y赋值为<code>x</code>，这里的<code>x</code>是括号里的第一个参数，并不是第一行代码里定义的<code>x</code>。打印结果：<code>vae vae</code>。</p>
+<p>如果我把第一个参数改一下，改成：</p>
+<pre><code class="language-javascript">    let x = &quot;smyh&quot;;
+    function fn(z, y = x) {
+        console.log(z, y);
+    }
+    fn(&quot;vae&quot;);
+</code></pre>
+<p>此时打印结果是：<code>vae smyh</code>。</p>
+<h2 id="扩展运算符">扩展运算符</h2>
+<p>注意区分：</p>
+<ul>
+<li>
+<p>扩展运算符的格式为<code>...</code></p>
+</li>
+<li>
+<p>rest运算符的格式为<code>...变量名</code></p>
+</li>
+</ul>
+<p>有了ES6，当我们在定义一个方法，但是不确定其参数的个数时，我们就可以用<strong>扩展运算符</strong>作为参数。</p>
+<p>以前，我们在定义方法时，参数要确定个数，如下：（程序会报错）</p>
+<pre><code class="language-javascript">    function fn(a, b, c) {
+        console.log(a);
+        console.log(b);
+        console.log(c);
+        console.log(d);
+    }
+
+    fn(1, 2, 3);
+</code></pre>
+<p>上方代码中，因为方法的参数是三个，但使用时是用到了四个参数，所以会报错：</p>
+<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180304_1638.png" alt="" loading="lazy"></figure>
+<p>现在，我们有了扩展运算符，就不用担心报错的问题了。代码可以这样写：</p>
+<pre><code class="language-javascript">function fn(...arg) {   //当不确定方法的参数时，可以使用扩展运算符
+    console.log(arg[0]);
+    console.log(arg[1]);
+    console.log(arg[2]);
+    console.log(arg[3]);
+}
+
+fn(1, 2, 3); //方法中定义了四个参数，但只引用了三个参数，ES6 中并不会报错。
+
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="http://img.smyhvae.com/20180304_1650.png" alt="" loading="lazy"></figure>
+<p>上方代码中注意，arg参数之后，不能再加别的参数，否则编译报错。</p>
+<p>**举例：**数组赋值的问题</p>
+<p>我们来分析一段代码：（将数组 arr1 赋值给 arr2）</p>
+<pre><code class="language-javascript">	let arr1 = ['www', 'smyhvae', 'com'];
+	let arr2 = arr1;          // 将 arr1 赋值给 arr2，其实是让 arr2 指向 arr1 的内存地址
+	console.log('arr1:' + arr1);
+	console.log('arr2:' + arr2);
+	console.log('---------------------');
+
+	arr2.push('你懂得');  //往arr2 里添加一部分内容
+	console.log('arr1:' + arr1);
+	console.log('arr2:' + arr2);
+</code></pre>
+<p>运行结果：</p>
+<figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180304_1950.png" alt="" loading="lazy"></figure>
+<p>上方代码中，我们往往 arr2 里添加了<code>你懂的</code>，却发现，arr1 里也有这个内容。原因是：<code>let arr2 = arr1;</code>其实是让 arr2 指向 arr1 的地址。也就是说，二者指向的是同一个内存地址。</p>
+<p>如果不想让 arr1 和 arr2 指向同一个内存地址，我们可以借助扩展运算符来做：</p>
+<pre><code class="language-javascript">	let arr1 = ['www', 'smyhvae', 'com'];
+	let arr2 = [...arr1];  //arr2 会重新开辟内存地址
+	console.log('arr1:' + arr1);
+	console.log('arr2:' + arr2);
+	console.log('---------------------');
+
+	arr2.push('你懂得');  //往arr2 里添加一部分内容
+	console.log('arr1:' + arr1);
+	console.log('arr2:' + arr2);
+</code></pre>
+<p>运行结果：</p>
+<figure data-type="image" tabindex="4"><img src="http://img.smyhvae.com/20180304_1951.png" alt="" loading="lazy"></figure>
+<p>我们明白了这个例子，就可以避免开发中的很多业务逻辑上的 bug。</p>
+<h2 id="rest-运算符"><code>rest</code> 运算符</h2>
+<p><code>rest</code> 在英文中指的是<strong>剩余部分</strong>（不是指休息）。我们来举个例子，理解剩余部分的含义：</p>
+<pre><code class="language-javascript">	function fn(first, second, ...arg) {
+	    console.log(arg.length);
+	}
+
+	fn(0, 1, 2, 3, 4, 5, 6);  //调用函数后，输出结果为 5
+</code></pre>
+<p>上方代码的输出结果为 5。 调用<code>fn()</code>时，里面有七个参数，而<code>arg</code>指的是剩下的部分（因为除去了<code>first</code>和<code>second</code>）。</p>
+<p>从上方例子中可以看出，<code>rest</code>运算符适用于：知道前面的一部分参数的数量，但对于后面剩余的参数数量未知的情况。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ES6变量]]></title>
+        <id>https://Gentleelephant.github.io/post/es6-bian-liang/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-bian-liang/">
+        </link>
+        <updated>2020-04-04T03:23:08.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="es6-的变量声明">ES6 的变量声明</h2>
+<p>ES6 中新增了 let 和 const 来定义变量：</p>
+<ul>
+<li>
+<p><code>var</code>：ES5 和 ES6中，定义<strong>全局变量</strong>（是variable的简写）。</p>
+</li>
+<li>
+<p><code>let</code>：定义<strong>局部变量</strong>，替代 var。</p>
+</li>
+<li>
+<p><code>const</code>：定义<strong>常量</strong>（定义后，不可修改）。</p>
+</li>
+</ul>
+<h3 id="var全局变量">var：全局变量</h3>
+<p>看下面的代码：</p>
+<pre><code class="language-javascript">	{
+	    var a = 1;
+	}
+
+	console.log(a);   //这里的 a，指的是 区块 里的 a
+</code></pre>
+<p>上方代码是可以输出结果的，输出结果为 1。因为 var 是全局声明的，所以，即使是在区块里声明，但仍然在全局起作用。</p>
+<p>再来看下面这段代码：</p>
+<pre><code class="language-javascript">	var a = 1;
+	{
+	    var a = 2;
+	}
+
+	console.log(a);   //这里的 a，指的是 区块 里的 a
+</code></pre>
+<p>上方代码的输出结果为 2 ，因为 var 是全局声明的。</p>
+<p><strong>总结：</strong></p>
+<p>用 var 定义的全部变量，有时候会污染整个 js 的作用域。</p>
+<h3 id="let定义局部变量">let：定义局部变量</h3>
+<pre><code class="language-javascript">	var a = 2;
+	{
+	    let a = 3;
+	}
+
+	console.log(a);
+</code></pre>
+<p>上方代码的输出结果为 2。用 let 声明的变量，只在局部（<strong>块级作用域内</strong>）起作用。</p>
+<p>let是防止数据污染，我们来看下面这个 <strong>for 循环</strong>的例子，很经典。</p>
+<p>1、用 var 声明变量：（）</p>
+<pre><code class="language-javascript">for (var i = 0; i &lt; 10; i++) {
+    console.log('循环体中:' + i); // 每循环一次，就会在 { } 所在的块级作用域中，重新定义一个新的 i
+}
+
+console.log('循环体外:' + i);
+</code></pre>
+<p>上方代码可以正常打印结果，且最后一行的打印结果是10。说明循环体外定义的变量 i，是在全局起作用的。</p>
+<p>2、用let声明变量：</p>
+<pre><code class="language-javascript">for (let i = 0; i &lt; 10; i++) {
+    console.log('循环体中:' + i);
+}
+
+console.log('循环体外:' + i);
+
+</code></pre>
+<p>上方代码的最后一行无法打印结果，也就是说打印会报错。因为用 let 定义的变量 i，只在<code>{ }</code>这个<strong>块级作用域</strong>里生效。</p>
+<p><strong>总结：<strong>我们要习惯用 let 声明，减少var声明带来的</strong>污染全局空间</strong>。</p>
+<p>为了进一步说明 let 不会带来污染，需要说明的是：当我们定义了<code>let a = 1</code>时，如果我们在同一个作用域内继续定义<code>let a = 2</code>，是会报错的。</p>
+<h3 id="const定义常量">const：定义常量</h3>
+<p>在程序开发中，有些变量是希望声明后，在业务层就不再发生变化，此时可以用 const 来定义。</p>
+<p>举例：</p>
+<pre><code class="language-javascript">const name = 'smyhvae';  //定义常量
+</code></pre>
+<p>用 const 声明的变量，只在局部（块级作用域内）起作用。</p>
+<h3 id="let-和-const-的作用重要">let 和 const 的作用【重要】</h3>
+<p>let 和 const 的作用如下：</p>
+<ul>
+<li>
+<p>禁止重复声明</p>
+</li>
+<li>
+<p>支持块级作用域</p>
+</li>
+<li>
+<p>控制修改</p>
+</li>
+</ul>
+<p>相反， 用<code>var</code>声明的变量：可以重复声明、<strong>没有块级作用域</strong>、不能限制。</p>
+<h3 id="for循环举例经典案例">for循环举例【经典案例】</h3>
+<p><strong>代码1</strong>、我们先来看看如下代码：（用 var 定义变量 i）</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;&quot;&gt;
+  &lt;head&gt;
+    &lt;meta /&gt;
+    &lt;meta /&gt;
+    &lt;meta /&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;aa&quot; /&gt;
+    &lt;input type=&quot;button&quot; value=&quot;bb&quot; /&gt;
+    &lt;input type=&quot;button&quot; value=&quot;cc&quot; /&gt;
+    &lt;input type=&quot;button&quot; value=&quot;dd&quot; /&gt;
+
+    &lt;script&gt;
+      var myBtn = document.getElementsByTagName(&quot;input&quot;);
+
+      for (var i = 0; i &lt; myBtn.length; i++) {
+        myBtn[i].onclick = function() {
+          alert(i);
+        };
+      }
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>上方代码中的运行效果如下：</p>
+<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20190904_1030.gif" alt="" loading="lazy"></figure>
+<p>你可能会感到诧异，为何点击任何一个按钮，弹出的内容都是4呢？这是因为，我们用 var 定义的变量 i，是在全局作用域声明的。整个代码中，自始至终只有一个变量。当我们还没点击按钮之前，变量 i 已经循环到4了。</p>
+<p>也就是说，上面的 for 循环，相当于如下代码：</p>
+<pre><code class="language-javascript">	var i = 0;
+	myBtn[0].onclick = function() {
+	alert(i);
+	};
+	i++;
+
+	myBtn[1].onclick = function() {
+	alert(i);
+	};
+	i++;
+
+	myBtn[2].onclick = function() {
+	alert(i);
+	};
+	i++;
+
+	myBtn[3].onclick = function() {
+	alert(i);
+	};
+	i++;  // 到这里，i 的值已经是4了。因此，当我们点击按钮时，i的值一直都是4
+</code></pre>
+<p><strong>代码2</strong>、上面的代码中，如果我们改为用 let 定义变量 i：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;&quot;&gt;
+  &lt;head&gt;
+    &lt;meta /&gt;
+    &lt;meta /&gt;
+    &lt;meta /&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;aa&quot; /&gt;
+    &lt;input type=&quot;button&quot; value=&quot;bb&quot; /&gt;
+    &lt;input type=&quot;button&quot; value=&quot;cc&quot; /&gt;
+    &lt;input type=&quot;button&quot; value=&quot;dd&quot; /&gt;
+
+    &lt;script&gt;
+      var myBtn = document.getElementsByTagName(&quot;input&quot;);
+
+      for (let i = 0; i &lt; myBtn.length; i++) {
+        myBtn[i].onclick = function() {
+          alert(i);
+        };
+      }
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>上面这个运行结果，才是我们预期的效果。我们用 let 定义变量 i，在循环的过程中，每执行一次循环体，就会诞生一个新的 i。循环体执行4次，就会有四个 i。</p>
+<h2 id="变量的解构赋值">变量的解构赋值</h2>
+<p>ES6允许我们，通过数组或者对象的方式，对一组变量进行赋值，这被称为解构。</p>
+<p>解构赋值在实际开发中可以大量减少我们的代码量，并且让程序结构更清晰。</p>
+<h3 id="数组的解构赋值">数组的解构赋值</h3>
+<p><strong>举例：</strong></p>
+<p>通常情况下，我们在为一组变量赋值时，一般是这样写：</p>
+<pre><code class="language-javascript">	let a = 0;
+	let b = 1;
+	let c = 2;
+
+</code></pre>
+<p>现在我们可以通过数组解构的方式进行赋值：</p>
+<pre><code class="language-javascript">	let [a, b, c] = [1, 2, 3];
+</code></pre>
+<p>二者的效果是一样的。</p>
+<p><strong>解构的默认值：</strong></p>
+<p>在解构赋值时，是允许使用默认值的。举例如下：</p>
+<pre><code class="language-javascript">{
+    //一个变量时
+    let [foo = true] = [];
+    console.log(foo); //输出结果：true
+}
+
+{
+    //两个变量时
+    let [a, b] = ['生命壹号']   //a 赋值为：生命壹号。b没有赋值
+    console.log(a + ',' + b); //输出结果：生命壹号,undefined
+}
+
+
+{
+    //两个变量时
+    let [a, b = 'smyhvae'] = ['生命壹号']   //a 赋值为：生命壹号。b 采用默认值 smyhvae
+    console.log(a + ',' + b); //输出结果：生命壹号,smyhvae
+}
+
+</code></pre>
+<p><code>undefined</code>和<code>null</code>的区别：</p>
+<p>如果我们在赋值时，采用的是 <code>undefined</code>或者<code>null</code>，那会有什么区别呢？</p>
+<pre><code class="language-javascript">{
+    let [a, b = 'smyhvae'] = ['生命壹号', undefined]; //b 虽然被赋值为 undefined，但是 b 会采用默认值
+    console.log(a + ',' + b); //输出结果：生命壹号,smyhvae
+}
+
+{
+    let [a, b = 'smyhvae'] = ['生命壹号', null];  //b 被赋值为 null
+    console.log(a + ',' + b); //输出结果：生命壹号,null
+}
+
+
+</code></pre>
+<p>上方代码分析：</p>
+<ul>
+<li>
+<p>undefined：相当于什么都没有，此时 b 采用默认值。</p>
+</li>
+<li>
+<p>null：相当于有值，但值为 null。</p>
+</li>
+</ul>
+<h3 id="对象的解构赋值">对象的解构赋值</h3>
+<p>通常情况下，我们从接口拿到json数据后，一般这么赋值：</p>
+<pre><code class="language-javascript">var a = json.a;
+
+var b = json.b;
+
+bar c = json.c;
+</code></pre>
+<p>上面这样写，过于麻烦了。</p>
+<p>现在，我们同样可以针对对象，进行结构赋值。</p>
+<p><strong>举例如下：</strong></p>
+<pre><code>	let { foo, bar } = { bar: '我是 bar 的值', foo: '我是 foo 的值' };
+	console.log(foo + ',' + bar); //输出结果：我是键 foo 的值,我是键 bar 的值
+
+</code></pre>
+<p>上方代码可以看出，对象的解构与数组的结构，有一个重要的区别：<strong>数组</strong>的元素是按次序排列的，变量的取值由它的<strong>位置</strong>决定；而<strong>对象的属性没有次序</strong>，是<strong>根据键来取值</strong>的。</p>
+<p><strong>圆括号的使用</strong>：</p>
+<p>如果变量 foo 在解构之前就已经定义了，此时你再去解构，就会出现问题。下面是错误的代码，编译会报错：</p>
+<pre><code class="language-javascript">	let foo = 'haha';
+	{ foo } = { foo: 'smyhvae' };
+	console.log(foo);
+
+</code></pre>
+<p>要解决报错，只要在解构的语句外边，加一个圆括号即可：</p>
+<pre><code class="language-javascript">	let foo = 'haha';
+	({ foo } = { foo: 'smyhvae' });
+	console.log(foo); //输出结果：smyhvae
+
+</code></pre>
+<h3 id="字符串解构">字符串解构</h3>
+<p>字符串也可以解构，这是因为，此时字符串被转换成了一个类似数组的对象。举例如下：</p>
+<pre><code class="language-javascript">const [a, b, c, d] = 'smyhvae';
+console.log(a);
+console.log(b);
+console.log(c);
+console.log(d);
+
+console.log(typeof a);  //输出结果：string
+</code></pre>
+<p>输出结果：</p>
+<figure data-type="image" tabindex="2"><img src="http://img.smyhvae.com/20180304_1626.png" alt="" loading="lazy"></figure>
+<h2 id="for-of-循环">for ... of 循环</h2>
+<p>ES6 中，如果我们要遍历一个数组，可以这样做：</p>
+<pre><code>	let arr1 = [1, 2, 3, 4, 5];
+
+	for (let value of arr1) {
+	    console.log(value);
+	}
+</code></pre>
+<p>输出结果：</p>
+<figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180304_2016.png" alt="" loading="lazy"></figure>
+<p>for…of 的循环可以避免我们开拓内存空间，增加代码运行效率，所以建议大家在以后的工作中使用for…of循环。</p>
+<p>注意，上面的数组中，<code>for ... of</code>获取的是数组里的值；<code>for ... in</code>获取的是index索引值。</p>
+<h3 id="map对象的遍历">Map对象的遍历</h3>
+<p><code>for ... of</code>既可以遍历数组，也可以遍历Map对象。</p>
+<h2 id="模板字符串">模板字符串</h2>
+<p>我们以前让字符串进行拼接的时候，是这样做的：（传统写法的字符串拼接）</p>
+<pre><code class="language-javascript">    var name = 'smyhvae';
+    var age = '26';
+    console.log('name:'+name+',age:'+age);   //传统写法
+</code></pre>
+<p>这种写法，比较繁琐，而且容易出错。</p>
+<p>现在有了 ES6 语法，字符串拼接可以这样写：</p>
+<pre><code class="language-javascript">    var name = 'smyhvae';
+    var age = '26';
+
+    console.log('name:'+name+',age:'+age);   //传统写法
+
+    console.log(`name:${name},age:${age}`);  //ES6 写法
+
+</code></pre>
+<p><strong>注意</strong>，上方代码中，倒数第二行用的符号是单引号，最后一行用的符号是反引号（在tab键的上方）。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ES6的介绍和环境配置]]></title>
+        <id>https://Gentleelephant.github.io/post/es6-de-jie-shao-he-huan-jing-pei-zhi/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-de-jie-shao-he-huan-jing-pei-zhi/">
+        </link>
+        <updated>2020-04-04T03:22:37.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="前言">前言</h3>
+<p>ECMAScript 是 JS 的语言标准。而 ES6 是新的 JS 语法标准。</p>
+<p>PS：严格来说，ECMAScript 还包括其他很多语言的语言标准。</p>
+<p>很多人在做业务选型的时候，会倾向于选jQuery。其实jQuery的语法是偏向于ES3的。而现在主流的框架 Vue.js 和React.js的语法，是用的ES6。</p>
+<p>ES6中增加了很多功能上的不足。比如：<strong>常量、作用域、对象代理、异步处理、类、继承</strong>等。这些在ES5中想实现，比较复杂，但是ES6对它们进行了封装。</p>
+<h3 id="ecmascript-发展历史">ECMAScript 发展历史</h3>
+<ul>
+<li>
+<p>1995年：ECMAScript 诞生。</p>
+</li>
+<li>
+<p>1997年：ECMAScript 标准确立。</p>
+</li>
+<li>
+<p>1999年：ES3 出现，与此同时，IE5 风靡一时。</p>
+</li>
+<li>
+<p>2009年，ES5 出现，例如 foreach、Object.keys、Object.create 和 json 标准。</p>
+</li>
+<li>
+<p>2015年6月，ES6正式发布。</p>
+</li>
+</ul>
+<p>ES6 的目标是：让 JS 语言可以编写复杂的大型应用程序，成为企业级开发语言。</p>
+<h3 id="ecmascript-的各大版本">ECMAScript 的各大版本</h3>
+<ul>
+<li>
+<p>ES5 : 09年发布。</p>
+</li>
+<li>
+<p>ES6：ECMAScript 2015年6月</p>
+</li>
+<li>
+<p>ES7：ECMAScript 2016</p>
+</li>
+<li>
+<p>ES8：ECMAScript 2017</p>
+</li>
+</ul>
+<h3 id="es6-的其他优势">ES6 的其他优势</h3>
+<ul>
+<li>
+<p>使用 babel 语法转换器，支持低端浏览器。</p>
+</li>
+<li>
+<p>流行的库基本都是基于 ES6 构建。 React 默认使用 ES6 标准开发。</p>
+</li>
+</ul>
+<h2 id="es6的环境配置为了兼容-es5">ES6的环境配置（为了兼容 ES5）</h2>
+<p>掌握 ES6 之后，如果要考虑 ES5 的兼容性，可以这样做：写 ES6 语法的 js 代码，然后通过 <code>Babel</code>将 ES6 转换为 ES5。</p>
+<p>但是，在这之前，我们需要配置一下相关的环境。</p>
+<h3 id="建立工程目录">建立工程目录</h3>
+<p>（1）先建立一个空的工程目录 <code>ES6Demo</code>，并在目录下建立两个文件夹 <code>src</code>和 <code>dist</code>：</p>
+<ul>
+<li>
+<p><code>src</code>：书写ES6代码，我们写的 js 程序都放在这里。</p>
+</li>
+<li>
+<p><code>dist</code>：利用 Babel 编译生成的 ES5 代码。<strong>我们在 HTML 页面需要引入 dist 里的 js 文件</strong>。</p>
+</li>
+</ul>
+<p>（2）在 src 里新建文件  <code>index.html</code>：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;!-- 我们引入 ES5 中的 js 文件，而不是引入 ES6 中的 js 文件。 --&gt;
+    &lt;script src=&quot;./dist/index.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>注意</strong>，上方代码中，我们引入的是<code>dist</code>目录下的 js 文件。</p>
+<p>然后我们新建文件 <code>src/index.js</code>：</p>
+<pre><code class="language-javascript">let a = 'smyhvae';
+const b = 'qianguyihao';
+
+console.log(a);
+console.log(b);
+</code></pre>
+<p>这个文件是一个 ES6语法 的js文件，稍后，我们尝试把这个 ES6 语法的 js 文件转化为 ES5 的 js 文件。</p>
+<p>PS：我们在写代码时，能用单引号尽量用单引号，而不是双引号，前者在压缩之后，程序执行会更快。</p>
+<h3 id="全局安装-babel-cli">全局安装 Babel-cli</h3>
+<p>（1）初始化项目：</p>
+<p>在安装Babel之前，需要先用 npm init 先初始化我们的项目。打开终端或者通过cmd打开命令行工具，进入项目目录，输入如下命令：</p>
+<pre><code class="language-bash">	npm init -y
+</code></pre>
+<p>上方代码中，<code>-y</code> 代表全部默认同意，就不用一次次按回车了（稍后再根据需要，在文件中手动修改）。命令执行完成后，会在项目的根目录下生成package.json文件：</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;es6demo&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;smyhvae&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+</code></pre>
+<p>PS：VS Code 里打开终端的快捷键是：<code>Contol + ~</code>。</p>
+<p>（2）全局安装 Babel-cli：</p>
+<p>在终端中输入以下命令：</p>
+<pre><code class="language-bash">	npm install -g babel-cli
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180304_1305.png" alt="" loading="lazy"></figure>
+<p>如果安装比较慢的话，Mac 下可以使用<code>cnpm</code>进行安装 ，windows 下可以使用<code>nrm</code>切换到 taobao 的镜像。</p>
+<p>（3）本地安装 babel-preset-es2015 和 babel-cli：</p>
+<pre><code class="language-bash">	npm install --save-dev babel-preset-es2015 babel-cli
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="http://img.smyhvae.com/20180304_1307.png" alt="" loading="lazy"></figure>
+<p>安装完成后，会发现<code>package.json</code>文件，已经多了 devDependencies 选项：</p>
+<figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180304_1308.png" alt="" loading="lazy"></figure>
+<p>（4）新建.babelrc：</p>
+<p>在根目录下新建文件<code>.babelrc</code>，输入如下内容：</p>
+<pre><code>{
+    &quot;presets&quot;:[
+        &quot;es2015&quot;
+    ],
+    &quot;plugins&quot;:[]
+}
+</code></pre>
+<p>（5）开始转换：</p>
+<p>现在，我们应该可以将 ES6 的文件转化为 ES5 的文件了，命令如下：（此命令略显复杂）</p>
+<pre><code>	babel src/index.js -o dist/index.js
+</code></pre>
+<p>我们可以将上面这个命令进行简化一下。操作如下：</p>
+<p>在文件 <code>package.json</code> 中修改键 <code>scripts</code>中的内容：</p>
+<pre><code class="language-json">  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;babel src/index.js -o dist/index.js&quot;
+  },
+</code></pre>
+<p>修改后的效果如下：</p>
+<figure data-type="image" tabindex="4"><img src="http://img.smyhvae.com/20180304_1315.png" alt="" loading="lazy"></figure>
+<p>目前为止，环境配置好了。以后，我们执行如下命令，即可将<code>src/index.js</code>这个 ES6 文件转化为 <code>dist/index.js</code>这个 ES5 文件：</p>
+<pre><code class="language-bash">	npm run build
+</code></pre>
+<p>我们执行上面的命令之后，会发现， dist目录下会生成 ES5 的 js 文件：</p>
+<p>index.js：</p>
+<pre><code class="language-javascript">	'use strict';
+
+	var a = 'smyhvae';
+	var b = 'qianguyihao';
+
+	console.log(a);
+	console.log(b);
+
+</code></pre>
+<p>当我们打开网页后，就可以在浏览器的控制台，看到代码的输出结果。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ES5中的一些扩展]]></title>
+        <id>https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/</id>
+        <link href="https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/">
+        </link>
+        <updated>2020-04-04T03:21:49.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="json-对象">JSON 对象</h2>
+<p>1、js对象(数组) --&gt; json对象(数组)：</p>
+<pre><code class="language-javascript">	JSON.stringify(obj/arr)
+</code></pre>
+<p>2、json对象(数组) --&gt; js对象(数组)：</p>
+<pre><code class="language-javascript">	JSON.parse(json)
+</code></pre>
+<p>上面这两个方法是ES5中提供的。</p>
+<p>我们要记住，我们通常说的“json字符串”，只有两种：<strong>json对象、json数组</strong>。</p>
+<p><code>typeof json字符串</code>的返回结果是string。</p>
+<h2 id="object的扩展">Object的扩展</h2>
+<p>ES5给Object扩展了一些静态方法，常用的有2个，我们接下来讲解。</p>
+<h3 id="方法一">方法一</h3>
+<pre><code class="language-javascript">	Object.create(prototype, [descriptors])
+</code></pre>
+<p>作用: 以指定对象为原型，创建新的对象。同时，第二个参数可以为为新的对象添加新的属性，并对此属性进行描述。</p>
+<p><strong>举例1</strong>：（没有第二个参数时）</p>
+<pre><code class="language-javascript">    var obj1 = {username: 'smyhvae', age: 26};
+    var obj2 = {address:'shenzhen'};
+
+    obj2 = Object.create(obj1);
+    console.log(obj2);
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180401_2150.png" alt="" loading="lazy"></figure>
+<p>我们发现，obj1成为了obj2的原型。</p>
+<p><strong>举例2</strong>：（有第二个参数时）</p>
+<p>第二个参数可以给新的对象添加新的属性。我们修改上面的代码，尝试给obj2添加新属性<code>sex</code>：</p>
+<pre><code class="language-javascript">    var obj1 = {username: 'smyhvae', age: 26};
+    var obj2 = {address: 'shenzhen'};
+
+    obj2 = Object.create(obj1, {
+        sex: {//给obj2添加新的属性`sex`。注意，这一行的冒号不要漏掉
+            value: '男',  //通过value关键字设置sex的属性值
+            writable: false,
+            configurable: true,
+            enumerable: true
+        }
+    });
+
+    console.log(obj2);
+
+</code></pre>
+<p>上方代码中，我们通过第5行的sex给obj2设置了一个新的属性<code>sex</code>，但是要通过<code>value</code>来设置属性值（第6行）。</p>
+<p>设置完属性值后，这个属性值默认是不可修改的，要通过<code>writable</code>来设置。总而言之，这几个关键字的解释如下：</p>
+<ul>
+<li><code>value</code>：设置属性值。</li>
+<li><code>writable</code>：标识当前属性值是否可修改。如果不写的话，默认为false，不可修改。</li>
+<li><code>configurable</code>：标识当前属性是否可以被删除。默认为false，不可删除。</li>
+<li><code>enumerable</code>：标识当前属性是否能用 for in 枚举。 默认为false，不可。</li>
+</ul>
+<h4 id="单独设置属性">单独设置属性</h4>
+<pre><code>Object.defineProperty(obj2, 'sex', {
+        value: 'cc',
+        writable: true,
+        configurable: true,
+        enumerable: true,
+      });
+</code></pre>
+<h3 id="方法二">方法二</h3>
+<blockquote>
+<p>这个方法有点难理解。</p>
+</blockquote>
+<pre><code class="language-javascript">	Object.defineProperties(object, descriptors)
+</code></pre>
+<p><strong>作用</strong>：为指定对象定义扩展多个属性。</p>
+<p>代码举例：</p>
+<pre><code class="language-javascript">    var obj2 = {
+        firstName : 'smyh',
+        lastName : 'vae'
+    };
+    Object.defineProperties(obj2, {
+        fullName : {
+            get : function () {
+                return this.firstName + '-' + this.lastName
+            },
+            set : function (data) {  //监听扩展属性，当扩展属性发生变化的时候自动调用，自动调用后将变化的值作为实参注入到set函数
+                var names = data.split('-');
+                this.firstName = names[0];
+                this.lastName = names[1];
+            }
+        }
+    });
+    console.log(obj2.fullName);
+    obj2.firstName = 'tim';
+    obj2.lastName = 'duncan';
+    console.log(obj2.fullName);
+    obj2.fullName = 'kobe-bryant';
+    console.log(obj2.fullName);
+</code></pre>
+<ul>
+<li>
+<p>get ：用来获取当前属性值的回调函数</p>
+</li>
+<li>
+<p>set ：修改当前属性值得触发的回调函数，并且实参即为修改后的值</p>
+</li>
+</ul>
+<p>存取器属性：setter,getter一个用来存值，一个用来取值。</p>
+<h2 id="object的扩展二">Object的扩展（二）</h2>
+<p>obj对象本身就自带了两个方法。格式如下：</p>
+<pre><code class="language-javascript">get 属性名(){} 用来得到当前属性值的回调函数
+
+set 属性名(){} 用来监视当前属性值变化的回调函数
+
+</code></pre>
+<p>举例如下：</p>
+<pre><code class="language-javascript">    var obj = {
+        firstName : 'kobe',
+        lastName : 'bryant',
+        get fullName(){
+            return this.firstName + ' ' + this.lastName
+        },
+        set fullName(data){
+            var names = data.split(' ');
+            this.firstName = names[0];
+            this.lastName = names[1];
+        }
+    };
+    console.log(obj.fullName);
+    obj.fullName = 'curry stephen';
+    console.log(obj.fullName);
+</code></pre>
+<h2 id="数组的扩展">数组的扩展</h2>
+<blockquote>
+<p>下面讲的这几个方法，都是给数组的实例用的。</p>
+</blockquote>
+<blockquote>
+<p>下面提到的数组的这五个方法，更详细的内容，可以看《03-JavaScript基础/15-数组的常见方法.md》</p>
+</blockquote>
+<p><strong>方法1</strong>：</p>
+<pre><code class="language-javascript">	Array.prototype.indexOf(value)
+</code></pre>
+<p>作用：获取 value 在数组中的第一个下标。</p>
+<p><strong>方法2</strong>：</p>
+<pre><code class="language-javascript">	Array.prototype.lastIndexOf(value)
+</code></pre>
+<p>作用：获取 value 在数组中的最后一个下标。</p>
+<p><strong>方法3</strong>：遍历数组</p>
+<pre><code class="language-javascript">	Array.prototype.forEach(function(item, index){})
+</code></pre>
+<p><strong>方法4</strong>：</p>
+<pre><code class="language-javascript">	Array.prototype.map(function(item, index){})
+</code></pre>
+<p>作用：遍历数组返回一个新的数组，返回的是<strong>加工之后</strong>的新数组。</p>
+<p><strong>方法5</strong>：</p>
+<pre><code class="language-javascript">	Array.prototype.filter(function(item, index){})
+</code></pre>
+<p>作用：遍历过滤出一个新的子数组，返回条件为true的值。</p>
+<h2 id="函数function的扩展bind">函数function的扩展：bind()</h2>
+<blockquote>
+<p>ES5中新增了<code>bind()</code>函数来改变this的指向。</p>
+</blockquote>
+<pre><code class="language-javascript">	Function.prototype.bind(obj)
+</code></pre>
+<p>作用：将函数内的this绑定为obj, 并将函数返回。</p>
+<p><strong>面试题</strong>: call()、apply()和bind()的区别：</p>
+<ul>
+<li>
+<p>都能改变this的指向</p>
+</li>
+<li>
+<p>call()/apply()是<strong>立即调用函数</strong></p>
+</li>
+<li>
+<p>bind()：绑定完this后，不会立即调用当前函数，而是<strong>将函数返回</strong>，因此后面还需要再加<code>()</code>才能调用。</p>
+</li>
+</ul>
+<p>PS：bind()传参的方式和call()一样。</p>
+<p><strong>分析</strong>：</p>
+<p>为什么ES5中要加入bind()方法来改变this的指向呢？因为bind()不会立即调用当前函数。</p>
+<p>bind()通常使用在回调函数中，因为回调函数并不会立即调用。如果你希望在回调函数中改变this，不妨使用bind()。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ES5中的严格模式]]></title>
+        <id>https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/</id>
+        <link href="https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/">
+        </link>
+        <updated>2020-04-04T03:20:23.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="es的几个重要版本">ES的几个重要版本</h2>
+<ul>
+<li>
+<p>ES5 : 09年发布。</p>
+</li>
+<li>
+<p>ES6(ES2015) : 2015年发布，也称为ECMA2015。</p>
+</li>
+<li>
+<p>ES7(ES2016) : 2016年发布，也称为ECMA2016  (变化不大)。</p>
+</li>
+</ul>
+<h2 id="严格模式的理解">严格模式的理解</h2>
+<h3 id="概念">概念</h3>
+<p><strong>理解</strong>：除了正常运行模式(混杂模式)，ES5添加了第二种运行模式：&quot;严格模式&quot;（strict mode）。</p>
+<p>顾名思义，这种模式使得Javascript在更严格的语法条件下运行。</p>
+<p><strong>目的</strong>：</p>
+<ul>
+<li>
+<p>消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为</p>
+</li>
+<li>
+<p>消除代码运行的一些不安全之处，为代码的安全运行保驾护航</p>
+</li>
+<li>
+<p>为未来新版本的Javascript做好铺垫</p>
+</li>
+</ul>
+<h3 id="使用">使用</h3>
+<ul>
+<li>
+<p>针对整个脚本文件：将<code>use strict</code>放在脚本文件的第一行，则整个脚本文件将以严格模式运行。</p>
+</li>
+<li>
+<p>针对单个函数：将<code>use strict</code>放在函数体的第一行，则整个函数以严格模式运行。</p>
+</li>
+</ul>
+<p>PS：如果浏览器不支持，则这句话只解析为一条简单的语句, 没有任何副作用。</p>
+<p>脚本文件的变通写法：因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<h3 id="语法和行为改变">语法和行为改变</h3>
+<ul>
+<li>
+<p>必须用var声明变量</p>
+</li>
+<li>
+<p>禁止自定义的函数中的this指向window</p>
+</li>
+<li>
+<p>对象不能有重名的属性</p>
+</li>
+</ul>
+<h2 id="严格模式和普通模式的区别">严格模式和普通模式的区别</h2>
+<blockquote>
+<p>下面列举几条严格模式的内容。</p>
+</blockquote>
+<h3 id="全局变量显式声明">全局变量显式声明</h3>
+<p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<h3 id="禁止this关键字指向全局对象">禁止this关键字指向全局对象：</h3>
+<pre><code class="language-javascript">        var foo = function () {
+            console.log(this);
+        }
+
+        foo();
+</code></pre>
+<p>上方代码中，普通模式打印的是window。严格模式下打印的是undefined。</p>
+<h3 id="构造函数必须通过new实例化对象">构造函数必须通过new实例化对象</h3>
+<p>构造函数必须通过new实例化对象，否则报错。因为this为undefined，此时无法设置属性。</p>
+<p>比如说：</p>
+<pre><code>        var Cat = function (name) {
+            this.name = name;
+        }
+
+        Cat('haha');
+</code></pre>
+<p>上方代码中，如果在严格模式下，则会报错。</p>
+<h3 id="属性相关">属性相关</h3>
+<p>普通模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<p>普通模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，多个重名的参数属于语法错误。</p>
+<p>比如下面这样的代码：</p>
+<pre><code class="language-javascript">	var obj = {
+		username: 'smyh';
+		username: 'vae'
+	}
+</code></pre>
+<p>上面的代码，在严格模式下属于语法错误，因为有重名的属性。</p>
+<h3 id="函数必须声明在顶层">函数必须声明在顶层</h3>
+<p>将来Javascript的新版本会引入&quot;块级作用域&quot;。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<h3 id="新增关键字">新增关键字</h3>
+<p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Swagger的简单使用]]></title>
         <id>https://Gentleelephant.github.io/post/swagger-de-jian-dan-shi-yong/</id>
@@ -255,926 +1625,6 @@ module.exports = {
 <figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170543.png" alt="" loading="lazy"></figure>
 <p>登陆成功，页面跳转：</p>
 <figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170649.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[项目第一步：数据库及Security配置]]></title>
-        <id>https://Gentleelephant.github.io/post/Project-001/</id>
-        <link href="https://Gentleelephant.github.io/post/Project-001/">
-        </link>
-        <updated>2020-03-23T12:12:51.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="一-数据库表">一、数据库表</h4>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/%E7%AC%AC15%E9%A1%B5.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/%E7%AC%AC16%E9%A1%B5.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/%E7%AC%AC17%E9%A1%B5.jpg" alt="" loading="lazy"></figure>
-<h4 id="二-springsecurity配置">二、SpringSecurity配置</h4>
-<p>pom依赖</p>
-<pre><code class="language-xml">&lt;dependency&gt;
-    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-    &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
-    &lt;version&gt;1.1.10&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
-    &lt;version&gt;2.1.1&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;mysql&lt;/groupId&gt;
-    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-    &lt;exclusions&gt;
-        &lt;exclusion&gt;
-            &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
-            &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
-        &lt;/exclusion&gt;
-    &lt;/exclusions&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>application.yml配置文件中的配置</p>
-<pre><code class="language-yaml">server:
-  port: 8888
-
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/vhr?serverTimezone=GMT&amp;useUnicode=true&amp;characterEncoding=UTF-8
-    username: root
-    password: root
-    type: com.alibaba.druid.pool.DruidDataSource
-</code></pre>
-<p>实体类:</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200323200722.png" alt="" loading="lazy"></figure>
-<p>Mapper接口和Mapper.xml:</p>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200323200932.png" alt="" loading="lazy"></figure>
-<p>HrService类：</p>
-<pre><code class="language-java">@Service
-public class HrService implements UserDetailsService {
-
-    @Autowired
-    HrMapper hrMapper;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Hr hr = hrMapper.loadUserByUsername(username);
-        if (hr == null){
-            System.out.println(&quot;没有查询到用户&quot;);
-            throw new UsernameNotFoundException(&quot;用户不存在!&quot;);
-        }
-        return hr;
-    }
-}
-</code></pre>
-<p>SecurityConfig配置类：</p>
-<pre><code class="language-java">@Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    HrService hrService;
-
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(hrService);
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .usernameParameter(&quot;username&quot;)
-                .passwordParameter(&quot;password&quot;)
-                .loginProcessingUrl(&quot;/doLogin&quot;)     // 表单登录提交请求
-                .loginPage(&quot;/login&quot;)                // 登陆页面
-                .successHandler(new AuthenticationSuccessHandler() {    // 登陆成功的方法
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                        response.setContentType(&quot;application/json;charset=utf-8&quot;);
-                        PrintWriter out = response.getWriter();
-                        Hr principal = (Hr) authentication.getPrincipal();
-                        RespBean ok = RespBean.ok(&quot;登陆成功&quot;,principal);
-                        String string = new ObjectMapper().writeValueAsString(ok);
-                        out.write(string);
-                        out.flush();
-                        out.close();
-                    }
-                })
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-                        response.setContentType(&quot;application/json;charset=utf-8&quot;);
-                        PrintWriter out = response.getWriter();
-                        RespBean respBean = RespBean.error(&quot;登陆失败&quot;);
-                        if (e instanceof LockedException){
-                            respBean.setMsg(&quot;账户被锁定,请联系管理员&quot;);
-                        }else if (e instanceof CredentialsExpiredException){
-                            respBean.setMsg(&quot;密码过期,请联系管理员&quot;);
-                        }else if (e instanceof AccountExpiredException){
-                            respBean.setMsg(&quot;账户过期,请联系管理员&quot;);
-                        }else if (e instanceof DisabledException){
-                            respBean.setMsg(&quot;账户被禁用,请联系管理员&quot;);
-                        }else if (e instanceof BadCredentialsException){
-                            respBean.setMsg(&quot;用户名或者密码输入错误&quot;);
-                        }
-                        String string = new ObjectMapper().writeValueAsString(respBean);
-                        out.write(string);
-                        out.flush();
-                        out.close();
-                    }
-                })
-                .permitAll()
-                .and()
-                .logout()
-                .logoutSuccessHandler(new LogoutSuccessHandler() {
-                    @Override
-                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
-                    }
-                })
-                .permitAll()
-                .and()
-                .csrf().disable();
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[基于数据库的认证]]></title>
-        <id>https://Gentleelephant.github.io/post/SpringSecurity-db/</id>
-        <link href="https://Gentleelephant.github.io/post/SpringSecurity-db/">
-        </link>
-        <updated>2020-03-21T14:11:28.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="一-创建数据库以及表">一、创建数据库以及表</h4>
-<p>数据库中有三张表，role(角色)，user(用户)，user_role（关联）</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321213935.png" alt="" loading="lazy"></figure>
-<p>role表：</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321214028.png" alt="" loading="lazy"></figure>
-<p>其中id为主键且自增，name是角色的name，namezh是中文名。</p>
-<p>user表：</p>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321214143.png" alt="" loading="lazy"></figure>
-<p>user是用户名，password是在SpringSecurity中用BCryptPasswordEncoder生成的密码，enable表示账户是否可用，locked表示账户是否被锁定。</p>
-<p>user_role表：</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321214523.png" alt="" loading="lazy"></figure>
-<p>uid是user的id，rid是role的id，一个用户可能有多个角色。</p>
-<h4 id="二-创建项目">二、创建项目</h4>
-<ul>
-<li>导入依赖</li>
-</ul>
-<pre><code class="language-xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
-    &lt;version&gt;2.1.1&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-    &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
-    &lt;version&gt;1.1.10&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;mysql&lt;/groupId&gt;
-    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>编写配置：</p>
-<pre><code class="language-yaml">spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/codezp?serverTimezone=GMT&amp;useUnicode=true&amp;characterEncoding=UTF-8
-    username: root
-    password: root
-    type: com.alibaba.druid.pool.DruidDataSource
-</code></pre>
-<ul>
-<li>
-<p>创建User和Role实体类</p>
-<p>User类：</p>
-<pre><code class="language-java">public class User implements UserDetails {
-
-    private Integer id;
-
-    private String username;
-
-    private String password;
-
-    private Boolean enable;
-
-    private Boolean locked;
-
-    private List&lt;Role&gt; roles;
-
-    public List&lt;Role&gt; getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List&lt;Role&gt; roles) {
-        this.roles = roles;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-
-    // 账户是否未过期
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    // 账户是否未锁定
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    // 凭证是否未过期(密码)
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enable;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    // 返回用户的所有角色
-    @Override
-    public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() {
-        List&lt;SimpleGrantedAuthority&gt; authorities = new ArrayList&lt;&gt;();
-        for (Role role : roles) {
-            // role必须以&quot;ROLE_&quot;开始
-            authorities.add(new SimpleGrantedAuthority(&quot;ROLE_&quot; + role.getName()));
-
-        }
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
-
-    public void setLocked(Boolean locked) {
-        this.locked = locked;
-    }
-}
-</code></pre>
-<p>我们的类要想到时候能被SpringSecurity使用，必须实现UserDetails。</p>
-<p>Role类：</p>
-<pre><code class="language-java">public class Role {
-
-    private Integer id;
-
-    private String name;
-
-    private String namezh;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNamezh() {
-        return namezh;
-    }
-
-    public void setNamezh(String namezh) {
-        this.namezh = namezh;
-    }
-}
-
-</code></pre>
-</li>
-</ul>
-<h4 id="第三步-编写mybatis的mapper接口和实现">第三步、编写Mybatis的Mapper接口和实现</h4>
-<p>UserMapper:</p>
-<pre><code class="language-java">@Mapper
-public interface UserMapper {
-	// 根据用户名获得用户对象
-    User loadUserByUsername(String username);
-	// 根据用户id获得用户的Role
-    List&lt;Role&gt; getUserRolesById(Integer id);
-
-}
-
-</code></pre>
-<p>UserMapper.xml</p>
-<pre><code class="language-xml">&lt;!DOCTYPE mapper
-        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-
-&lt;mapper namespace=&quot;com.codezp.mapper.UserMapper&quot;&gt;
-    &lt;select id=&quot;loadUserByUsername&quot; resultType=&quot;com.codezp.bean.User&quot;&gt;
-        select * from user where username=#{username}
-    &lt;/select&gt;
-
-    &lt;select id=&quot;getUserRolesById&quot; resultType=&quot;com.codezp.bean.Role&quot;&gt;
-        select * from role where id in (select rid from user_role where uid=#{id})
-    &lt;/select&gt;
-
-&lt;/mapper&gt;
-</code></pre>
-<h4 id="第四步-编写userservice类以及security配置类">第四步、编写Userservice类以及Security配置类</h4>
-<p>这个类到时候要交给SpringSecurity的配置类使用。</p>
-<pre><code class="language-java">@Service
-public class UserService implements UserDetailsService {
-
-    @Autowired
-    UserMapper userMapper;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        User user = userMapper.loadUserByUsername(username);
-        if (user == null){
-            throw new UsernameNotFoundException(&quot;user not found&quot;);
-        }
-        user.setRoles(userMapper.getUserRolesById(user.getId()));
-        return user;
-    }
-}
-</code></pre>
-<p>SpringSecurity的配置类</p>
-<pre><code class="language-java">@Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    UserService userService;
-
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 刚才写的UserService类的对象
-        auth.userDetailsService(userService);
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(&quot;/dba/**&quot;).hasRole(&quot;dba&quot;)
-                .antMatchers(&quot;/admin/**&quot;).hasRole(&quot;admin&quot;)
-                .antMatchers(&quot;/user/**&quot;).hasRole(&quot;user&quot;)
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .permitAll()
-                .and()
-                .csrf().disable();
-    }
-}
-</code></pre>
-<h5 id="第五步-编写controller进行测试">第五步、编写Controller进行测试</h5>
-<pre><code class="language-java">@RestController
-public class HelloController {
-
-    @GetMapping(&quot;/hello&quot;)
-    public String hello(){
-        return &quot;hello serurity&quot;;
-    }
-
-    @GetMapping(&quot;/dba/hello&quot;)
-    public String dba(){
-        return &quot;hello dba&quot;;
-    }
-
-    @GetMapping(&quot;/admin/hello&quot;)
-    public String root(){
-        return &quot;hello admin&quot;;
-    }
-
-    @GetMapping(&quot;/user/hello&quot;)
-    public String user(){
-        return &quot;hello user&quot;;
-    }
-
-}
-</code></pre>
-<p>root有dba和admin的权限，它应该能访问到dba和admin下的资源。</p>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321220908.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321221002.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321221037.png" alt="" loading="lazy"></figure>
-<p>可以看到在使用root用户登录之后可以访问到dba和admin下的资源，但是访问不到user下的资源。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringSecurity的配置（自定义拦截规则）]]></title>
-        <id>https://Gentleelephant.github.io/post/httpsecurity-custom/</id>
-        <link href="https://Gentleelephant.github.io/post/httpsecurity-custom/">
-        </link>
-        <updated>2020-03-21T07:28:27.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="一-简单的配置">一、简单的配置</h4>
-<p>重写一个configure方法参数是AuthenticationManagerBuilder类型的,用来配置用户名和密码，而且还要添加一个密码编码器(Spring5之后密码必须要加密)。</p>
-<pre><code class="language-java">@Bean
-    PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser(&quot;codezp&quot;).password(&quot;123&quot;).roles(&quot;admin&quot;)
-                .and()
-                .withUser(&quot;haha&quot;).password(&quot;456&quot;).roles(&quot;user&quot;);
-    }
-</code></pre>
-<p>重写另一个configure方法，添加自己的拦截规则</p>
-<pre><code class="language-java">    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(&quot;/admin/**&quot;).hasRole(&quot;admin&quot;)
-                //.antMatchers(&quot;user/**&quot;).hasAnyRole(&quot;admin&quot;,&quot;user&quot;)
-                //上面注释的方式和下面的方式都可以
-                .antMatchers(&quot;/user/**&quot;).access(&quot;hasAnyRole('user','admin')&quot;)
-                .anyRequest().authenticated()  // 其他的请求都可以访问
-                .and()
-                .formLogin()
-                .loginProcessingUrl(&quot;/doLogin&quot;) // 处理登陆请求的地址，(使用postman可以配一下)
-                .permitAll()    // 跟登陆相关的接口直接能访问
-                .and()
-                .csrf().disable();  // 关闭csrf攻击，方便测试
-    }
-</code></pre>
-<p>在controller中补充：</p>
-<pre><code class="language-java">    @GetMapping(&quot;/admin/hello&quot;)
-    public String admin(){
-        return &quot;hello admin&quot;;
-    }
-    @GetMapping(&quot;/user/hello&quot;)
-    public String user(){
-        return &quot;hello user&quot;;
-    }
-</code></pre>
-<p>现在再去浏览器访问：</p>
-<p>我们用的是haha用户登陆上去的，它是user角色，所以可以访问user/**下的资源。</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321122541.png" alt="" loading="lazy"></figure>
-<p>我们试着去访问admin下的资源，就会报错。</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321122942.png" alt="" loading="lazy"></figure>
-<p>admin角色用户的测试就不进行，道理都是一样的。</p>
-<h4 id="二-登陆表单详细配置">二、登陆表单详细配置</h4>
-<pre><code class="language-java">@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(&quot;/admin/**&quot;).hasRole(&quot;admin&quot;)
-//                .antMatchers(&quot;user/**&quot;).hasAnyRole(&quot;admin&quot;,&quot;user&quot;)
-                .antMatchers(&quot;/user/**&quot;).access(&quot;hasAnyRole('user','admin')&quot;)
-                .anyRequest().authenticated()  // 其他的请求都可以访问
-                .and()
-                .formLogin()
-                .loginProcessingUrl(&quot;/doLogin&quot;) // 处理登陆请求的地址，(使用postman可以配一下)
-                .loginPage(&quot;/login&quot;) //登陆页面
-                .usernameParameter(&quot;uname&quot;) // username参数名字
-                .passwordParameter(&quot;passwd&quot;) // password参数名字
-                .successHandler(new AuthenticationSuccessHandler() {    // 登录成功的处理
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
-                        resp.setContentType(&quot;application/json;charset=utf-8&quot;);
-                        PrintWriter writer = resp.getWriter();
-                        Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
-                        map.put(&quot;status&quot;, 200);
-                        // authentication.getPrincipal()返回的是刚才登录成功的对象
-                        map.put(&quot;msg&quot;, authentication.getPrincipal());
-                        writer.write(new ObjectMapper().writeValueAsString(map));
-                        writer.flush();
-                        writer.close();
-                    }
-                })
-                .failureHandler(new AuthenticationFailureHandler() {   // 登陆失败的处理
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse resp, AuthenticationException e) throws IOException, ServletException {
-                        resp.setContentType(&quot;application/json;charset=utf-8&quot;);
-                        PrintWriter writer = resp.getWriter();
-                        Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
-                        map.put(&quot;status&quot;, 401);
-
-                        if (e instanceof LockedException){  // 账户锁定异常
-                            map.put(&quot;msg&quot;, &quot;账户被锁定，登陆失败&quot;);
-                        } else if (e instanceof BadCredentialsException){ // 错误凭证
-                            map.put(&quot;msg&quot;, &quot;用户名或密码输入错误,登陆失败&quot;);
-                        } else if (e instanceof DisabledException){  // 账户被禁用
-                            map.put(&quot;msg&quot;, &quot;账户被禁用,登陆失败&quot;);
-                        } else if (e instanceof AccountExpiredException){  // 账户过期
-                            map.put(&quot;msg&quot;, &quot;账户过期,登陆失败&quot;);
-                        } else if (e instanceof CredentialsExpiredException){ // 密码过期
-                            map.put(&quot;msg&quot;, &quot;密码过期,登陆失败&quot;);
-                        }
-
-                        writer.write(new ObjectMapper().writeValueAsString(map));
-                        writer.flush();
-                        writer.close();
-                    }
-                })
-                .permitAll()    // 跟登陆相关的接口直接能访问
-                .and()
-                .csrf().disable();  // 关闭csrf攻击，方便测试
-    }
-</code></pre>
-<p>使用postman进行测试：</p>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321142215.png" alt="" loading="lazy"></figure>
-<p>把用户名和密码参数名跟换后</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321142356.png" alt="" loading="lazy"></figure>
-<h4 id="三-注销登录配置">三、注销登录配置</h4>
-<p>继续在configure类中添加配置</p>
-<pre><code class="language-java">.and()
-    .logout()
-    .logoutUrl(&quot;/logout&quot;)
-    .logoutSuccessHandler(new LogoutSuccessHandler() {
-        @Override
-        public void onLogoutSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
-            resp.setContentType(&quot;application/json;charset=utf-8&quot;);
-            PrintWriter writer = resp.getWriter();
-            Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
-            map.put(&quot;status&quot;, 200);
-            map.put(&quot;msg&quot;, &quot;注销成功&quot;);
-            writer.write(new ObjectMapper().writeValueAsString(map));
-            writer.flush();
-            writer.close();
-        }
-    })
-.and()
-</code></pre>
-<figure data-type="image" tabindex="5"><img src="C:%5CUsers%5C%E5%BC%A0%E9%B9%8F%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200321143204960.png" alt="image-20200321143204960" loading="lazy"></figure>
-<h4 id="四-多个httpsecurity">四、多个HttpSecurity</h4>
-<pre><code class="language-java">@Configuration
-public class MultiHttpSecurity {
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-    @Autowired
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser(&quot;codezp&quot;).password(&quot;111&quot;).roles(&quot;admin&quot;)
-                .and()
-                .withUser(&quot;haha&quot;).password(&quot;222&quot;).roles(&quot;user&quot;);
-    }
-
-    @Configuration
-    @Order(value = 1)
-    public static class AdminSecurity extends WebSecurityConfigurerAdapter{
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher(&quot;/admin/**&quot;).authorizeRequests().anyRequest().hasRole(&quot;admin&quot;);
-        }
-    }
-
-    @Configuration
-    @Order
-    public static class OtherSecurity extends WebSecurityConfigurerAdapter{
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().anyRequest().authenticated()
-                    .and()
-                    .formLogin()
-                    .loginProcessingUrl(&quot;/doLogin&quot;)
-                    .permitAll()
-                    .and()
-                    .formLogin()
-                    .and()
-                    .csrf()
-                    .disable();
-        }
-    }
-}
-
-</code></pre>
-<p>多个HttpSecurity也需要密码编码器。@Order是个HttpSecurity设置优先级，数字越大优先级越小。</p>
-<p>可以看到已经登陆成功</p>
-<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321151623.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringSecurity初体验]]></title>
-        <id>https://Gentleelephant.github.io/post/springsecurity-chu-ti-yan/</id>
-        <link href="https://Gentleelephant.github.io/post/springsecurity-chu-ti-yan/">
-        </link>
-        <updated>2020-03-21T07:27:17.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="第一步先创建一个springboot项目添加依赖">第一步：先创建一个springboot项目添加依赖</h4>
-<pre><code class="language-xml">&lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<h4 id="第二步写一个controller测试">第二步：写一个controller测试</h4>
-<pre><code class="language-java">@RestController
-public class HelloController {
-
-    @GetMapping(&quot;/hello&quot;)
-    public String hello(){
-        return &quot;hello security!&quot;;
-    }
-}
-</code></pre>
-<h4 id="第三步进行测试">第三步：进行测试</h4>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321113409.png" alt="" loading="lazy"></figure>
-<p>我们虽然访问的是：http://localhost:8080/hello但是会被重定向成http://localhost:8080/login，需要先登录从才能访问。</p>
-<p>默认的用户名是user,密码在项目启动的控制台。输入用户名和密码就能访问。</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321113956.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringBoot实现session共享]]></title>
-        <id>https://Gentleelephant.github.io/post/springboot-session/</id>
-        <link href="https://Gentleelephant.github.io/post/springboot-session/">
-        </link>
-        <updated>2020-03-19T13:12:46.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="第一步导入依赖">第一步：导入依赖</h4>
-<pre><code class="language-xml">&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-		&lt;/dependency&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-		&lt;/dependency&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-		&lt;/dependency&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;
-		&lt;/dependency&gt;
-</code></pre>
-<h4 id="第二步编写配置文件">第二步：编写配置文件</h4>
-<pre><code class="language-yaml">spring:
-  redis:
-    host: 192.168.202.132
-    port: 6379
-    password: root
-    database: 0
-server:
-  # 这里指定端口是因为等一下要早controller中取到port方便测试
-  port: 8085
-</code></pre>
-<h4 id="第三步编写controller测式">第三步：编写controller测式</h4>
-<pre><code class="language-java">@RestController
-public class HelloController {
-
-    @Value(&quot;${server.port}&quot;)
-    Integer port;
-
-    @GetMapping(&quot;/set&quot;)
-    public String set(HttpSession session){
-        session.setAttribute(&quot;name&quot;, &quot;codezp&quot;);
-        return String.valueOf(port);
-    }
-
-    @GetMapping(&quot;/get&quot;)
-    public String get(HttpSession session){
-        return (String) session.getAttribute(&quot;name&quot;) + port;
-    }
-}
-</code></pre>
-<h4 id="第四步启动项目开始测试">第四步：启动项目开始测试</h4>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319205646.png" alt="" loading="lazy"></figure>
-<p>先把maven的test关掉，然后再点击package进行打包。</p>
-<p>打包成功后：</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319205900.png" alt="" loading="lazy"></figure>
-<p>我们控制台启动项目，注意一个可以不指定端口，但另一个需要指定端口(方便查看效果)</p>
-<p><code>java -jar demosessionshare-0.0.1-SNAPSHOT.jar --server.port=8088</code></p>
-<p><code>java -jar demosessionshare-0.0.1-SNAPSHOT.jar</code></p>
-<p>项目启动后我们在浏览器进行测试：</p>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210318.png" alt="" loading="lazy"></figure>
-<p>需要先登录，我们根据访问的端口取控制台查看密码，username默认是user</p>
-<p>输入密码之后：</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210540.png" alt="" loading="lazy"></figure>
-<p>我们再访问另一个项目的get方法：</p>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210646.png" alt="" loading="lazy"></figure>
-<p>这一次访问可以取到session的值，而且还不需要输入密码。再去redis上查看：已经有东西了。</p>
-<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200319210849.png" alt="" loading="lazy"></figure>
-<p>总结：SpringBoot实现session其实就是做了一些自动化的配置，如果想要在SpringMVC中做也是可以实现的，配置也没有那么麻烦。在SpringBoot中实现session跟平常使用session没什么两样。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringBoot整合Redis]]></title>
-        <id>https://Gentleelephant.github.io/post/springboot-zheng-he-redis/</id>
-        <link href="https://Gentleelephant.github.io/post/springboot-zheng-he-redis/">
-        </link>
-        <updated>2020-03-17T05:43:23.000Z</updated>
-        <content type="html"><![CDATA[<ol>
-<li>
-<p>SpringBoot整合Redis前提要先进行配置</p>
-</li>
-<li>
-<ul>
-<li>配置让所有主机都可以访问</li>
-</ul>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131655.png" alt="配置让所有主机都可以访问" loading="lazy"></figure>
-<ul>
-<li>
-<p>配置密码，requirepass不要变，后面的root可以换为你自己设置的密码</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317131952.png" alt="" loading="lazy"></figure>
-</li>
-</ul>
-</li>
-<li>
-<p>需要导入的依赖：</p>
-<pre><code class="language-xml">     &lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-     &lt;/dependency&gt;
-     &lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-		&lt;/dependency&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-		&lt;/dependency&gt;
-</code></pre>
-<p><em>因为springboot现在要求必须使用springboot security所以redis才要设置密码</em></p>
-<ol>
-<li>编写配置文件</li>
-</ol>
-<pre><code class="language-yaml">spring:
-  redis:
-    host: 192.168.202.132
-    database: 0
-    port: 6379
-    password: root
-
-</code></pre>
-</li>
-<li>
-<p>查看RedisAutoConfiguration类</p>
-</li>
-</ol>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317132526.png" alt="" loading="lazy"></figure>
-<p>这个类为我们准备了两个Template，第一个Template顾名思义，键-值都是Object类型的，而第二个的键-值都是String类型的。我们使用第二个。</p>
-<ol start="6">
-<li>
-<p>编写一个测试的Controller</p>
-<pre><code class="language-java">@RestController
-public class HelloController {
-
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
-    @GetMapping(&quot;/set&quot;)
-    public void set(){
-        // 注意对值的操作需要用opsXXX操作获取，而对键的操作就用stringRedisTemplate就可以了
-        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
-        stringStringValueOperations.set(&quot;name&quot;, &quot;codezp&quot;);
-
-    }
-    @GetMapping(&quot;/get&quot;)
-    public void get(){
-        ValueOperations&lt;String, String&gt; stringStringValueOperations = stringRedisTemplate.opsForValue();
-        System.out.println(stringStringValueOperations.get(&quot;name&quot;));
-    }
-
-}
-</code></pre>
-<ol start="7">
-<li>
-<p>启动项目，并访问localhost:8080/set</p>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133157.png" alt="" loading="lazy"></figure>
-</li>
-</ol>
-</li>
-</ol>
-<p>密码在控制台：</p>
-<p>​		<img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317133439.png" alt="" loading="lazy"></p>
-<p>访问成功我们在redis上看看：</p>
-<p>可以看到我们的数据已经存储上去了</p>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200317134034.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Redis安装]]></title>
-        <id>https://Gentleelephant.github.io/post/redis-install/</id>
-        <link href="https://Gentleelephant.github.io/post/redis-install/">
-        </link>
-        <updated>2020-03-15T03:23:30.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-编译安装前提要有gccg环境">一、编译安装(前提要有gcc/g++环境)</h3>
-<ol>
-<li>
-<p>进入官网复制链接：<a href="http://download.redis.io/releases/redis-5.0.8.tar.gz">http://download.redis.io/releases/redis-5.0.8.tar.gz</a></p>
-</li>
-<li>
-<p>在Linux下使用wget http://download.redis.io/releases/redis-5.0.8.tar.gz 命令下载Redis</p>
-</li>
-<li>
-<p>然后使用<code>tar -zxvf redis-5.0.5.tar.gz</code>命令解压</p>
-</li>
-<li>
-<p>执行<code>make</code></p>
-</li>
-<li>
-<p>执行<code>meke install</code></p>
-</li>
-<li>
-<p>安装完成后启动redis：<code>redis-server redis-conf</code></p>
-</li>
-</ol>
-<h3 id="二-通过docker安装centos">二、通过docker安装(centos)</h3>
-<p>docker安装好之后，先启动docker，然后直接运行命令：</p>
-<p><code>docker run --name codezp-redis -d -p 6379:6379 redis --requirepass root</code></p>
-<p>docker上的redis启动成功后，<strong>在宿主机器上有redis-cli的情况下</strong>可以直接运行命令连接：</p>
-<p><code>redis-cli -a 123</code></p>
-<p>如果宿主机器没有redis-cli也可以运行命令：</p>
-<p><code>docker exec -it codezp-redis redis-cli -a root</code></p>
-<h3 id="三-通过命令直接安装ubuntu">三、通过命令直接安装(Ubuntu)</h3>
-<ol>
-<li>
-<p><code>apt-get update</code>(root用户，不是root用户需要先su，或者sudo)</p>
-</li>
-<li>
-<p><code>apt-get install redis-server</code></p>
-</li>
-<li>
-<p>启动redis<code>redis-server</code></p>
-</li>
-<li>
-<p>客户端连接<code>redis-cli</code></p>
-</li>
-<li>
-<p>出现：127.0.0.1:6379&gt; 就成功了</p>
-</li>
-<li>
-<p>可以在  /etc/redis目录下修改redis.conf文件</p>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>

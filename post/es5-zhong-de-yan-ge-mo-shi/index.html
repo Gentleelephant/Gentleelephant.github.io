@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>Swagger的简单使用 | Aboy</title>
+        <title>ES5中的严格模式 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,79 +56,106 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">Swagger的简单使用</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-04-02 01:20:24">2020-04-02 / 2 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p>SpringBoot继承Swagger只需要导入两个依赖</p>
-<pre><code class="language-xml">		&lt;dependency&gt;
-			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
-			&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
-			&lt;version&gt;2.9.2&lt;/version&gt;
-		&lt;/dependency&gt;
+                                    <div class="post-title  mdui-m-b-1">ES5中的严格模式</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-04-04 11:20:23">2020-04-04 / 3 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h2 id="es的几个重要版本">ES的几个重要版本</h2>
+<ul>
+<li>
+<p>ES5 : 09年发布。</p>
+</li>
+<li>
+<p>ES6(ES2015) : 2015年发布，也称为ECMA2015。</p>
+</li>
+<li>
+<p>ES7(ES2016) : 2016年发布，也称为ECMA2016  (变化不大)。</p>
+</li>
+</ul>
+<h2 id="严格模式的理解">严格模式的理解</h2>
+<h3 id="概念">概念</h3>
+<p><strong>理解</strong>：除了正常运行模式(混杂模式)，ES5添加了第二种运行模式：&quot;严格模式&quot;（strict mode）。</p>
+<p>顾名思义，这种模式使得Javascript在更严格的语法条件下运行。</p>
+<p><strong>目的</strong>：</p>
+<ul>
+<li>
+<p>消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为</p>
+</li>
+<li>
+<p>消除代码运行的一些不安全之处，为代码的安全运行保驾护航</p>
+</li>
+<li>
+<p>为未来新版本的Javascript做好铺垫</p>
+</li>
+</ul>
+<h3 id="使用">使用</h3>
+<ul>
+<li>
+<p>针对整个脚本文件：将<code>use strict</code>放在脚本文件的第一行，则整个脚本文件将以严格模式运行。</p>
+</li>
+<li>
+<p>针对单个函数：将<code>use strict</code>放在函数体的第一行，则整个函数以严格模式运行。</p>
+</li>
+</ul>
+<p>PS：如果浏览器不支持，则这句话只解析为一条简单的语句, 没有任何副作用。</p>
+<p>脚本文件的变通写法：因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<h3 id="语法和行为改变">语法和行为改变</h3>
+<ul>
+<li>
+<p>必须用var声明变量</p>
+</li>
+<li>
+<p>禁止自定义的函数中的this指向window</p>
+</li>
+<li>
+<p>对象不能有重名的属性</p>
+</li>
+</ul>
+<h2 id="严格模式和普通模式的区别">严格模式和普通模式的区别</h2>
+<blockquote>
+<p>下面列举几条严格模式的内容。</p>
+</blockquote>
+<h3 id="全局变量显式声明">全局变量显式声明</h3>
+<p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<h3 id="禁止this关键字指向全局对象">禁止this关键字指向全局对象：</h3>
+<pre><code class="language-javascript">        var foo = function () {
+            console.log(this);
+        }
 
-		&lt;dependency&gt;
-			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
-			&lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
-			&lt;version&gt;2.9.2&lt;/version&gt;
-		&lt;/dependency&gt;
+        foo();
 </code></pre>
-<p>然后在编写一个Swagger的配置类，Swagger是用Docket对象来进行配置的，所有的配置都在Docket中进行设置</p>
-<pre><code class="language-java">@Configuration
-public class SwaggerConfig {
+<p>上方代码中，普通模式打印的是window。严格模式下打印的是undefined。</p>
+<h3 id="构造函数必须通过new实例化对象">构造函数必须通过new实例化对象</h3>
+<p>构造函数必须通过new实例化对象，否则报错。因为this为undefined，此时无法设置属性。</p>
+<p>比如说：</p>
+<pre><code>        var Cat = function (name) {
+            this.name = name;
+        }
 
-    /*配置Swagger的Docket实例*/
-    @Bean
-    public Docket docket(Environment environment){
-
-        // 设置要显示的Swagger环境,可以根据不同的环境设置Swagger是否显示
-        Profiles dev = Profiles.of(&quot;dev&quot;);
-        // 通过environment.acceptsProfiles判断是否处在自己设定的环境中
-        boolean flag = environment.acceptsProfiles(dev);
-        
-        return new Docket(DocumentationType.SPRING_WEB)
-                .apiInfo(apiInfo())
-//                .enable(flag)       是否启动Swagger，如果为false则不能访问
-                    .select()
-                    // RequestHandlerSelectors：配置要扫描接口的方式
-                    // basePackage：基于某个包进行扫描
-                    // any：扫描全部
-                    // none：不扫描
-                    // withClassAnnotation：扫描类上的注解
-                    // .apis(RequestHandlerSelectors.basePackage(&quot;com.zhang.controller&quot;))
-                    .apis(RequestHandlerSelectors.withMethodAnnotation(GetMapping.class))
-                    // path() 过滤某路径
-                    //.paths(PathSelectors.ant(&quot;com&quot;))
-                    .build();
-    }
-
-    // 当前Api的一些基本信息
-    @Bean
-    public ApiInfo apiInfo(){
-        // 作者信息
-        Contact contact = new Contact(&quot;codezp&quot;, &quot;http://www.codezp.club&quot;, &quot;moon0hello@gmail&quot;);  
-
-        return new ApiInfo(
-                &quot;Vhr Api Documentation&quot;,
-                &quot;Vhr项目的API文档&quot;,
-                &quot;1.0&quot;,
-                &quot;&quot;,
-                contact,
-                &quot;Apache 2.0&quot;,
-                &quot;&quot;,
-                new ArrayList&lt;VendorExtension&gt;());
-    }
-
-}
+        Cat('haha');
 </code></pre>
-<p>然后再控制台访问http://localhost:8080/swagger-ui.html就可以了！</p>
+<p>上方代码中，如果在严格模式下，则会报错。</p>
+<h3 id="属性相关">属性相关</h3>
+<p>普通模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<p>普通模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，多个重名的参数属于语法错误。</p>
+<p>比如下面这样的代码：</p>
+<pre><code class="language-javascript">	var obj = {
+		username: 'smyh';
+		username: 'vae'
+	}
+</code></pre>
+<p>上面的代码，在严格模式下属于语法错误，因为有重名的属性。</p>
+<h3 id="函数必须声明在顶层">函数必须声明在顶层</h3>
+<p>将来Javascript的新版本会引入&quot;块级作用域&quot;。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<h3 id="新增关键字">新增关键字</h3>
+<p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/">ES5中的严格模式</a></div></div>
+                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/">ES5中的一些扩展</a></div></div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/xiang-mu-di-san-bu-qian-duan-qing-qiu-fang-fa-de-feng-zhuang/">项目第三步：前端请求方法的封装</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/swagger-de-jian-dan-shi-yong/">Swagger的简单使用</a></div> </div>
                                        
                                       </div>
                                    

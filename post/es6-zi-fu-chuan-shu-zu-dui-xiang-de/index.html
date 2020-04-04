@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>ES6字符串、数组、对象的扩展 | Aboy</title>
+        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">文章</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">分类</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">ES6字符串、数组、对象的扩展</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-04-04 11:25:44">2020-04-04 / 4 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h2 id="字符串的扩展">字符串的扩展</h2>
+<p>ES6中的字符串扩展，用得少，而且逻辑相对简单。如下：</p>
+<ul>
+<li>
+<p><code>includes(str)</code>：判断是否包含指定的字符串</p>
+</li>
+<li>
+<p><code>startsWith(str)</code>：判断是否以指定字符串开头</p>
+</li>
+<li>
+<p><code>endsWith(str)</code>：判断是否以指定字符串结尾</p>
+</li>
+<li>
+<p><code>repeat(count)</code>：重复指定次数</p>
+</li>
+</ul>
+<p>举例如下：</p>
+<pre><code class="language-javascript">    let str = 'abcdefg';
+
+    console.log(str.includes('a'));//true
+    console.log(str.includes('h'));//false
+
+    //startsWith(str) : 判断是否以指定字符串开头
+    console.log(str.startsWith('a'));//true
+    console.log(str.startsWith('d'));//false
+
+    //endsWith(str) : 判断是否以指定字符串结尾
+    console.log(str.endsWith('g'));//true
+    console.log(str.endsWith('d'));//false
+
+    //repeat(count) : 重复指定次数a
+    console.log(str.repeat(5));
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180402_1050.png" alt="" loading="lazy"></figure>
+<h2 id="number-的扩展">Number 的扩展</h2>
+<ul>
+<li>二进制与八进制数值表示法: 二进制用<code>0b</code>, 八进制用<code>0o</code>。</li>
+</ul>
+<p>举例：</p>
+<pre><code class="language-javascript">    console.log(0b1010);//10
+    console.log(0o56);//46
+</code></pre>
+<ul>
+<li>
+<p><code>Number.isFinite(i)</code>：判断是否为有限大的数。比如<code>Infinity</code>这种无穷大的数，返回的就是false。</p>
+</li>
+<li>
+<p><code>Number.isNaN(i)</code>：判断是否为NaN。</p>
+</li>
+<li>
+<p><code>Number.isInteger(i)</code>：判断是否为整数。</p>
+</li>
+<li>
+<p><code>Number.parseInt(str)</code>：将字符串转换为对应的数值。</p>
+</li>
+<li>
+<p><code>Math.trunc(i)</code>：去除小数部分。</p>
+</li>
+</ul>
+<p>举例：</p>
+<pre><code class="language-javascript">    //Number.isFinite(i) : 判断是否是有限大的数
+    console.log(Number.isFinite(NaN)); //false
+    console.log(Number.isFinite(5)); //true
+    console.log(Number.isFinite(Infinity)); //false
+
+    //Number.isNaN(i) : 判断是否是NaN
+    console.log(Number.isNaN(NaN));//true
+    console.log(Number.isNaN(5));//falsse
+
+    //Number.isInteger(i) : 判断是否是整数
+    console.log(Number.isInteger(5.23));//false
+    console.log(Number.isInteger(5.0));//true
+    console.log(Number.isInteger(5));//true
+
+    //Number.parseInt(str) : 将字符串转换为对应的数值
+    console.log(Number.parseInt('123abc'));//123
+    console.log(Number.parseInt('a123abc'));//NaN
+
+    // Math.trunc(i) : 直接去除小数部分
+    console.log(Math.trunc(13.123));//13
+</code></pre>
+<h2 id="数组的扩展">数组的扩展</h2>
+<blockquote>
+<p>下面提到的数组的几个方法，更详细的内容，可以看《04-JavaScript基础/17-数组的常见方法.md》。</p>
+</blockquote>
+<h3 id="扩展1arrayfrom">扩展1：Array.from()</h3>
+<pre><code class="language-javascript">	Array.from(伪数组/可遍历的对象)
+</code></pre>
+<p><strong>作用</strong>：将<strong>伪数组</strong>或可遍历对象转换为<strong>真数组</strong>。</p>
+<h3 id="扩展2arrayof">扩展2：Array.of()</h3>
+<pre><code class="language-javascript">	Array.of(value1, value2, value3)
+</code></pre>
+<p><strong>作用</strong>：将一系列值转换成数组。</p>
+<h3 id="扩展3find-和-findindex">扩展3：find() 和 findIndex()</h3>
+<p><strong>方法1</strong>：</p>
+<pre><code class="language-javascript">	find(function(item, index, arr){return true})
+</code></pre>
+<p><strong>作用</strong>：找出<strong>第一个</strong>满足「指定条件返回true」的元素。</p>
+<p><strong>方法2</strong>：</p>
+<pre><code class="language-javascript">	findIndex(function(item, index, arr){return true})
+</code></pre>
+<p><strong>作用</strong>：找出第一个满足「指定条件返回true」的元素的index。</p>
+<h2 id="对象的扩展">对象的扩展</h2>
+<h3 id="扩展1">扩展1</h3>
+<pre><code class="language-javascript">	Object.is(v1, v2)
+</code></pre>
+<p><strong>作用：<strong>判断两个数据是否完全相等。底层是通过</strong>字符串</strong>来判断的。</p>
+<p>我们先来看下面这两行代码的打印结果：</p>
+<pre><code class="language-javascript">        console.log(0 == -0);
+        console.log(NaN == NaN);
+</code></pre>
+<p>打印结果：</p>
+<pre><code>	true
+	false
+</code></pre>
+<p>上方代码中，第一行代码的打印结果为true，这个很好理解。第二行代码的打印结果为false，因为NaN和任何值都不相等。</p>
+<p>但是，如果换成下面这种方式来比较：</p>
+<pre><code class="language-javascript">        console.log(Object.is(0, -0));
+        console.log(Object.is(NaN, NaN));
+</code></pre>
+<p>打印结果却是：</p>
+<pre><code>	false
+	true
+</code></pre>
+<p>代码解释：还是刚刚说的那样，<code>Object.is(v1, v2)</code>比较的是字符串是否相等。</p>
+<h3 id="扩展2重要">扩展2（重要）</h3>
+<pre><code class="language-javascript">	Object.assign(目标对象, 源对象1, 源对象2...)
+</code></pre>
+<p><strong>作用：</strong> 将源对象的属性追加到目标对象上。如果对象里属性名相同，会被覆盖。</p>
+<p>其实可以理解成：将多个对象<strong>合并</strong>为一个新的对象。</p>
+<p>举例：</p>
+<pre><code class="language-javascript">        let obj1 = { name: 'smyhvae', age: 26 };
+        let obj2 = { city: 'shenzhen' };
+        let obj3 = {};
+
+        Object.assign(obj3, obj1, obj2);
+        console.log(obj3);
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="2"><img src="http://img.smyhvae.com/20180404_2240.png" alt="" loading="lazy"></figure>
+<p>上图显示，成功将obj1和obj2的属性复制给了obj3。</p>
+<h3 id="扩展3__proto__属性">扩展3：<code>__proto__</code>属性</h3>
+<p>举例：</p>
+<pre><code class="language-javascript">       let obj1 = {name:'smyhvae'};
+       let obj2 = {};
+
+       obj2.__proto__ = obj1;
+
+       console.log(obj1);
+       console.log(obj2);
+       console.log(obj2.name);
+</code></pre>
+<p>打印结果：</p>
+<figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180404_2251.png" alt="" loading="lazy"></figure>
+<p>上方代码中，obj2本身是没有属性的，但是通过<code>__proto__</code>属性和obj1产生关联，于是就可以获得obj1里的属性。</p>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> </div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">ES6的promise、async等</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                    <div class="copyright">
+                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
+</html>
