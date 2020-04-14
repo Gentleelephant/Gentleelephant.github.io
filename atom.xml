@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-04-04T03:29:18.520Z</updated>
+    <updated>2020-04-14T09:20:39.545Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[JVM面试题]]></title>
+        <id>https://Gentleelephant.github.io/post/jvm-mian-shi-ti/</id>
+        <link href="https://Gentleelephant.github.io/post/jvm-mian-shi-ti/">
+        </link>
+        <updated>2020-04-14T09:19:12.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="font-colorgreen-size51-java类加载机制font"><font color="green" size=5>1. Java类加载机制</font></h4>
+<p>​		<strong>JVM中类的装载是由类加载器（ClassLoader）和它的子类来实现的，Java 中的类加载器是一个重要的Java 运行时系统组件，它负责在运行时查找和装入类文件中的类。由于Java的跨平台性，经过编译的Java 源程序并不是一个可执行程序，而是一个或多个类文件。当Java程序需要使用某个类时,JVM会确保这个类已经被加载、链接（验证、准备和解析）和初始化。类的加载是指把类的.class 文件中的数据读入到内存中，通常是创建一个字节数组读入.class 文件，然后产生与所加载类对应的Class 对象。加载完成后，Class 对象还不完整，所以此时的类还不可用。当类被加载后就进入连接阶段，这一阶段包括验证、准备（为静态变量分配内存并设置默认的初始值）和解析（将符号引用替换为直接引用）三个步骤。最后JVM 对类进行初始化，包括：如果类存在直接的父类并且这个类还没有被初始化，那么就先初始化父类；如果类中存在初始化语句，就依次执行这些初始化语句。类的加载是由类加载器完成的，类加载器包括：根加载器（BootStrap）、扩展加载器（Extension）、系统加载器（System）和用户自定义类加载器（java.lang.ClassLoader 的子类）。从Java  2（JDK  1.2）开始，类加载过程采取了父亲委托机制（PDM）。PDM 更好的保证了Java 平台的安全性，在该机制中，JVM 自带的Bootstrap是根加载器，其他的加载器都有且仅有一个父类加载器。类的加载首先请求父类加载器加载，父类加载器无能为力时才由其子类加载器自行加载。JVM不会向Java 程序提供对Bootstrap 的引用。下面是关于几个类加载器的说明：•Bootstrap：一般用本地代码实现，负责加载JVM 基础核心类库（rt.jar）；•Extension：从java.ext.dirs 系统属性所指定的目录中加载类库，它的父加载器是Bootstrap；•System：又叫应用类加载器，其父类是Extension。它是应用最广泛的类加载器。它从环境变量classpath或者系统属性java.class.path 所指定的目录中记载类，是用户自定义加载器的默认父加载器。</strong></p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200414164814.png" alt="" loading="lazy"></figure>
+<h4 id="font-colorgreen-size52-java内存分配font"><font color="green" size=5>2. Java内存分配</font></h4>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200414171832.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ES6字符串、数组、对象的扩展]]></title>
         <id>https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/</id>
@@ -1506,125 +1519,6 @@ Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.postKeyValueRequest = postKeyValueRequest;
 </code></pre>
 <p>这样在我们想用这些方法的时候是需要用 this. 的形式调用了</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ 项目第二步：前后端接口对接]]></title>
-        <id>https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/</id>
-        <link href="https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/">
-        </link>
-        <updated>2020-03-29T09:07:50.000Z</updated>
-        <content type="html"><![CDATA[<p>网络请求使用axios，首先安装axios，在控制台下输入<code>npm install axios</code>如果在package.js中看到:</p>
-<pre><code class="language-json"> &quot;dependencies&quot;: {
-    &quot;axios&quot;: &quot;^0.19.2&quot;, // axios已经安装成功
-    &quot;core-js&quot;: &quot;^3.6.4&quot;,
-    &quot;element-ui&quot;: &quot;^2.13.0&quot;,
-    &quot;vue&quot;: &quot;^2.6.11&quot;,
-    &quot;vue-router&quot;: &quot;^3.1.5&quot;
-  },
-</code></pre>
-<p>编写网络请求方法：</p>
-<p>api.js</p>
-<pre><code class="language-javascript">import axios from 'axios'
-import {Message} from 'element-ui';
-
-axios.interceptors.response.use(success =&gt; {
-    if (success.status &amp;&amp; success.status == 200 &amp;&amp; success.data.status == 500) {
-        Message.error({message: success.data.msg})
-        return;
-    }
-    return success.data;
-}, error =&gt; {
-    if (error.response.status == 504 || error.response.status == 404) {
-        alert(error.response.data)
-        Message.error(&quot;服务器被吃了&quot;);
-    } else if (error.response.status == 403) {
-        Message.error(&quot;权限不足&quot;)
-    } else if (error.response.status == 401) {
-        Message.error(&quot;没有登陆&quot;)
-    } else {
-
-        if (error.response.data.msg) {
-            Message.error({message: error.response.data.msg});
-        } else {
-            Message.error(&quot;未知错误&quot;);
-        }
-    }
-
-    return;
-})
-
-
-let base = '';
-
-export const postKeyValueRequest = (url, params) =&gt; {
-    return axios({
-        method: 'post',
-        url: url,
-        data: params,
-        transformRequest: [function (data) {
-            let ret = '';
-            for (let i in data) {
-                ret += encodeURIComponent(i) + '=' + encodeURIComponent(data[i]) + '&amp;'
-                // console.log(i + &quot;:&quot; + data[i])
-            }
-            ret = ret.substring(0, ret.length - 1)
-            console.log(ret);
-            return ret;
-        }],
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-}
-
-</code></pre>
-<p>这里编写完成之后还不能使用因为存在跨域问题，因此我们还要编写配置</p>
-<p>vue.config.js(项目目录下)</p>
-<pre><code class="language-javascript">let proxyObj = {};
-proxyObj['/'] = {
-    ws: false,
-    target: 'http://localhost:8081',
-    changeOrigin: true,
-    pathRewrite: {
-        '^/': ''
-    }
-}
-
-module.exports = {
-    devServer: {
-        host: 'localhost',
-        port: 8080,	// 本项目的端口
-        proxy: proxyObj	// 代理配置
-    }
-}
-</code></pre>
-<p>实现submitLogin提交按钮的方法：</p>
-<pre><code class="language-javascript">methods: {
-            submitLogin() {
-                this.$refs.login.validate((valid) =&gt; {
-                    if (valid) {
-                        postKeyValueRequest('/doLogin',this.loginForm).then(resp=&gt;{
-                            if (resp) { // 服务端返回的数据
-                                window.sessionStorage.setItem(&quot;user&quot;,JSON.stringify(resp.obj));
-                                // 页面跳转
-                                this.$router.replace('/home')
-                                // alert(JSON.stringify(resp));
-                            }
-                        })
-                    } else {
-                        this.$message.error(&quot;请输入所有参数&quot;);
-                        return false;
-                    }
-                });
-            }
-        }
-</code></pre>
-<p>测试访问：</p>
-<p>登录页：</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170543.png" alt="" loading="lazy"></figure>
-<p>登陆成功，页面跳转：</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200329170649.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
