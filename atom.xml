@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-04-14T09:20:39.545Z</updated>
+    <updated>2020-07-11T09:11:38.351Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,170 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[RabbitMQ学习]]></title>
+        <id>https://Gentleelephant.github.io/post/rabbitmq-xue-xi/</id>
+        <link href="https://Gentleelephant.github.io/post/rabbitmq-xue-xi/">
+        </link>
+        <updated>2020-07-11T09:08:57.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="安装rabbitmq">安装rabbitmq</h4>
+<p>安装rabbitma我这里采用的是docker方式：</p>
+<p><code>docker run -d --hostname my-rabbit --name aboy-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management</code></p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155812.png" alt="image-20200711155812668" loading="lazy"></figure>
+<p>测试rabbitmq的管理端</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155902.png" alt="image-20200711155902615" loading="lazy"></figure>
+<p>显示这个页面就已经安装成功</p>
+<h4 id="手动创建一个queue">手动创建一个queue</h4>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155602.png" alt="image-20200711145424712" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711170502.png" alt="image-20200711145541980" loading="lazy"></figure>
+<h4 id="手动添加一个exchange">手动添加一个exchange</h4>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155613.png" alt="image-20200711145738048" loading="lazy"></figure>
+<h4 id="exchange和queue进行绑定">exchange和queue进行绑定</h4>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155624.png" alt="image-20200711150314154" loading="lazy"></figure>
+<h4 id="编写配置文件">编写配置文件</h4>
+<pre><code class="language-properties"># rabbitmq基本配置
+spring.rabbitmq.username=guest
+spring.rabbitmq.password=guest
+spring.rabbitmq.addresses=47.97.221.113
+spring.rabbitmq.virtual-host=/
+spring.rabbitmq.port=5672
+
+
+# rabbitmq消费端配置
+# 并发数
+spring.rabbitmq.listener.simple.concurrency=5
+# manual为手工签收，auto为自动签收
+spring.rabbitmq.listener.simple.acknowledge-mode=manual
+spring.rabbitmq.listener.simple.max-concurrency=10
+# 限流
+spring.rabbitmq.listener.simple.prefetch=1
+</code></pre>
+<h4 id="编写代码测试发送消息">编写代码测试发送消息</h4>
+<p>一个简单的实体类</p>
+<pre><code class="language-java">public class Std implements Serializable {
+
+    private String id;
+
+    private String name;
+
+    // 存储消息发送的唯一标识
+    private String messageId;
+
+
+    public Std() {
+
+    }
+
+    public Std(String id, String name, String messageId) {
+        this.id = id;
+        this.name = name;
+        this.messageId = messageId;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+</code></pre>
+<p>消息发送类</p>
+<pre><code class="language-java">@Component
+public class RabbitSender {
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    /**
+     * exchange: rabbitmq的exchange
+     * routingkey:
+     * 消息体内容
+     * correlationData: 消息的唯一id
+     * @param std
+     * @throws Exception
+     */
+    public void sendStd(Std std) throws Exception{
+
+        CorrelationData correlationData = new CorrelationData();
+        correlationData.setId(std.getMessageId());
+        rabbitTemplate.convertAndSend(&quot;std-exchange&quot;, &quot;std.abc&quot;, std, correlationData);
+
+    }
+
+}
+</code></pre>
+<p>测试发送消息</p>
+<pre><code class="language-java">    @Autowired
+    private RabbitSender rabbitSender;
+
+    @Test
+    public void send() throws Exception{
+        Std std = new Std();
+        std.setId(&quot;123456789987&quot;);
+        std.setName(&quot;测试RabbitMQ&quot;);
+        std.setMessageId(System.currentTimeMillis() + &quot;$&quot; + UUID.randomUUID().toString());
+        rabbitSender.sendStd(std);
+    }
+</code></pre>
+<p>发送完毕查看rabbitmq管理端</p>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711162927.png" alt="image-20200711162927205" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711170444.png" alt="image-20200711163059298" loading="lazy"></figure>
+<h4 id="读取消息">读取消息</h4>
+<pre><code class="language-java">@Component
+public class RabbitReveiver {
+
+    /**
+     *
+     * 如果知道消息是什么类型就可以用@Payload把参数定义成什么类型
+     * @param headers 定义消息头
+     * @param std
+     * @param channel：手工签收方式要依赖于Channel。
+     */
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(value = &quot;std-queue&quot;, durable = &quot;true&quot;),
+            exchange = @Exchange(name = &quot;std-exchange&quot;,durable = &quot;true&quot;,type = &quot;topic&quot;),
+            key = &quot;std.*&quot;)
+            )
+    @RabbitHandler // 标识,但并没有绑定,要用RabbitListener绑定
+    public void reveiverStdMessage(@Payload Std std,
+                                   @Headers Map&lt;String,Object&gt; headers,
+                                   Channel channel)throws Exception{
+        // 消费者操作
+        System.out.println(&quot;------------------收到消息,打印ID----------------&quot;);
+        System.out.println(&quot;ID：&quot; + std.getId());
+
+        Long deliveryTag = (Long)headers.get(AmqpHeaders.DELIVERY_TAG);
+        // 手工签收必须要确认
+        // false表示不支持批量签收
+        channel.basicAck(deliveryTag, false);
+    }
+
+}
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711165952.png" alt="image-20200711165952494" loading="lazy"></figure>
+<p>成功读取到消息</p>
+<figure data-type="image" tabindex="10"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711170029.png" alt="image-20200711170029950" loading="lazy"></figure>
+<p>签收之后消息就没了</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[JVM面试题]]></title>
         <id>https://Gentleelephant.github.io/post/jvm-mian-shi-ti/</id>
@@ -1461,64 +1625,6 @@ public class SwaggerConfig {
 }
 </code></pre>
 <p>然后再控制台访问http://localhost:8080/swagger-ui.html就可以了！</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[项目第三步：前端请求方法的封装]]></title>
-        <id>https://Gentleelephant.github.io/post/xiang-mu-di-san-bu-qian-duan-qing-qiu-fang-fa-de-feng-zhuang/</id>
-        <link href="https://Gentleelephant.github.io/post/xiang-mu-di-san-bu-qian-duan-qing-qiu-fang-fa-de-feng-zhuang/">
-        </link>
-        <updated>2020-03-29T09:22:38.000Z</updated>
-        <content type="html"><![CDATA[<p>如果我们不封装方法，那么我们每次都要import，所以我们可以把方法制作成Vue插件</p>
-<p>首先在api.js中编写出剩下的方法：</p>
-<pre><code class="language-javascript">export const postRequest=(url,params)=&gt;{
-    return axios({
-        method: 'post',
-        url: `${url}`,
-        data: params
-    })
-}
-
-export const putRequest=(url,params)=&gt;{
-    return axios({
-        method: 'put',
-        url: `${url}`,
-        data: params
-    })
-}
-
-export const getRequest=(url,params)=&gt;{
-    return axios({
-        method: 'get',
-        url: `${url}`,
-        data: params
-    })
-}
-
-export const deleteRequest=(url,params)=&gt;{
-    return axios({
-        method: 'delete',
-        url: `${url}`,
-        data: params
-    })
-}
-</code></pre>
-<p>然后再main.js中导入这些方法并且制作插件：</p>
-<pre><code class="language-javascript">// 导入
-import {postKeyValueRequest} from &quot;../utils/api&quot;;
-import {postRequest} from &quot;../utils/api&quot;;
-import {putRequest} from &quot;../utils/api&quot;;
-import {getRequest} from &quot;../utils/api&quot;;
-import {deleteRequest} from &quot;../utils/api&quot;;
-
-// 制作插件
-Vue.prototype.postRequest = postRequest;
-Vue.prototype.putRequest = putRequest;
-Vue.prototype.getRequest = getRequest;
-Vue.prototype.deleteRequest = deleteRequest;
-Vue.prototype.postKeyValueRequest = postKeyValueRequest;
-</code></pre>
-<p>这样在我们想用这些方法的时候是需要用 this. 的形式调用了</p>
 ]]></content>
     </entry>
 </feed>
