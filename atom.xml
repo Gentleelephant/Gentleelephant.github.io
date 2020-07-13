@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-07-11T09:11:38.351Z</updated>
+    <updated>2020-07-13T05:48:41.295Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,103 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[线程池简单学习]]></title>
+        <id>https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/</id>
+        <link href="https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/">
+        </link>
+        <updated>2020-07-13T05:46:03.000Z</updated>
+        <content type="html"><![CDATA[<h5 id="线程池介绍">线程池介绍</h5>
+<p><mark><a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485808&amp;idx=1&amp;sn=1013253533d73450cef673aee13267ab&amp;chksm=cea246bbf9d5cfad1c21316340a0ef1609a7457fea4113a1f8d69e8c91e7d9cd6285f5ee1490&amp;token=510053261&amp;lang=zh_CN&amp;scene=21#wechat_redirect">新手也能看懂的线程池学习总结</a></mark></p>
+<!-- ![image-20200713133311614](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133311.png)
+
+![image-20200713133518336](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133518.png)
+
+![image-20200713133539848](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133539.png)
+
+![image-20200713133607716](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133607.png)
+
+![image-20200713133638732](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133638.png)
+
+![image-20200713133653654](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133653.png)
+
+![image-20200713133747243](C:\Users\张鹏\AppData\Roaming\Typora\typora-user-images\image-20200713133747243.png)
+
+![image-20200713133801856](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133801.png)
+
+![image-20200713133837672](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133908.png) -->
+<h5 id="线程池测试首先定义任务实现runnable接口">线程池测试：首先定义任务（实现Runnable接口）</h5>
+<pre><code class="language-java">public class MyRunnable implements Runnable {
+
+    private String command;
+
+    public MyRunnable(String s) {
+        this.command = s;
+    }
+
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + &quot; Start. Time = &quot; + new Date());
+        processCommand();
+        System.out.println(Thread.currentThread().getName() + &quot; End. Time = &quot; + new Date());
+    }
+
+    private void processCommand() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return this.command;
+    }
+}
+</code></pre>
+<h5 id="编写测试类">编写测试类</h5>
+<pre><code class="language-java">public class Demo {
+
+    private static final int CORE_POOL_SIZE = 5;	// 核心线程数线程数定义了最小可以同时运行的线程数量。
+    private static final int MAX_POOL_SIZE = 10;	// 当队列中存放的任务达到队列容量的时候，当前可以同时运行的线程数量变为最大线程数。
+    private static final int QUEUE_CAPACITY = 100;	// 当新任务来的时候会先判断当前运行的线程数量是否达到核心线程数，如果达到的话，信任就会被存放在队列中。
+    private static final long KEEP_ALIVE_TIME = 1L;	// 当线程数大于核心线程数时，多余的空闲线程存活的最长时间
+
+    public static void main(String[] args) {
+
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                CORE_POOL_SIZE,
+                MAX_POOL_SIZE,
+                KEEP_ALIVE_TIME,
+                TimeUnit.SECONDS,
+                new ArrayBlockingQueue&lt;&gt;(QUEUE_CAPACITY),
+                new ThreadPoolExecutor.CallerRunsPolicy()
+        );
+
+        for (int i = 0; i &lt; 10; i++) {
+            // 创建任务
+            Runnable worker = new MyRunnable(&quot;&quot; + i);
+            // 执行任务
+
+            executor.execute(worker);
+        }
+
+        // 终止线程
+        executor.shutdown();
+
+        while (!executor.isTerminated()){
+
+        }
+        System.out.println(&quot;结束所有线程&quot;);
+
+    }
+
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[RabbitMQ学习]]></title>
         <id>https://Gentleelephant.github.io/post/rabbitmq-xue-xi/</id>
@@ -1555,76 +1652,6 @@ set 属性名(){} 用来监视当前属性值变化的回调函数
 <p>将来Javascript的新版本会引入&quot;块级作用域&quot;。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
 <h3 id="新增关键字">新增关键字</h3>
 <p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Swagger的简单使用]]></title>
-        <id>https://Gentleelephant.github.io/post/swagger-de-jian-dan-shi-yong/</id>
-        <link href="https://Gentleelephant.github.io/post/swagger-de-jian-dan-shi-yong/">
-        </link>
-        <updated>2020-04-01T17:20:24.000Z</updated>
-        <content type="html"><![CDATA[<p>SpringBoot继承Swagger只需要导入两个依赖</p>
-<pre><code class="language-xml">		&lt;dependency&gt;
-			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
-			&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
-			&lt;version&gt;2.9.2&lt;/version&gt;
-		&lt;/dependency&gt;
-
-		&lt;dependency&gt;
-			&lt;groupId&gt;io.springfox&lt;/groupId&gt;
-			&lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
-			&lt;version&gt;2.9.2&lt;/version&gt;
-		&lt;/dependency&gt;
-</code></pre>
-<p>然后在编写一个Swagger的配置类，Swagger是用Docket对象来进行配置的，所有的配置都在Docket中进行设置</p>
-<pre><code class="language-java">@Configuration
-public class SwaggerConfig {
-
-    /*配置Swagger的Docket实例*/
-    @Bean
-    public Docket docket(Environment environment){
-
-        // 设置要显示的Swagger环境,可以根据不同的环境设置Swagger是否显示
-        Profiles dev = Profiles.of(&quot;dev&quot;);
-        // 通过environment.acceptsProfiles判断是否处在自己设定的环境中
-        boolean flag = environment.acceptsProfiles(dev);
-        
-        return new Docket(DocumentationType.SPRING_WEB)
-                .apiInfo(apiInfo())
-//                .enable(flag)       是否启动Swagger，如果为false则不能访问
-                    .select()
-                    // RequestHandlerSelectors：配置要扫描接口的方式
-                    // basePackage：基于某个包进行扫描
-                    // any：扫描全部
-                    // none：不扫描
-                    // withClassAnnotation：扫描类上的注解
-                    // .apis(RequestHandlerSelectors.basePackage(&quot;com.zhang.controller&quot;))
-                    .apis(RequestHandlerSelectors.withMethodAnnotation(GetMapping.class))
-                    // path() 过滤某路径
-                    //.paths(PathSelectors.ant(&quot;com&quot;))
-                    .build();
-    }
-
-    // 当前Api的一些基本信息
-    @Bean
-    public ApiInfo apiInfo(){
-        // 作者信息
-        Contact contact = new Contact(&quot;codezp&quot;, &quot;http://www.codezp.club&quot;, &quot;moon0hello@gmail&quot;);  
-
-        return new ApiInfo(
-                &quot;Vhr Api Documentation&quot;,
-                &quot;Vhr项目的API文档&quot;,
-                &quot;1.0&quot;,
-                &quot;&quot;,
-                contact,
-                &quot;Apache 2.0&quot;,
-                &quot;&quot;,
-                new ArrayList&lt;VendorExtension&gt;());
-    }
-
-}
-</code></pre>
-<p>然后再控制台访问http://localhost:8080/swagger-ui.html就可以了！</p>
 ]]></content>
     </entry>
 </feed>
