@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-07-13T05:48:41.295Z</updated>
+    <updated>2020-07-16T06:27:26.955Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,243 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[实现简陋版本的HashMap]]></title>
+        <id>https://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/</id>
+        <link href="https://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/">
+        </link>
+        <updated>2020-07-16T06:25:35.000Z</updated>
+        <content type="html"><![CDATA[<p><mark>非泛型</mark></p>
+<pre><code class="language-java">// HashMap中存储的节点类型
+public class Node {
+
+    int hash;
+    Object key;
+    Object value;
+    Node next;
+}
+</code></pre>
+<pre><code class="language-java">// 实现类
+public class MyHash01 {
+
+    public static int LENGTH = 16;
+
+
+    Node[] table;       // 位桶数组
+    int size;           // 存放的键值对个数
+
+    public MyHash01() {
+        // 长度一般要是2的整数次幂
+        table = new Node[LENGTH];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(&quot;{&quot;);
+        for (Node node : table) {
+            while (node != null){
+                sb.append(node.key + &quot;:&quot; + node.value + &quot;,&quot;);
+                node = node.next;
+            }
+        }
+        sb.setCharAt(sb.length()-1, '}');
+        return sb.toString();
+    }
+
+
+    public Object get(Object key){
+        int hash = this.hash(key.hashCode(), table.length);
+        if (table[hash] != null){
+            Node temp = table[hash];
+            while (temp != null){
+                if (temp.key.equals(key)){
+                    // 如果两个key相等，就查找到了
+                    System.out.println(&quot;查找到了:&quot;+temp.value);
+                    return temp.value;
+                }else {
+                    temp = temp.next;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public void put(Object key, Object value){
+
+        /**
+         * TODO：数组扩容
+         */
+
+        Node node = new Node();
+        node.hash = this.hash(key.hashCode(), table.length);
+        node.key = key;
+        node.value = value;
+        node.next = null;
+
+        Node temp = table[node.hash];
+        Node lastNode = null;
+        // 如果此节点为空，直接添加
+        if (temp == null){
+            table[node.hash] = node;
+            size++;
+        }else {
+            // 如果此节点已经有了值，就遍历对应的链表
+            while (temp != null){
+                // key重复就覆盖value
+                if (temp.key.equals(key)){
+                    System.out.println(&quot;key已经存在&quot;);
+                    temp.value = value;
+                    return;
+                }else {
+                    // key不重复
+                    // 把最后一个结点的地址保存下来
+                    if (temp.next == null){
+                        lastNode = temp;
+                    }
+                    temp = temp.next;
+                }
+            }
+            // 把要添加的节点赋值到链表的最后
+            lastNode.next = node;
+            size++;
+        }
+    }
+
+    public int hash(int v,int length){
+        System.out.println(&quot;hash:&quot; + (v&amp;(length - 1)));
+        return v&amp;(length - 1);
+    }
+
+    public static void main(String[] args) {
+
+        MyHash01 myHash01 = new MyHash01();
+
+        myHash01.put(53, &quot;aaa&quot;);
+        myHash01.put(69, &quot;bbb&quot;);
+        myHash01.put(85, &quot;ccc&quot;);
+        myHash01.get(85);
+        System.out.println(&quot;size:&quot; + myHash01.size);
+        System.out.println(myHash01.toString());
+//        System.out.println(&quot;结束&quot;);
+    }
+}
+</code></pre>
+<p><mark>泛型版本</mark></p>
+<pre><code class="language-java">public class Node1&lt;K,V&gt; {
+    int hash;
+    K key;
+    V value;
+    Node1 next;
+}
+</code></pre>
+<pre><code class="language-java">public class MyHash02&lt;K,V&gt; {
+    public static int LENGTH = 16;
+
+
+    Node1&lt;K,V&gt;[] table;       // 位桶数组
+    int size;           // 存放的键值对个数
+
+    public MyHash02() {
+        // 长度一般要是2的整数次幂
+        table = new Node1[LENGTH];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(&quot;{&quot;);
+        for (Node1 Node1 : table) {
+            while (Node1 != null){
+                sb.append(Node1.key + &quot;:&quot; + Node1.value + &quot;,&quot;);
+                Node1 = Node1.next;
+            }
+        }
+        sb.setCharAt(sb.length()-1, '}');
+        return sb.toString();
+    }
+
+
+    public V get(K key){
+        int hash = this.hash(key.hashCode(), table.length);
+        if (table[hash] != null){
+            Node1 temp = table[hash];
+            while (temp != null){
+                if (temp.key.equals(key)){
+                    // 如果两个key相等，就查找到了
+                    System.out.println(&quot;查找到了:&quot;+temp.value);
+                    return (V)temp.value;
+                }else {
+                    temp = temp.next;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public void put(K key, V value){
+
+
+        /**
+         * TODO：数组扩容
+         */
+
+        Node1 node1 = new Node1();
+        node1.hash = this.hash(key.hashCode(), table.length);
+        node1.key = key;
+        node1.value = value;
+        node1.next = null;
+
+        Node1 temp = table[node1.hash];
+        Node1 lastNode1 = null;
+        // 如果此节点为空，直接添加
+        if (temp == null){
+            table[node1.hash] = node1;
+            size++;
+        }else {
+            // 如果此节点已经有了值，就遍历对应的链表
+            while (temp != null){
+                // key重复就覆盖value
+                if (temp.key.equals(key)){
+                    System.out.println(&quot;key已经存在&quot;);
+                    temp.value = value;
+                    return;
+                }else {
+                    // key不重复
+                    // 把最后一个结点的地址保存下来
+                    if (temp.next == null){
+                        lastNode1 = temp;
+                    }
+                    temp = temp.next;
+                }
+            }
+            // 把要添加的节点赋值到链表的最后
+            lastNode1.next = node1;
+            size++;
+        }
+    }
+
+    public int hash(int v,int length){
+        System.out.println(&quot;hash:&quot; + (v&amp;(length - 1)));
+        return v&amp;(length - 1);
+    }
+
+    public static void main(String[] args) {
+
+        MyHash02&lt;Integer,String&gt; myHash02 = new MyHash02&lt;&gt;();
+
+        myHash02.put(54, &quot;aaa&quot;);
+        myHash02.put(65, &quot;bbb&quot;);
+        myHash02.put(88, &quot;xxx&quot;);
+        myHash02.get(88);
+        System.out.println(&quot;size:&quot; + myHash02.size);
+        System.out.println(myHash02.toString());
+//        System.out.println(&quot;结束&quot;);
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[线程池简单学习]]></title>
         <id>https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/</id>
@@ -1555,103 +1792,6 @@ set 属性名(){} 用来监视当前属性值变化的回调函数
 <p><strong>分析</strong>：</p>
 <p>为什么ES5中要加入bind()方法来改变this的指向呢？因为bind()不会立即调用当前函数。</p>
 <p>bind()通常使用在回调函数中，因为回调函数并不会立即调用。如果你希望在回调函数中改变this，不妨使用bind()。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ES5中的严格模式]]></title>
-        <id>https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/</id>
-        <link href="https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/">
-        </link>
-        <updated>2020-04-04T03:20:23.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="es的几个重要版本">ES的几个重要版本</h2>
-<ul>
-<li>
-<p>ES5 : 09年发布。</p>
-</li>
-<li>
-<p>ES6(ES2015) : 2015年发布，也称为ECMA2015。</p>
-</li>
-<li>
-<p>ES7(ES2016) : 2016年发布，也称为ECMA2016  (变化不大)。</p>
-</li>
-</ul>
-<h2 id="严格模式的理解">严格模式的理解</h2>
-<h3 id="概念">概念</h3>
-<p><strong>理解</strong>：除了正常运行模式(混杂模式)，ES5添加了第二种运行模式：&quot;严格模式&quot;（strict mode）。</p>
-<p>顾名思义，这种模式使得Javascript在更严格的语法条件下运行。</p>
-<p><strong>目的</strong>：</p>
-<ul>
-<li>
-<p>消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为</p>
-</li>
-<li>
-<p>消除代码运行的一些不安全之处，为代码的安全运行保驾护航</p>
-</li>
-<li>
-<p>为未来新版本的Javascript做好铺垫</p>
-</li>
-</ul>
-<h3 id="使用">使用</h3>
-<ul>
-<li>
-<p>针对整个脚本文件：将<code>use strict</code>放在脚本文件的第一行，则整个脚本文件将以严格模式运行。</p>
-</li>
-<li>
-<p>针对单个函数：将<code>use strict</code>放在函数体的第一行，则整个函数以严格模式运行。</p>
-</li>
-</ul>
-<p>PS：如果浏览器不支持，则这句话只解析为一条简单的语句, 没有任何副作用。</p>
-<p>脚本文件的变通写法：因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
-<h3 id="语法和行为改变">语法和行为改变</h3>
-<ul>
-<li>
-<p>必须用var声明变量</p>
-</li>
-<li>
-<p>禁止自定义的函数中的this指向window</p>
-</li>
-<li>
-<p>对象不能有重名的属性</p>
-</li>
-</ul>
-<h2 id="严格模式和普通模式的区别">严格模式和普通模式的区别</h2>
-<blockquote>
-<p>下面列举几条严格模式的内容。</p>
-</blockquote>
-<h3 id="全局变量显式声明">全局变量显式声明</h3>
-<p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
-<h3 id="禁止this关键字指向全局对象">禁止this关键字指向全局对象：</h3>
-<pre><code class="language-javascript">        var foo = function () {
-            console.log(this);
-        }
-
-        foo();
-</code></pre>
-<p>上方代码中，普通模式打印的是window。严格模式下打印的是undefined。</p>
-<h3 id="构造函数必须通过new实例化对象">构造函数必须通过new实例化对象</h3>
-<p>构造函数必须通过new实例化对象，否则报错。因为this为undefined，此时无法设置属性。</p>
-<p>比如说：</p>
-<pre><code>        var Cat = function (name) {
-            this.name = name;
-        }
-
-        Cat('haha');
-</code></pre>
-<p>上方代码中，如果在严格模式下，则会报错。</p>
-<h3 id="属性相关">属性相关</h3>
-<p>普通模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
-<p>普通模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，多个重名的参数属于语法错误。</p>
-<p>比如下面这样的代码：</p>
-<pre><code class="language-javascript">	var obj = {
-		username: 'smyh';
-		username: 'vae'
-	}
-</code></pre>
-<p>上面的代码，在严格模式下属于语法错误，因为有重名的属性。</p>
-<h3 id="函数必须声明在顶层">函数必须声明在顶层</h3>
-<p>将来Javascript的新版本会引入&quot;块级作用域&quot;。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
-<h3 id="新增关键字">新增关键字</h3>
-<p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
 ]]></content>
     </entry>
 </feed>

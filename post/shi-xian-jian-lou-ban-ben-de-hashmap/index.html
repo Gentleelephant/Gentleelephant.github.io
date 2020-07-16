@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>实现简陋版本的HashMap | Aboy</title>
+        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">文章</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">分类</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">实现简陋版本的HashMap</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-07-16 14:25:35">2020-07-16 / 5 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p><mark>非泛型</mark></p>
+<pre><code class="language-java">// HashMap中存储的节点类型
+public class Node {
+
+    int hash;
+    Object key;
+    Object value;
+    Node next;
+}
+</code></pre>
+<pre><code class="language-java">// 实现类
+public class MyHash01 {
+
+    public static int LENGTH = 16;
+
+
+    Node[] table;       // 位桶数组
+    int size;           // 存放的键值对个数
+
+    public MyHash01() {
+        // 长度一般要是2的整数次幂
+        table = new Node[LENGTH];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(&quot;{&quot;);
+        for (Node node : table) {
+            while (node != null){
+                sb.append(node.key + &quot;:&quot; + node.value + &quot;,&quot;);
+                node = node.next;
+            }
+        }
+        sb.setCharAt(sb.length()-1, '}');
+        return sb.toString();
+    }
+
+
+    public Object get(Object key){
+        int hash = this.hash(key.hashCode(), table.length);
+        if (table[hash] != null){
+            Node temp = table[hash];
+            while (temp != null){
+                if (temp.key.equals(key)){
+                    // 如果两个key相等，就查找到了
+                    System.out.println(&quot;查找到了:&quot;+temp.value);
+                    return temp.value;
+                }else {
+                    temp = temp.next;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public void put(Object key, Object value){
+
+        /**
+         * TODO：数组扩容
+         */
+
+        Node node = new Node();
+        node.hash = this.hash(key.hashCode(), table.length);
+        node.key = key;
+        node.value = value;
+        node.next = null;
+
+        Node temp = table[node.hash];
+        Node lastNode = null;
+        // 如果此节点为空，直接添加
+        if (temp == null){
+            table[node.hash] = node;
+            size++;
+        }else {
+            // 如果此节点已经有了值，就遍历对应的链表
+            while (temp != null){
+                // key重复就覆盖value
+                if (temp.key.equals(key)){
+                    System.out.println(&quot;key已经存在&quot;);
+                    temp.value = value;
+                    return;
+                }else {
+                    // key不重复
+                    // 把最后一个结点的地址保存下来
+                    if (temp.next == null){
+                        lastNode = temp;
+                    }
+                    temp = temp.next;
+                }
+            }
+            // 把要添加的节点赋值到链表的最后
+            lastNode.next = node;
+            size++;
+        }
+    }
+
+    public int hash(int v,int length){
+        System.out.println(&quot;hash:&quot; + (v&amp;(length - 1)));
+        return v&amp;(length - 1);
+    }
+
+    public static void main(String[] args) {
+
+        MyHash01 myHash01 = new MyHash01();
+
+        myHash01.put(53, &quot;aaa&quot;);
+        myHash01.put(69, &quot;bbb&quot;);
+        myHash01.put(85, &quot;ccc&quot;);
+        myHash01.get(85);
+        System.out.println(&quot;size:&quot; + myHash01.size);
+        System.out.println(myHash01.toString());
+//        System.out.println(&quot;结束&quot;);
+    }
+}
+</code></pre>
+<p><mark>泛型版本</mark></p>
+<pre><code class="language-java">public class Node1&lt;K,V&gt; {
+    int hash;
+    K key;
+    V value;
+    Node1 next;
+}
+</code></pre>
+<pre><code class="language-java">public class MyHash02&lt;K,V&gt; {
+    public static int LENGTH = 16;
+
+
+    Node1&lt;K,V&gt;[] table;       // 位桶数组
+    int size;           // 存放的键值对个数
+
+    public MyHash02() {
+        // 长度一般要是2的整数次幂
+        table = new Node1[LENGTH];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(&quot;{&quot;);
+        for (Node1 Node1 : table) {
+            while (Node1 != null){
+                sb.append(Node1.key + &quot;:&quot; + Node1.value + &quot;,&quot;);
+                Node1 = Node1.next;
+            }
+        }
+        sb.setCharAt(sb.length()-1, '}');
+        return sb.toString();
+    }
+
+
+    public V get(K key){
+        int hash = this.hash(key.hashCode(), table.length);
+        if (table[hash] != null){
+            Node1 temp = table[hash];
+            while (temp != null){
+                if (temp.key.equals(key)){
+                    // 如果两个key相等，就查找到了
+                    System.out.println(&quot;查找到了:&quot;+temp.value);
+                    return (V)temp.value;
+                }else {
+                    temp = temp.next;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public void put(K key, V value){
+
+
+        /**
+         * TODO：数组扩容
+         */
+
+        Node1 node1 = new Node1();
+        node1.hash = this.hash(key.hashCode(), table.length);
+        node1.key = key;
+        node1.value = value;
+        node1.next = null;
+
+        Node1 temp = table[node1.hash];
+        Node1 lastNode1 = null;
+        // 如果此节点为空，直接添加
+        if (temp == null){
+            table[node1.hash] = node1;
+            size++;
+        }else {
+            // 如果此节点已经有了值，就遍历对应的链表
+            while (temp != null){
+                // key重复就覆盖value
+                if (temp.key.equals(key)){
+                    System.out.println(&quot;key已经存在&quot;);
+                    temp.value = value;
+                    return;
+                }else {
+                    // key不重复
+                    // 把最后一个结点的地址保存下来
+                    if (temp.next == null){
+                        lastNode1 = temp;
+                    }
+                    temp = temp.next;
+                }
+            }
+            // 把要添加的节点赋值到链表的最后
+            lastNode1.next = node1;
+            size++;
+        }
+    }
+
+    public int hash(int v,int length){
+        System.out.println(&quot;hash:&quot; + (v&amp;(length - 1)));
+        return v&amp;(length - 1);
+    }
+
+    public static void main(String[] args) {
+
+        MyHash02&lt;Integer,String&gt; myHash02 = new MyHash02&lt;&gt;();
+
+        myHash02.put(54, &quot;aaa&quot;);
+        myHash02.put(65, &quot;bbb&quot;);
+        myHash02.put(88, &quot;xxx&quot;);
+        myHash02.get(88);
+        System.out.println(&quot;size:&quot; + myHash02.size);
+        System.out.println(myHash02.toString());
+//        System.out.println(&quot;结束&quot;);
+    }
+}
+</code></pre>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> </div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/">线程池简单学习</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                    <div class="copyright">
+                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
+</html>
