@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-07-16T06:27:26.955Z</updated>
+    <updated>2020-07-30T03:04:33.895Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,36 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[快速排序]]></title>
+        <id>https://Gentleelephant.github.io/post/kuai-su-pai-xu/</id>
+        <link href="https://Gentleelephant.github.io/post/kuai-su-pai-xu/">
+        </link>
+        <updated>2020-07-30T03:00:52.000Z</updated>
+        <content type="html"><![CDATA[<pre><code class="language-java">private void quickSort(int[] nums, int start, int end){
+        if (start &gt;= end) {
+            return;
+        }
+        int i = start;
+        int j = end;
+        int key = nums[i];
+        while (i &lt; j) {
+            while (i &lt; j &amp;&amp; nums[j] &gt;= key) {
+                j--;
+            }
+            nums[i] = nums[j];
+            while (i &lt; j &amp;&amp; nums[i] &lt;= key) {
+                i++;
+            }
+            nums[j] = nums[i];
+        }
+        nums[i] = key;
+        quickSort(nums, start, i - 1);
+        quickSort(nums, i + 1, end);
+    }
+    ```</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[实现简陋版本的HashMap]]></title>
         <id>https://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/</id>
@@ -1612,186 +1642,6 @@ console.log(b);
 
 </code></pre>
 <p>当我们打开网页后，就可以在浏览器的控制台，看到代码的输出结果。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ES5中的一些扩展]]></title>
-        <id>https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/</id>
-        <link href="https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/">
-        </link>
-        <updated>2020-04-04T03:21:49.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="json-对象">JSON 对象</h2>
-<p>1、js对象(数组) --&gt; json对象(数组)：</p>
-<pre><code class="language-javascript">	JSON.stringify(obj/arr)
-</code></pre>
-<p>2、json对象(数组) --&gt; js对象(数组)：</p>
-<pre><code class="language-javascript">	JSON.parse(json)
-</code></pre>
-<p>上面这两个方法是ES5中提供的。</p>
-<p>我们要记住，我们通常说的“json字符串”，只有两种：<strong>json对象、json数组</strong>。</p>
-<p><code>typeof json字符串</code>的返回结果是string。</p>
-<h2 id="object的扩展">Object的扩展</h2>
-<p>ES5给Object扩展了一些静态方法，常用的有2个，我们接下来讲解。</p>
-<h3 id="方法一">方法一</h3>
-<pre><code class="language-javascript">	Object.create(prototype, [descriptors])
-</code></pre>
-<p>作用: 以指定对象为原型，创建新的对象。同时，第二个参数可以为为新的对象添加新的属性，并对此属性进行描述。</p>
-<p><strong>举例1</strong>：（没有第二个参数时）</p>
-<pre><code class="language-javascript">    var obj1 = {username: 'smyhvae', age: 26};
-    var obj2 = {address:'shenzhen'};
-
-    obj2 = Object.create(obj1);
-    console.log(obj2);
-</code></pre>
-<p>打印结果：</p>
-<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180401_2150.png" alt="" loading="lazy"></figure>
-<p>我们发现，obj1成为了obj2的原型。</p>
-<p><strong>举例2</strong>：（有第二个参数时）</p>
-<p>第二个参数可以给新的对象添加新的属性。我们修改上面的代码，尝试给obj2添加新属性<code>sex</code>：</p>
-<pre><code class="language-javascript">    var obj1 = {username: 'smyhvae', age: 26};
-    var obj2 = {address: 'shenzhen'};
-
-    obj2 = Object.create(obj1, {
-        sex: {//给obj2添加新的属性`sex`。注意，这一行的冒号不要漏掉
-            value: '男',  //通过value关键字设置sex的属性值
-            writable: false,
-            configurable: true,
-            enumerable: true
-        }
-    });
-
-    console.log(obj2);
-
-</code></pre>
-<p>上方代码中，我们通过第5行的sex给obj2设置了一个新的属性<code>sex</code>，但是要通过<code>value</code>来设置属性值（第6行）。</p>
-<p>设置完属性值后，这个属性值默认是不可修改的，要通过<code>writable</code>来设置。总而言之，这几个关键字的解释如下：</p>
-<ul>
-<li><code>value</code>：设置属性值。</li>
-<li><code>writable</code>：标识当前属性值是否可修改。如果不写的话，默认为false，不可修改。</li>
-<li><code>configurable</code>：标识当前属性是否可以被删除。默认为false，不可删除。</li>
-<li><code>enumerable</code>：标识当前属性是否能用 for in 枚举。 默认为false，不可。</li>
-</ul>
-<h4 id="单独设置属性">单独设置属性</h4>
-<pre><code>Object.defineProperty(obj2, 'sex', {
-        value: 'cc',
-        writable: true,
-        configurable: true,
-        enumerable: true,
-      });
-</code></pre>
-<h3 id="方法二">方法二</h3>
-<blockquote>
-<p>这个方法有点难理解。</p>
-</blockquote>
-<pre><code class="language-javascript">	Object.defineProperties(object, descriptors)
-</code></pre>
-<p><strong>作用</strong>：为指定对象定义扩展多个属性。</p>
-<p>代码举例：</p>
-<pre><code class="language-javascript">    var obj2 = {
-        firstName : 'smyh',
-        lastName : 'vae'
-    };
-    Object.defineProperties(obj2, {
-        fullName : {
-            get : function () {
-                return this.firstName + '-' + this.lastName
-            },
-            set : function (data) {  //监听扩展属性，当扩展属性发生变化的时候自动调用，自动调用后将变化的值作为实参注入到set函数
-                var names = data.split('-');
-                this.firstName = names[0];
-                this.lastName = names[1];
-            }
-        }
-    });
-    console.log(obj2.fullName);
-    obj2.firstName = 'tim';
-    obj2.lastName = 'duncan';
-    console.log(obj2.fullName);
-    obj2.fullName = 'kobe-bryant';
-    console.log(obj2.fullName);
-</code></pre>
-<ul>
-<li>
-<p>get ：用来获取当前属性值的回调函数</p>
-</li>
-<li>
-<p>set ：修改当前属性值得触发的回调函数，并且实参即为修改后的值</p>
-</li>
-</ul>
-<p>存取器属性：setter,getter一个用来存值，一个用来取值。</p>
-<h2 id="object的扩展二">Object的扩展（二）</h2>
-<p>obj对象本身就自带了两个方法。格式如下：</p>
-<pre><code class="language-javascript">get 属性名(){} 用来得到当前属性值的回调函数
-
-set 属性名(){} 用来监视当前属性值变化的回调函数
-
-</code></pre>
-<p>举例如下：</p>
-<pre><code class="language-javascript">    var obj = {
-        firstName : 'kobe',
-        lastName : 'bryant',
-        get fullName(){
-            return this.firstName + ' ' + this.lastName
-        },
-        set fullName(data){
-            var names = data.split(' ');
-            this.firstName = names[0];
-            this.lastName = names[1];
-        }
-    };
-    console.log(obj.fullName);
-    obj.fullName = 'curry stephen';
-    console.log(obj.fullName);
-</code></pre>
-<h2 id="数组的扩展">数组的扩展</h2>
-<blockquote>
-<p>下面讲的这几个方法，都是给数组的实例用的。</p>
-</blockquote>
-<blockquote>
-<p>下面提到的数组的这五个方法，更详细的内容，可以看《03-JavaScript基础/15-数组的常见方法.md》</p>
-</blockquote>
-<p><strong>方法1</strong>：</p>
-<pre><code class="language-javascript">	Array.prototype.indexOf(value)
-</code></pre>
-<p>作用：获取 value 在数组中的第一个下标。</p>
-<p><strong>方法2</strong>：</p>
-<pre><code class="language-javascript">	Array.prototype.lastIndexOf(value)
-</code></pre>
-<p>作用：获取 value 在数组中的最后一个下标。</p>
-<p><strong>方法3</strong>：遍历数组</p>
-<pre><code class="language-javascript">	Array.prototype.forEach(function(item, index){})
-</code></pre>
-<p><strong>方法4</strong>：</p>
-<pre><code class="language-javascript">	Array.prototype.map(function(item, index){})
-</code></pre>
-<p>作用：遍历数组返回一个新的数组，返回的是<strong>加工之后</strong>的新数组。</p>
-<p><strong>方法5</strong>：</p>
-<pre><code class="language-javascript">	Array.prototype.filter(function(item, index){})
-</code></pre>
-<p>作用：遍历过滤出一个新的子数组，返回条件为true的值。</p>
-<h2 id="函数function的扩展bind">函数function的扩展：bind()</h2>
-<blockquote>
-<p>ES5中新增了<code>bind()</code>函数来改变this的指向。</p>
-</blockquote>
-<pre><code class="language-javascript">	Function.prototype.bind(obj)
-</code></pre>
-<p>作用：将函数内的this绑定为obj, 并将函数返回。</p>
-<p><strong>面试题</strong>: call()、apply()和bind()的区别：</p>
-<ul>
-<li>
-<p>都能改变this的指向</p>
-</li>
-<li>
-<p>call()/apply()是<strong>立即调用函数</strong></p>
-</li>
-<li>
-<p>bind()：绑定完this后，不会立即调用当前函数，而是<strong>将函数返回</strong>，因此后面还需要再加<code>()</code>才能调用。</p>
-</li>
-</ul>
-<p>PS：bind()传参的方式和call()一样。</p>
-<p><strong>分析</strong>：</p>
-<p>为什么ES5中要加入bind()方法来改变this的指向呢？因为bind()不会立即调用当前函数。</p>
-<p>bind()通常使用在回调函数中，因为回调函数并不会立即调用。如果你希望在回调函数中改变this，不妨使用bind()。</p>
 ]]></content>
     </entry>
 </feed>
