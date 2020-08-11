@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-08-11T16:03:28.175Z</updated>
+    <updated>2020-08-11T16:11:10.821Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -47,6 +47,62 @@
         }
         Arrays.sort(nums,j,nums.length);
 
+    }
+}
+</code></pre>
+<p><strong>算法题：给定任意一个自然数，获取它重新排列后，下一个比它大的自然数</strong></p>
+<pre><code class="language-java">public class Problem031 {
+
+    public static void main(String[] args) {
+
+        int n = 1243;
+        int length = String.valueOf(n).length();
+        int[] nums = new int[length];
+        // 把自然数分割成一个一个的数字
+        while (n != 0) {
+            nums[--length] = n % 10;
+            n = n / 10;
+        }
+        for (int num : nums) {
+            System.out.println(num);
+        }
+
+        System.out.println(&quot;======================&quot;);
+        method(nums);
+
+        for (int num : nums) {
+            System.out.println(num);
+        }
+
+    }
+
+    public static void method(int[] nums) {
+        if (nums.length == 0 || nums.length == 1) {
+            return;
+        }
+        int i = nums.length - 2;
+        int j = nums.length - 1;
+        int k = nums.length - 1;
+        // 查找第一个连续递增序列（2个数的序列）
+        while (i &gt;= 0) {
+            if (nums[i] &gt;= nums[j]) {
+                i--;
+                j--;
+            } else {
+                break;
+            }
+        }
+        if (i &gt;= 0) {
+            while (nums[i] &gt; nums[k]) {
+                k--;
+            }
+            // 进行交换
+            int t = nums[i];
+            nums[i] = nums[k];
+            nums[k] = t;
+        }
+        // 把后半段进行从小到大排序
+        Arrays.sort(nums, j, nums.length);
     }
 }
 </code></pre>
