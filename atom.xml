@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://Gentleelephant.github.io</id>
+    <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-08-14T11:31:04.325Z</updated>
+    <updated>2020-08-14T11:36:32.017Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://Gentleelephant.github.io"/>
-    <link rel="self" href="http://Gentleelephant.github.io/atom.xml"/>
+    <link rel="alternate" href="https://Gentleelephant.github.io"/>
+    <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>http://Gentleelephant.github.io/images/avatar.png</logo>
-    <icon>http://Gentleelephant.github.io/favicon.ico</icon>
+    <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
+    <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
     <entry>
         <title type="html"><![CDATA[LeetCode: 31.下一个排列]]></title>
-        <id>http://Gentleelephant.github.io/post/leetcode-31xia-yi-ge-pai-lie/</id>
-        <link href="http://Gentleelephant.github.io/post/leetcode-31xia-yi-ge-pai-lie/">
+        <id>https://Gentleelephant.github.io/post/leetcode-31xia-yi-ge-pai-lie/</id>
+        <link href="https://Gentleelephant.github.io/post/leetcode-31xia-yi-ge-pai-lie/">
         </link>
         <updated>2020-08-11T16:02:25.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200811235640.png" alt="image-20200811235548154" loading="lazy"></figure>
@@ -110,8 +110,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[快速排序]]></title>
-        <id>http://Gentleelephant.github.io/post/kuai-su-pai-xu/</id>
-        <link href="http://Gentleelephant.github.io/post/kuai-su-pai-xu/">
+        <id>https://Gentleelephant.github.io/post/kuai-su-pai-xu/</id>
+        <link href="https://Gentleelephant.github.io/post/kuai-su-pai-xu/">
         </link>
         <updated>2020-07-30T03:00:52.000Z</updated>
         <content type="html"><![CDATA[<pre><code class="language-java">private void quickSort(int[] nums, int start, int end){
@@ -140,8 +140,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[实现简陋版本的HashMap]]></title>
-        <id>http://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/</id>
-        <link href="http://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/">
+        <id>https://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/</id>
+        <link href="https://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/">
         </link>
         <updated>2020-07-16T06:25:35.000Z</updated>
         <content type="html"><![CDATA[<p><mark>非泛型</mark></p>
@@ -377,8 +377,8 @@ public class MyHash01 {
     </entry>
     <entry>
         <title type="html"><![CDATA[线程池简单学习]]></title>
-        <id>http://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/</id>
-        <link href="http://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/">
+        <id>https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/</id>
+        <link href="https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/">
         </link>
         <updated>2020-07-13T05:46:03.000Z</updated>
         <content type="html"><![CDATA[<h5 id="线程池介绍">线程池介绍</h5>
@@ -474,8 +474,8 @@ public class MyHash01 {
     </entry>
     <entry>
         <title type="html"><![CDATA[RabbitMQ学习]]></title>
-        <id>http://Gentleelephant.github.io/post/rabbitmq-xue-xi/</id>
-        <link href="http://Gentleelephant.github.io/post/rabbitmq-xue-xi/">
+        <id>https://Gentleelephant.github.io/post/rabbitmq-xue-xi/</id>
+        <link href="https://Gentleelephant.github.io/post/rabbitmq-xue-xi/">
         </link>
         <updated>2020-07-11T09:08:57.000Z</updated>
         <content type="html"><![CDATA[<h4 id="安装rabbitmq">安装rabbitmq</h4>
@@ -638,8 +638,8 @@ public class RabbitReveiver {
     </entry>
     <entry>
         <title type="html"><![CDATA[JVM面试题]]></title>
-        <id>http://Gentleelephant.github.io/post/jvm-mian-shi-ti/</id>
-        <link href="http://Gentleelephant.github.io/post/jvm-mian-shi-ti/">
+        <id>https://Gentleelephant.github.io/post/jvm-mian-shi-ti/</id>
+        <link href="https://Gentleelephant.github.io/post/jvm-mian-shi-ti/">
         </link>
         <updated>2020-04-14T09:19:12.000Z</updated>
         <content type="html"><![CDATA[<h4 id="font-colorgreen-size51-java类加载机制font"><font color="green" size=5>1. Java类加载机制</font></h4>
@@ -651,8 +651,8 @@ public class RabbitReveiver {
     </entry>
     <entry>
         <title type="html"><![CDATA[ES6字符串、数组、对象的扩展]]></title>
-        <id>http://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/</id>
-        <link href="http://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/">
+        <id>https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/">
         </link>
         <updated>2020-04-04T03:25:44.000Z</updated>
         <content type="html"><![CDATA[<h2 id="字符串的扩展">字符串的扩展</h2>
@@ -815,8 +815,8 @@ public class RabbitReveiver {
     </entry>
     <entry>
         <title type="html"><![CDATA[ES6的promise、async等]]></title>
-        <id>http://Gentleelephant.github.io/post/es6-de-promiseasync-deng/</id>
-        <link href="http://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">
+        <id>https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">
         </link>
         <updated>2020-04-04T03:24:49.000Z</updated>
         <content type="html"><![CDATA[<h2 id="前言">前言</h2>
@@ -1081,8 +1081,8 @@ public class RabbitReveiver {
     </entry>
     <entry>
         <title type="html"><![CDATA[ES6函数扩展]]></title>
-        <id>http://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/</id>
-        <link href="http://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/">
+        <id>https://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/">
         </link>
         <updated>2020-04-04T03:24:11.000Z</updated>
         <content type="html"><![CDATA[<h2 id="前言">前言</h2>
@@ -1278,8 +1278,8 @@ fn(1, 2, 3); //方法中定义了四个参数，但只引用了三个参数，ES
     </entry>
     <entry>
         <title type="html"><![CDATA[ES6变量]]></title>
-        <id>http://Gentleelephant.github.io/post/es6-bian-liang/</id>
-        <link href="http://Gentleelephant.github.io/post/es6-bian-liang/">
+        <id>https://Gentleelephant.github.io/post/es6-bian-liang/</id>
+        <link href="https://Gentleelephant.github.io/post/es6-bian-liang/">
         </link>
         <updated>2020-04-04T03:23:08.000Z</updated>
         <content type="html"><![CDATA[<h2 id="es6-的变量声明">ES6 的变量声明</h2>
