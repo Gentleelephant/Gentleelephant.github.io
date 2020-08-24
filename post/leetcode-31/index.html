@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>快速排序 | Aboy</title>
+        <title>LeetCode: 31.下一个排列 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,39 +56,107 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">快速排序</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-07-30 11:00:52">2020-07-30 / 1 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><pre><code class="language-java">private void quickSort(int[] nums, int start, int end){
-        if (start &gt;= end) {
+                                    <div class="post-title  mdui-m-b-1">LeetCode: 31.下一个排列</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-08-12 00:02:25">2020-08-12 / 2 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200811235640.png" alt="image-20200811235548154" loading="lazy"></figure>
+<p>思路：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200812000201.png" alt="image-20200811235758192" loading="lazy"></figure>
+<pre><code class="language-java">class Solution {
+    public void nextPermutation(int[] nums) {
+        if(nums.length == 0 || nums.length == 1){
             return;
         }
-        int i = start;
-        int j = end;
-        int key = nums[i];
-        while (i &lt; j) {
-            while (i &lt; j &amp;&amp; nums[j] &gt;= key) {
+        int i = nums.length - 2;
+        int j = nums.length - 1;
+        int k = nums.length - 1;
+        // 查找第一个升序序列
+        while(i &gt;= 0){
+            if(nums[i] &gt;= nums[j]){
+                i--;
                 j--;
+            }else{
+                break;
             }
-            nums[i] = nums[j];
-            while (i &lt; j &amp;&amp; nums[i] &lt;= key) {
-                i++;
-            }
-            nums[j] = nums[i];
         }
-        nums[i] = key;
-        quickSort(nums, start, i - 1);
-        quickSort(nums, i + 1, end);
+        // 根据条件进行交换
+        if(i &gt;= 0){
+            while(nums[i] &gt;= nums[k]){
+                k--;
+            }
+            int t = nums[i];
+            nums[i] = nums[k];
+            nums[k] = t;
+        }
+        Arrays.sort(nums,j,nums.length);
+
     }
-    ```</code></pre>
+}
+</code></pre>
+<p><strong>算法题：给定任意一个自然数，获取它重新排列后，下一个比它大的自然数</strong></p>
+<pre><code class="language-java">public class Problem031 {
+
+    public static void main(String[] args) {
+
+        int n = 1243;
+        int length = String.valueOf(n).length();
+        int[] nums = new int[length];
+        // 把自然数分割成一个一个的数字
+        while (n != 0) {
+            nums[--length] = n % 10;
+            n = n / 10;
+        }
+        for (int num : nums) {
+            System.out.println(num);
+        }
+
+        System.out.println(&quot;======================&quot;);
+        method(nums);
+
+        for (int num : nums) {
+            System.out.println(num);
+        }
+
+    }
+
+    public static void method(int[] nums) {
+        if (nums.length == 0 || nums.length == 1) {
+            return;
+        }
+        int i = nums.length - 2;
+        int j = nums.length - 1;
+        int k = nums.length - 1;
+        // 查找第一个连续递增序列（2个数的序列）
+        while (i &gt;= 0) {
+            if (nums[i] &gt;= nums[j]) {
+                i--;
+                j--;
+            } else {
+                break;
+            }
+        }
+        if (i &gt;= 0) {
+            while (nums[i] &gt; nums[k]) {
+                k--;
+            }
+            // 进行交换
+            int t = nums[i];
+            nums[i] = nums[k];
+            nums[k] = t;
+        }
+        // 把后半段进行从小到大排序
+        Arrays.sort(nums, j, nums.length);
+    }
+}
+</code></pre>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/leetcode-31/">LeetCode: 31.下一个排列</a></div></div>
+                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/python-fa-song-you-jian-ku/">Python发送邮件库</a></div></div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/">实现简陋版本的HashMap</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/kuai-su-pai-xu/">快速排序</a></div> </div>
                                        
                                       </div>
                                    

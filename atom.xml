@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-08-24T17:14:33.504Z</updated>
+    <updated>2020-08-24T17:18:41.131Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -21,8 +21,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[LeetCode: 31.下一个排列]]></title>
-        <id>https://Gentleelephant.github.io/post/leetcode-31xia-yi-ge-pai-lie/</id>
-        <link href="https://Gentleelephant.github.io/post/leetcode-31xia-yi-ge-pai-lie/">
+        <id>https://Gentleelephant.github.io/post/leetcode-31/</id>
+        <link href="https://Gentleelephant.github.io/post/leetcode-31/">
         </link>
         <updated>2020-08-11T16:02:25.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200811235640.png" alt="image-20200811235548154" loading="lazy"></figure>
