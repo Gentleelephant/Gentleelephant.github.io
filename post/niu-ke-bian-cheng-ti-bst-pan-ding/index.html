@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>Python发送邮件库 | Aboy</title>
+        <title>牛客编程题BST判定 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,18 +56,87 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">Python发送邮件库</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-08-21 10:23:35">2020-08-21 / 1 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p><mark>yagmail</mark></p>
+                                    <div class="post-title  mdui-m-b-1">牛客编程题BST判定</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-08-29 16:39:03">2020-08-29 / 2 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p><a href="https://www.nowcoder.com/practice/d7a2a2bc00544dbfa71cdef591354c9a?tpId=182&amp;&amp;tqId=34720&amp;rp=1&amp;ru=/ta/exam-all&amp;qru=/ta/exam-all/question-ranking">判断给定的二叉树是否为二分查找树</a></p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200829163423.png" alt="image-20200829163416451" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200829163443.png" alt="image-20200829163443786" loading="lazy"></figure>
+<pre><code class="language-java">import java.util.*;
+public class Main{
+
+    static boolean res = true;
+    static int pre = Integer.MIN_VALUE;
+
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int head = Integer.parseInt(sc.nextLine());
+        TreeNode root = new TreeNode(head);
+        Map&lt;Integer,TreeNode&gt; map = new HashMap&lt;&gt;();
+        map.put(head, root);
+        // 输入并且创建二叉树
+        while(sc.hasNextLine()){
+            String[] temp = sc.nextLine().split(&quot;:&quot;);
+            String[] temp1 = temp[1].split(&quot;[|]&quot;);
+            int a = Integer.parseInt(temp[0]);    					// 节点值
+            int b = Integer.parseInt(temp1[0]);                     // 左子树节点值
+            int c = Integer.parseInt(temp1[1]);                     // 右子树节点的值
+            if (b != -1){
+                map.put(b, new TreeNode(b));
+            }
+            if (c != -1){
+                map.put(c,new TreeNode(c));
+            }
+
+            map.get(a).left = map.get(b);
+            map.get(a).right = map.get(c);
+        }
+
+        method(root);
+
+        if (res == true){
+            System.out.println(&quot;1&quot;);
+        }else{
+            System.out.println(&quot;0&quot;);
+        }
+
+
+    }
+
+    // 判断二叉树是否是二叉树查找树（中序遍历和前一个比大小）
+    public static void method(TreeNode root){
+        if (root == null){
+            return;
+        }
+        method(root.left);
+
+        if (pre &gt;= root.val){
+            res = false;
+        }
+        pre = root.val;
+
+        method(root.right);
+    }
+}
+
+class TreeNode{
+    int val;
+    TreeNode left;
+    TreeNode right;
+    public TreeNode(int val){
+        this.val = val;
+    }
+
+}
+</code></pre>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/niu-ke-bian-cheng-ti-bst-pan-ding/">牛客编程题BST判定</a></div></div>
+                                        <div class="mdui-col"> </div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/leetcode-31/">LeetCode: 31.下一个排列</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/python-fa-song-you-jian-ku/">Python发送邮件库</a></div> </div>
                                        
                                       </div>
                                    
