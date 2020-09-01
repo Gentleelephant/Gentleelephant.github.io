@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-08-29T08:40:03.613Z</updated>
+    <updated>2020-09-01T08:37:52.258Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,234 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[树的遍历]]></title>
+        <id>https://Gentleelephant.github.io/post/shu-de-bian-li/</id>
+        <link href="https://Gentleelephant.github.io/post/shu-de-bian-li/">
+        </link>
+        <updated>2020-09-01T08:36:40.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="n叉树的前序遍历迭代">N叉树的前序遍历（迭代）</h4>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; preorder(Node root) {
+
+        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            res.add(temp.val);
+            // 把子节点逆序入栈
+            Collections.reverse(temp.children);
+            for(Node node:temp.children){
+                stack.push(node);
+            }
+        }
+
+        return res;
+
+    }
+}
+</code></pre>
+<h4 id="n叉树的前序遍历dfs">N叉树的前序遍历（dfs）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        dfs(root);
+        return res;
+
+    }
+    public void dfs(Node root){
+        if(root == null){
+            return;
+        }
+        for(Node n:root.children){
+            dfs(n);
+        }
+        res.add(root.val);
+    }
+}
+</code></pre>
+<h4 id="n叉树的后序遍历迭代">N叉树的后序遍历（迭代）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        if(root == null){
+            return res;
+        }
+        method(root);
+        Collections.reverse(res);
+        return res;
+
+    }
+    // 迭代
+    public void method(Node root){
+        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            res.add(temp.val);
+            for(Node n:temp.children){
+                stack.push(n);
+            }
+        }
+    }
+}
+</code></pre>
+<h4 id="n叉树的后序遍历dfs">N叉树的后序遍历（dfs）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        if(root == null){
+            return res;
+        }
+        method(root);
+        Collections.reverse(res);
+        return res;
+
+    }
+
+    // 递归
+    public void dfs(Node root){
+        if(root == null){
+            return;
+        }
+        for(Node n:root.children){
+            dfs(n);
+        }
+        res.add(root.val);
+    }
+ 
+}
+</code></pre>
+<h4 id="二叉树的前序遍历迭代">二叉树的前序遍历（迭代）</h4>
+<pre><code class="language-java"> public class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+ }
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            res.add(node.val);
+            if(node.right != null){
+                stack.push(node.right);
+            }
+            if(node.left != null){
+                stack.push(node.left);
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+<h4 id="二叉树的中序遍历迭代">二叉树的中序遍历（迭代）</h4>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return list;
+        }
+        TreeNode node = root;
+        while(!stack.isEmpty() || node != null){
+
+            // 中序遍历左中右
+            // 先把左子树节入栈
+            while(node != null){
+                stack.push(node);
+                node = node.left;
+            }
+
+            TreeNode temp = stack.pop();
+            // 中
+            list.add(temp.val);
+            // 右
+            node = temp.right;
+
+        }
+        return list;
+    }
+}
+</code></pre>
+<h4 id="二叉树的后序遍历迭代">二叉树的后序遍历迭代</h4>
+<pre><code class="language-java">public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        LinkedList&lt;Integer&gt; result = new LinkedList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
+                stack.push(root);
+                result.addFirst(root.val);
+                root = root.right;
+            } else {
+                root = stack.pop();
+                root = root.left;
+            }
+        }
+        return result;
+    }
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[牛客编程题BST判定]]></title>
         <id>https://Gentleelephant.github.io/post/niu-ke-bian-cheng-ti-bst-pan-ding/</id>
@@ -898,272 +1126,6 @@ public class RabbitReveiver {
 <p>打印结果：</p>
 <figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180404_2251.png" alt="" loading="lazy"></figure>
 <p>上方代码中，obj2本身是没有属性的，但是通过<code>__proto__</code>属性和obj1产生关联，于是就可以获得obj1里的属性。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ES6的promise、async等]]></title>
-        <id>https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/</id>
-        <link href="https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">
-        </link>
-        <updated>2020-04-04T03:24:49.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
-<p>文本主要内容：</p>
-<ul>
-<li>
-<p>Promise（比较重要）</p>
-</li>
-<li>
-<p>Symbol</p>
-</li>
-<li>
-<p>async函数</p>
-</li>
-</ul>
-<h2 id="promise">Promise</h2>
-<h3 id="概述">概述</h3>
-<p>Promise对象: 代表了未来某个将要发生的事件(通常是一个异步操作)。</p>
-<p>ES6中的promise对象, 可以<strong>将异步操作以同步的流程表达出来，<strong>很好地解决了</strong>回调地狱</strong>的问题（避免了层层嵌套的回调函数）。在使用ES5的时候，在多层嵌套回调时，写完的代码层次过多，很难进行维护和二次开发。</p>
-<h3 id="回调地狱的举例">回调地狱的举例</h3>
-<p>假设买菜、做饭、洗碗都是异步的。</p>
-<p>现在的流程是：买菜成功之后，才能开始做饭。做饭成功后，才能开始洗碗。这里面就涉及到了回调的嵌套。</p>
-<p>ES6的Promise是一个构造函数, 用来生成promise实例。</p>
-<h3 id="promise对象的3个状态">promise对象的3个状态</h3>
-<ul>
-<li>
-<p>初始化状态（等待状态）：pending</p>
-</li>
-<li>
-<p>成功状态：fullfilled</p>
-</li>
-<li>
-<p>失败状态：rejected</p>
-</li>
-</ul>
-<h3 id="使用promise的基本步骤">使用promise的基本步骤</h3>
-<p>（1）创建promise对象</p>
-<p>（2）调用promise的<strong>回调函数</strong>then()</p>
-<p>代码格式如下：</p>
-<pre><code class="language-javascript">    let promise = new Promise((resolve, reject) =&gt; {
-        //进来之后，状态为pending
-        console.log('111');  //这一行代码是同步的
-        //开始执行异步操作（这里开始，写异步的代码，比如ajax请求 or 开启定时器）
-        if (异步的ajax请求成功) {
-            console.log('333');
-            resolve();//如果请求成功了，请写resolve()，此时，promise的状态会被自动修改为fullfilled
-        } else {
-            reject();//如果请求失败了，请写reject()，此时，promise的状态会被自动修改为rejected
-        }
-    })
-    console.log('222');
-
-    //调用promise的then()
-    promise.then(() =&gt; {
-            //如果promise的状态为fullfilled，则执行这里的代码
-            console.log('成功了');
-        }
-        , () =&gt; {
-            //如果promise的状态为rejected，则执行这里的代码
-            console.log('失败了');
-
-        }
-    )
-</code></pre>
-<p>代码解释：</p>
-<p>（1）当new Promise()执行之后，promise对象的状态会被初始化为<code>pending</code>，这个状态是初始化状态。<code>new Promise()</code>这行代码，括号里的内容是同步执行的。括号里定义一个function，function有两个参数：resolve和reject。如下：</p>
-<ul>
-<li>
-<p>如果请求成功了，请写resolve()，此时，promise的状态会被自动修改为fullfilled。</p>
-</li>
-<li>
-<p>如果请求失败了，请写reject()，此时，promise的状态会被自动修改为rejected</p>
-</li>
-</ul>
-<p>（2）promise.then()方法，括号里面有两个参数，分别代表两个函数 function1 和 function2：</p>
-<ul>
-<li>
-<p>如果promise的状态为fullfilled（意思是：如果请求成功），则执行function1里的内容</p>
-</li>
-<li>
-<p>如果promise的状态为rejected（意思是，如果请求失败），则执行function2里的内容</p>
-</li>
-</ul>
-<p>另外，resolve()和reject()这两个方法，是可以给promise.then()传递参数的。如下：</p>
-<pre><code class="language-javascript">    let promise = new Promise((resolve, reject) =&gt; {
-        //进来之后，状态为pending
-        console.log('111');  //这行代码是同步的
-        //开始执行异步操作（这里开始，写异步的代码，比如ajax请求 or 开启定时器）
-        if (异步的ajax请求成功) {
-            console.log('333');
-            resolve('haha');//如果请求成功了，请写resolve()，此时，promise的状态会被自动修改为fullfilled
-        } else {
-            reject('555');//如果请求失败了，请写reject()，此时，promise的状态会被自动修改为rejected
-        }
-    })
-    console.log('222');
-
-    //调用promise的then()
-    promise.then((successMsg) =&gt; {
-            //如果promise的状态为fullfilled，则执行这里的代码
-            console.log(successMsg, '成功了');
-        }
-        , (errorMsg) =&gt; {
-            //如果promise的状态为rejected，则执行这里的代码
-            console.log(errorMsg, '失败了');
-
-        }
-    )
-</code></pre>
-<h3 id="ajax请求的举例涉及到嵌套的回调">ajax请求的举例（涉及到嵌套的回调）</h3>
-<pre><code class="language-javascript">    //定义一个请求news的方法
-    function getNews(url) {
-        //创建一个promise对象
-        let promise = new Promise((resolve, reject) =&gt; {
-            //初始化promise状态为pending
-            //启动异步任务
-            let request = new XMLHttpRequest();
-            request.onreadystatechange = function () {
-                if (request.readyState === 4) {
-                    if (request.status === 200) {
-                        let news = request.response;
-                        resolve(news);
-                    } else {
-                        reject('请求失败了。。。');
-                    }
-                }
-            };
-            request.responseType = 'json';//设置返回的数据类型
-            request.open(&quot;GET&quot;, url);//规定请求的方法，创建链接
-            request.send();//发送
-        })
-        return promise;
-    }
-
-    getNews('http://localhost:3000/news?id=2')
-        .then((news) =&gt; {
-            console.log(news);
-            document.write(JSON.stringify(news));
-            console.log('http://localhost:3000' + news.commentsUrl);
-            return getNews('http://localhost:3000' + news.commentsUrl);
-        }, (error) =&gt; {
-            alert(error);
-        })
-        .then((comments) =&gt; {
-            console.log(comments);
-            document.write('&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;' + JSON.stringify(comments));
-        }, (error) =&gt; {
-            alert(error);
-        })
-
-</code></pre>
-<h2 id="symbol">Symbol</h2>
-<h3 id="概述-2">概述</h3>
-<p>背景：ES5中对象的属性名都是字符串，容易造成重名，污染环境。</p>
-<p><strong>概念</strong>：ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。</p>
-<p><strong>特点：</strong></p>
-<ul>
-<li>
-<p>Symbol属性对应的值是唯一的，解决<strong>命名冲突问题</strong></p>
-</li>
-<li>
-<p>Symbol值不能与其他数据进行计算，包括同字符串拼串</p>
-</li>
-<li>
-<p>for in、for of 遍历时不会遍历Symbol属性。</p>
-</li>
-</ul>
-<h3 id="创建symbol属性值">创建Symbol属性值</h3>
-<p>Symbol是函数，但并不是构造函数。创建一个Symbol数据类型：</p>
-<pre><code class="language-javascript">    let mySymbol = Symbol();
-
-    console.log(typeof mySymbol);  //打印结果：symbol
-    console.log(mySymbol);         //打印结果：Symbol()
-</code></pre>
-<p>打印结果：</p>
-<figure data-type="image" tabindex="1"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
-<p>下面来讲一下Symbol的使用。</p>
-<h3 id="1-将symbol作为对象的属性值">1、将Symbol作为对象的属性值</h3>
-<pre><code class="language-javascript">    let mySymbol = Symbol();
-
-    let obj = {
-        name: 'smyhvae',
-        age: 26
-    };
-
-    //obj.mySymbol = 'male'; //错误：不能用 . 这个符号给对象添加 Symbol 属性。
-    obj[mySymbol] = 'hello';    //正确：通过**属性选择器**给对象添加 Symbol 属性。后面的属性值随便写。
-
-    console.log(obj);
-</code></pre>
-<p>上面的代码中，我们尝试给obj添加一个Symbol类型的属性值，但是添加的时候，不能采用<code>.</code>这个符号，而是应该用<code>属性选择器</code>的方式。打印结果：</p>
-<figure data-type="image" tabindex="2"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
-<p>现在我们用for in尝试对上面的obj进行遍历：</p>
-<pre><code class="language-javascript">    let mySymbol = Symbol();
-
-    let obj = {
-        name: 'smyhvae',
-        age: 26
-    };
-
-    obj[mySymbol] = 'hello';
-
-    console.log(obj);
-
-    //遍历obj
-    for (let i in obj) {
-        console.log(i);
-    }
-</code></pre>
-<p>打印结果：</p>
-<figure data-type="image" tabindex="3"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
-<p>从打印结果中可以看到：for in、for of 遍历时不会遍历Symbol属性。</p>
-<h3 id="创建symbol属性值时传参作为标识">创建Symbol属性值时，传参作为标识</h3>
-<p>如果我通过 Symbol()函数创建了两个值，这两个值是不一样的：</p>
-<pre><code class="language-javascript">    let mySymbol1 = Symbol();
-    let mySymbol2 = Symbol();
-
-    console.log(mySymbol1 == mySymbol2); //打印结果：false
-    console.log(mySymbol1);         //打印结果：Symbol()
-    console.log(mySymbol2);         //打印结果：Symbol()
-</code></pre>
-<figure data-type="image" tabindex="4"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
-<p>上面代码中，倒数第三行的打印结果也就表明了，二者的值确实是不相等的。</p>
-<p>最后两行的打印结果却发现，二者的打印输出，肉眼看到的却相同。那该怎么区分它们呢？</p>
-<p>既然Symbol()是函数，函数就可以传入参数，我们可以通过参数的不同来作为<strong>标识</strong>。比如：</p>
-<pre><code class="language-javascript">    //在括号里加入参数，来标识不同的Symbol
-    let mySymbol1 = Symbol('one');
-    let mySymbol2 = Symbol('two');
-
-    console.log(mySymbol1 == mySymbol2); //打印结果：false
-    console.log(mySymbol1);         //打印结果：Symbol(one)
-    console.log(mySymbol2);         //打印结果：Symbol(two)。颜色为红色。
-    console.log(mySymbol2.toString());//打印结果：Symbol(two)。颜色为黑色。
-</code></pre>
-<p>打印结果：</p>
-<figure data-type="image" tabindex="5"><img src="http://img.smyhvae.com/20180317_1134.png" alt="" loading="lazy"></figure>
-<h3 id="定义常量">定义常量</h3>
-<p>Symbol 可以用来定义常量：</p>
-<pre><code class="language-javascript">    const MY_NAME = Symbol('my_name');
-</code></pre>
-<h2 id="async函数异步函数">async函数（异步函数）</h2>
-<h3 id="概述-3">概述</h3>
-<blockquote>
-<p>async 函数是在 ES2017 引入的。</p>
-</blockquote>
-<p>概念：真正意义上去解决异步回调的问题，同步流程表达异步操作。</p>
-<p>本质： Generator 的语法糖。</p>
-<p>async比之前的 Promise、Generator要好用一些。</p>
-<p>语法：</p>
-<pre><code class="language-javascript">    async function foo() {
-        await 异步操作;
-        await 异步操作；
-    }
-</code></pre>
-<p>我们在普通的函数前面加上 async 关键字，就成了 async 函数。</p>
-<h3 id="async-promise-generator的对比async的特点">async、Promise、Generator的对比（async的特点）</h3>
-<p>1、不需要像Generator去调用next方法，遇到await等待，当前的异步操作完成就往下执行。</p>
-<p>2、async返回的总是Promise对象，可以用then方法进行下一步操作。</p>
-<p>3、async取代Generator函数的星号*，await取代Generator的yield。</p>
-<p>4、语意上更为明确，使用简单，经临床验证，暂时没有任何副作用。</p>
 ]]></content>
     </entry>
 </feed>
