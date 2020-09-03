@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>树的遍历 | Aboy</title>
+        <title>岛屿问题 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,237 +56,142 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">树的遍历</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-09-01 16:36:40">2020-09-01 / 4 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h4 id="n叉树的前序遍历迭代">N叉树的前序遍历（迭代）</h4>
+                                    <div class="post-title  mdui-m-b-1">岛屿问题</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-09-03 21:29:37">2020-09-03 / 3 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p>一、岛屿的周长</p>
+<p><a href="https://leetcode-cn.com/problems/island-perimeter/">leetcode-463 岛屿的周长</a></p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200903194510.png" alt="image-20200903194502868" loading="lazy"></figure>
 <pre><code class="language-java">class Solution {
-    public List&lt;Integer&gt; preorder(Node root) {
-
-        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
-        if(root == null){
-            return res;
-        }
-        
-        stack.push(root);
-        while(!stack.isEmpty()){
-            Node temp = stack.pop();
-            res.add(temp.val);
-            // 把子节点逆序入栈
-            Collections.reverse(temp.children);
-            for(Node node:temp.children){
-                stack.push(node);
+    public int islandPerimeter(int[][] grid) {
+        int sum = 0;
+        for(int i = 0;i &lt; grid.length;i++){
+            for(int  j = 0;j &lt; grid[0].length;j++){
+                if(grid[i][j] == 1){{
+                    sum += dfs(grid,i,j);
+                }}
             }
         }
-
-        return res;
-
+        return sum;
     }
+
+    public int dfs(int[][] grid,int r,int c){
+        // 遍历到陆地外面（越界）会产生一条边
+        if(!isArea(grid,r,c)){
+            return 1;
+        }
+        // 遍历到水域会产生一条边
+        if(grid[r][c] == 0){
+            return 1;
+        }
+        // 遍历到已经遍历过的陆地不会产生边
+        if(grid[r][c] != 1){
+            return 0;
+        }
+        grid[r][c] = 2;
+
+        return dfs(grid,r-1,c) + dfs(grid,r+1,c) + dfs(grid,r,c-1) + dfs(grid,r,c+1);
+    }
+
+    public boolean isArea(int[][] grid,int r,int c){
+        return r &gt;= 0 &amp;&amp; r &lt; grid.length &amp;&amp; c &gt;= 0 &amp;&amp; c &lt; grid[0].length;
+    }
+
+
 }
 </code></pre>
-<h4 id="n叉树的前序遍历dfs">N叉树的前序遍历（dfs）</h4>
-<pre><code class="language-java">class Node {
-    public int val;
-    public List&lt;Node&gt; children;
-
-    public Node() {}
-
-    public Node(int _val) {
-        val = _val;
-    }
-
-    public Node(int _val, List&lt;Node&gt; _children) {
-        val = _val;
-        children = _children;
-    }
-}
-
-class Solution {
-    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
-    public List&lt;Integer&gt; postorder(Node root) {
-        dfs(root);
-        return res;
-
-    }
-    public void dfs(Node root){
-        if(root == null){
-            return;
-        }
-        for(Node n:root.children){
-            dfs(n);
-        }
-        res.add(root.val);
-    }
-}
-</code></pre>
-<h4 id="n叉树的后序遍历迭代">N叉树的后序遍历（迭代）</h4>
-<pre><code class="language-java">class Node {
-    public int val;
-    public List&lt;Node&gt; children;
-
-    public Node() {}
-
-    public Node(int _val) {
-        val = _val;
-    }
-
-    public Node(int _val, List&lt;Node&gt; _children) {
-        val = _val;
-        children = _children;
-    }
-}
-
-class Solution {
-    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
-    public List&lt;Integer&gt; postorder(Node root) {
-        if(root == null){
-            return res;
-        }
-        method(root);
-        Collections.reverse(res);
-        return res;
-
-    }
-    // 迭代
-    public void method(Node root){
-        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-        stack.push(root);
-        while(!stack.isEmpty()){
-            Node temp = stack.pop();
-            res.add(temp.val);
-            for(Node n:temp.children){
-                stack.push(n);
-            }
-        }
-    }
-}
-</code></pre>
-<h4 id="n叉树的后序遍历dfs">N叉树的后序遍历（dfs）</h4>
-<pre><code class="language-java">class Node {
-    public int val;
-    public List&lt;Node&gt; children;
-
-    public Node() {}
-
-    public Node(int _val) {
-        val = _val;
-    }
-
-    public Node(int _val, List&lt;Node&gt; _children) {
-        val = _val;
-        children = _children;
-    }
-}
-
-class Solution {
-    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
-    public List&lt;Integer&gt; postorder(Node root) {
-        if(root == null){
-            return res;
-        }
-        method(root);
-        Collections.reverse(res);
-        return res;
-
-    }
-
-    // 递归
-    public void dfs(Node root){
-        if(root == null){
-            return;
-        }
-        for(Node n:root.children){
-            dfs(n);
-        }
-        res.add(root.val);
-    }
- 
-}
-</code></pre>
-<h4 id="二叉树的前序遍历迭代">二叉树的前序遍历（迭代）</h4>
-<pre><code class="language-java"> public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
- }
-class Solution {
-    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
-    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
-        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
-        if(root == null){
-            return res;
-        }
-        stack.push(root);
-        while(!stack.isEmpty()){
-            TreeNode node = stack.pop();
-            res.add(node.val);
-            if(node.right != null){
-                stack.push(node.right);
-            }
-            if(node.left != null){
-                stack.push(node.left);
-            }
-        }
-        return res;
-    }
-}
-</code></pre>
-<h4 id="二叉树的中序遍历迭代">二叉树的中序遍历（迭代）</h4>
+<p>二、岛屿的最大面积</p>
+<p><a href="https://leetcode-cn.com/problems/max-area-of-island/">leetcode-463 岛屿的最大面积</a></p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200903212901.png" alt="image-20200903195849281" loading="lazy"></figure>
+<hr>
 <pre><code class="language-java">class Solution {
-    public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
-        List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
-        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
-        if(root == null){
-            return list;
-        }
-        TreeNode node = root;
-        while(!stack.isEmpty() || node != null){
-
-            // 中序遍历左中右
-            // 先把左子树节入栈
-            while(node != null){
-                stack.push(node);
-                node = node.left;
+    public int maxAreaOfIsland(int[][] grid) {
+        int count = 0;
+        for(int i = 0;i &lt; grid.length;i++){
+            for(int j = 0;j &lt; grid[0].length;j++){
+                if(grid[i][j] == 1){
+                    int temp = dfs(grid,i,j);
+                    count = count &gt; temp ? count : temp;
+                }
             }
-
-            TreeNode temp = stack.pop();
-            // 中
-            list.add(temp.val);
-            // 右
-            node = temp.right;
-
         }
-        return list;
+        return count;
     }
+
+    public int dfs(int[][] grid,int r,int c){
+        // 出界
+        if(!isArea(grid,r,c)){
+            return 0;
+        }
+        // 遇到水域
+        if(grid[r][c] != 1){
+            return 0;
+        }
+        // 设置当前位置已经被访问过
+        grid[r][c] = 2;
+
+        return dfs(grid,r-1,c) + dfs(grid,r+1,c) + dfs(grid,r,c - 1) + dfs(grid,r,c + 1) + 1;
+
+    }
+    // 判断当前位置是否出界
+    public boolean isArea(int[][] grid,int r,int c){
+        return r &gt;= 0 &amp;&amp; r &lt; grid.length &amp;&amp; c &gt;= 0 &amp;&amp; c &lt; grid[0].length;
+    }
+
 }
 </code></pre>
-<h4 id="二叉树的后序遍历迭代">二叉树的后序遍历迭代</h4>
-<pre><code class="language-java">public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
-        LinkedList&lt;Integer&gt; result = new LinkedList&lt;&gt;();
-        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
-        while (root != null || !stack.isEmpty()) {
-            if (root != null) {
-                stack.push(root);
-                result.addFirst(root.val);
-                root = root.right;
-            } else {
-                root = stack.pop();
-                root = root.left;
+<p>三、统计封闭岛屿的数目</p>
+<p><a href="https://leetcode-cn.com/problems/number-of-closed-islands/">leetcode-463 岛屿的最大面积</a></p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200903212505.png" alt="image-20200903212505291" loading="lazy"></figure>
+<p><strong>思路：封闭岛屿说明不能走到边缘</strong></p>
+<pre><code class="language-java">class Solution {
+    public int closedIsland(int[][] grid) {
+        int count = 0;
+        for(int i = 0;i &lt; grid.length;i++){
+            for(int j = 0;j &lt; grid[i].length;j++){
+                if(grid[i][j] == 0){
+                    if(dfs(grid,i,j)){
+                        count++;
+                    }
+                }
             }
         }
-        return result;
+        return count;
     }
+
+    public boolean dfs(int grid[][],int r,int c){
+        // 如果接触到边界说明不是岛屿
+        if(!isArea(grid,r,c)){
+            return false;
+        }
+
+        if(grid[r][c] != 0){
+            return true;
+        }
+
+        grid[r][c] = 2;
+
+        boolean flage1 = dfs(grid,r-1,c);
+        boolean flage2 = dfs(grid,r+1,c);
+        boolean flage3 = dfs(grid,r,c+1);
+        boolean flage4 = dfs(grid,r,c-1);
+
+        return flage1 &amp;&amp; flage2 &amp;&amp; flage3 &amp;&amp; flage4;
+    }
+
+    public boolean isArea(int[][] grid,int r,int c){
+        return r &gt;= 0 &amp;&amp; r &lt; grid.length &amp;&amp; c &gt;= 0 &amp;&amp; c &lt; grid[0].length;
+    }
+}
 </code></pre>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/dao-yu-wen-ti/">岛屿问题</a></div></div>
+                                        <div class="mdui-col"> </div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/niu-ke-bian-cheng-ti-bst-pan-ding/">牛客编程题BST判定</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/shu-de-bian-li/">树的遍历</a></div> </div>
                                        
                                       </div>
                                    
