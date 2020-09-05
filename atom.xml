@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-09-03T15:51:18.190Z</updated>
+    <updated>2020-09-05T06:39:24.765Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,96 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[滑动窗口]]></title>
+        <id>https://Gentleelephant.github.io/post/hua-dong-chuang-kou/</id>
+        <link href="https://Gentleelephant.github.io/post/hua-dong-chuang-kou/">
+        </link>
+        <updated>2020-09-05T06:38:02.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="一-替换后的最长重复字符">一、替换后的最长重复字符</h4>
+<p><a href="https://leetcode-cn.com/problems/longest-repeating-character-replacement/">leetcode-424</a></p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200905132208.png" alt="image-20200905131909088" loading="lazy"></figure>
+<p>题解分析：<a href="https://leetcode-cn.com/problems/longest-repeating-character-replacement/solution/tong-guo-ci-ti-liao-jie-yi-xia-shi-yao-shi-hua-don/">别人的思路</a></p>
+<pre><code class="language-java">class Solution {
+    // 最初没把题目看清楚，以为只有A和B字符
+    char[] map = new char[26];
+    public int characterReplacement(String s, int k) {
+        if(s == null){
+            return 0;
+        }
+        char[] chars = s.toCharArray();
+        int left = 0;
+        int right = 0;
+        int maxChars = 0;
+        for(right = 0;right &lt; chars.length;right++){
+            // right坐在位置的下标
+            int index = chars[right] - 'A';
+            map[index]++;
+            maxChars = Math.max(maxChars,map[index]);
+            // 不满足条件-1，左边界+1
+            if(right - left + 1 &gt; maxChars + k){
+                int left_index = chars[left] - 'A';
+                map[left_index]--;
+                left++;
+            }
+        }
+        return chars.length - left;
+    }
+}
+</code></pre>
+<h4 id="二-乘积小于k的连续的子数组的个数">二、乘积小于k的连续的子数组的个数。</h4>
+<p><a href="https://leetcode-cn.com/problems/subarray-product-less-than-k/">leetcode-713</a></p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200905143712.png" alt="image-20200905143637491" loading="lazy"></figure>
+<pre><code class="language-java">class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int count = 0;
+        int left = 0;
+        int help = 1;
+        /*
+         *  这里需要注意的是，比如10，5，2中符合的子数组为 [10],[5],[2],[10,5],[5,2],但是没有[10,2]，必须要保证连续
+         *  窗口中的数乘积小于k时，符合条件的子数组的个数就为right - left + 1
+         *  比如例子中[10, 5, 2, 6]，初始情况窗口中只有10，所以times+1，之后窗口中加上了5，变成[10,5],其中连续子数组有：{{10},{5},           *  {10,5}}，之前的10已经加过了，因此每次加进去的连续子数组是以当前right对应的数为首的连续子数组，再以[10,5,2]，以2为首就是{2,         *  25,2510},对应为right-left+1。
+         */
+        for(int right = 0;right &lt; nums.length;right++){
+            help *= nums[right];
+            while(help &gt;= k &amp;&amp; left &lt;= right){
+                // 新加入元素是的乘积&gt;100时,窗口向右移动
+                help = help / nums[left];
+                left++;
+            }
+            count += right - left + 1;
+        }
+        return count;
+    }
+}
+</code></pre>
+<h4 id="三-最大连续1的个数iii">三、最大连续1的个数III</h4>
+<p><a href="https://leetcode-cn.com/problems/max-consecutive-ones-iii/">leetcode-1004</a></p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200905143747.png" alt="image-20200905143747620" loading="lazy"></figure>
+<p><strong>这道题的思路和424题基本一样，只不过要注意的是这道题只能把o变成1，而不能把1变成0，因此我们统计窗口中字符最大个数只能统计1的个数，而不能统计0的个数，体现在代码中的就是 <code>maxNum = Math.max(maxNum,map[1]);</code>直接把map[1]写死</strong></p>
+<pre><code class="language-java">class Solution {
+    int[] map = new int[]{0,0};
+    public int longestOnes(int[] A, int K) {
+        int left = 0;
+        int maxNum = 0;
+        for(int right = 0;right &lt; A.length;right++){
+            if(A[right] == 0){
+                map[0] += 1;
+            }else{
+                map[1] += 1;
+            }
+            maxNum = Math.max(maxNum,map[1]);
+            if(right - left + 1 &gt; maxNum + K){
+                map[A[left]]--;
+                left++;
+            }
+        }
+        return A.length - left;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[岛屿问题]]></title>
         <id>https://Gentleelephant.github.io/post/dao-yu-wen-ti/</id>
@@ -1082,19 +1172,6 @@ public class RabbitReveiver {
 <p>成功读取到消息</p>
 <figure data-type="image" tabindex="10"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711170029.png" alt="image-20200711170029950" loading="lazy"></figure>
 <p>签收之后消息就没了</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JVM面试题]]></title>
-        <id>https://Gentleelephant.github.io/post/jvm-mian-shi-ti/</id>
-        <link href="https://Gentleelephant.github.io/post/jvm-mian-shi-ti/">
-        </link>
-        <updated>2020-04-14T09:19:12.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="font-colorgreen-size51-java类加载机制font"><font color="green" size=5>1. Java类加载机制</font></h4>
-<p>​		<strong>JVM中类的装载是由类加载器（ClassLoader）和它的子类来实现的，Java 中的类加载器是一个重要的Java 运行时系统组件，它负责在运行时查找和装入类文件中的类。由于Java的跨平台性，经过编译的Java 源程序并不是一个可执行程序，而是一个或多个类文件。当Java程序需要使用某个类时,JVM会确保这个类已经被加载、链接（验证、准备和解析）和初始化。类的加载是指把类的.class 文件中的数据读入到内存中，通常是创建一个字节数组读入.class 文件，然后产生与所加载类对应的Class 对象。加载完成后，Class 对象还不完整，所以此时的类还不可用。当类被加载后就进入连接阶段，这一阶段包括验证、准备（为静态变量分配内存并设置默认的初始值）和解析（将符号引用替换为直接引用）三个步骤。最后JVM 对类进行初始化，包括：如果类存在直接的父类并且这个类还没有被初始化，那么就先初始化父类；如果类中存在初始化语句，就依次执行这些初始化语句。类的加载是由类加载器完成的，类加载器包括：根加载器（BootStrap）、扩展加载器（Extension）、系统加载器（System）和用户自定义类加载器（java.lang.ClassLoader 的子类）。从Java  2（JDK  1.2）开始，类加载过程采取了父亲委托机制（PDM）。PDM 更好的保证了Java 平台的安全性，在该机制中，JVM 自带的Bootstrap是根加载器，其他的加载器都有且仅有一个父类加载器。类的加载首先请求父类加载器加载，父类加载器无能为力时才由其子类加载器自行加载。JVM不会向Java 程序提供对Bootstrap 的引用。下面是关于几个类加载器的说明：•Bootstrap：一般用本地代码实现，负责加载JVM 基础核心类库（rt.jar）；•Extension：从java.ext.dirs 系统属性所指定的目录中加载类库，它的父加载器是Bootstrap；•System：又叫应用类加载器，其父类是Extension。它是应用最广泛的类加载器。它从环境变量classpath或者系统属性java.class.path 所指定的目录中记载类，是用户自定义加载器的默认父加载器。</strong></p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200414164814.png" alt="" loading="lazy"></figure>
-<h4 id="font-colorgreen-size52-java内存分配font"><font color="green" size=5>2. Java内存分配</font></h4>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200414171832.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>

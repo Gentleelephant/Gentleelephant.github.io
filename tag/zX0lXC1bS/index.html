@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-        <head>
+       <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>快速排序 | Aboy</title>
+        <title>滑动窗口 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -14,7 +14,7 @@
 
     </head>
     <body>
-              <header class="header mdui-m-b-5">      
+          <header class="header mdui-m-b-5">      
             <div class="container  ">
                 <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
                 <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
@@ -54,86 +54,32 @@
         </header>
         <div class="mdui-container ">
                 <div class="mdui-row">
-                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
-                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">快速排序</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-07-30 11:00:52">2020-07-30 / 1 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><pre><code class="language-java">private void quickSort(int[] nums, int start, int end){
-        if (start &gt;= end) {
-            return;
-        }
-        int i = start;
-        int j = end;
-        int key = nums[i];
-        while (i &lt; j) {
-            while (i &lt; j &amp;&amp; nums[j] &gt;= key) {
-                j--;
-            }
-            nums[i] = nums[j];
-            while (i &lt; j &amp;&amp; nums[i] &lt;= key) {
-                i++;
-            }
-            nums[j] = nums[i];
-        }
-        nums[i] = key;
-        quickSort(nums, start, i - 1);
-        quickSort(nums, i + 1, end);
-    }
-    ```</code></pre>
-</div>
-                                    <div class="mdui-divider mdui-m-b-2"></div>
-                                    <div class="mdui-row-xs-2 post-fenye">
-                                       
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/leetcode-31/">LeetCode: 31.下一个排列</a></div></div>
-                                        
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 mdui-m-t-1">
+                                                         
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-09-05 14:38:02">2020-09-05</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/hua-dong-chuang-kou/">滑动窗口</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>一、替换后的最长重复字符
+leetcode-424
 
-                                        
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/shi-xian-jian-lou-ban-ben-de-hashmap/">实现简陋版本的HashMap</a></div> </div>
-                                       
-                                      </div>
-                                   
-                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
-                                    
-                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
- <div class="comment"></div>
-
-<script>
-      new Valine({
-            el: '.comment',
-
-            app_id: 'DyDP872v8jpwwGIDm44F1kcn-gzGzoHsz',
-
-
-            app_key: 'xtFwuWwsgHBpbgi5fNMHj6zH',
-
-
-            placeholder: '美好生活源于友善的评论，渴望进步的人，运气不会差',
-            
-            path: window.location.pathname,
-            pageSize: 30,
-            avatar:'mm', 
-       })
-    </script> 
-<script>
-    if(window.location.hash){
-        var checkExist = setInterval(function() {
-           if ($(window.location.hash).length) {
-              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
-              clearInterval(checkExist);
-           }
-        }, 100);
-    }
-</script>
+题解分析：别人的思路
+class Solution {
+    // 最初没把题目看清楚，以为只有A和B字符
+    char[] map = new char[26];
+    pub...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/hua-dong-chuang-kou/">Read More</a></div>
                                 </article>
+                                
 
-                                    
+                                                            <nav class="mdui-m-t-5">
+                                
+                                
+                                </nav>     
+
                         </div>
                       </div>
-    
-                
-
               </div>
-                    <footer class="footer mdui-m-t-5 mdui-text-center">
+                <footer class="footer mdui-m-t-5 mdui-text-center">
                <nav class="social-links">
                       <ul>
                       
