@@ -1,121 +1,118 @@
-<!DOCTYPE html>
 <html>
-       <head>
-        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
-        <meta charset="utf-8">
-        <title>Redis | Aboy</title>
-        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
-        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
-        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
-         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
-         <script >hljs.initHighlightingOnLoad();</script>
-
-    </head>
-    <body>
-          <header class="header mdui-m-b-5">      
-            <div class="container  ">
-                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
-                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
-           
-            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
-                   
-                            <li><a href="/">首页</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/archives">文章</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/tags">分类</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/post/about">关于</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                  </nav>
-                </div>
-        </header>
-        <div class="mdui-container ">
-                <div class="mdui-row">
-                        <div class="mdui-col-md-8 mdui-col-offset-md-2 mdui-m-t-1">
-                                                         
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-15 11:23:30">2020-03-15</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/redis-install/">Redis安装</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>一、编译安装(前提要有gcc/g++环境)
+  <head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Redis | Aboy</title>
+<link rel="shortcut icon" href="https://Gentleelephant.github.io/favicon.ico?v=1599305822018">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Redis | Aboy - Atom Feed" href="https://Gentleelephant.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
-进入官网复制链接：http://download.redis.io/releases/redis-5.0.8.tar.gz
 
+  <meta name="description" content="温故而知新" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Gentleelephant.github.io">
+  <img class="avatar" src="https://Gentleelephant.github.io/images/avatar.png?v=1599305822018" alt="">
+  </a>
+  <h1 class="site-title">
+    Aboy
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          文章
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          分类
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
 
-在Linux下使用wget http://download.re...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/redis-install/">Read More</a></div>
-                                </article>
-                                
+        <div class="current-tag-container">
+            <h2 class="title">
+                标签：# Redis
+            </h2> 
+        </div>
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/redis-install/">
+        <h2 class="post-title">Redis安装</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-15
+        </span>
+        <span>
+          2 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/bUC8a8VGS/" class="post-tag">
+            # Redis
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+</div>
 
-                                                            <nav class="mdui-m-t-5">
-                                
-                                
-                                </nav>     
+        <div class="pagination-container">
+  
+  
+</div>
 
-                        </div>
-                      </div>
-              </div>
-                <footer class="footer mdui-m-t-5 mdui-text-center">
-               <nav class="social-links">
-                      <ul>
-                      
-                      
-                           
-                      
-                           
-                      	
-                        <li class="social-link"><a href="https://github.com/Gentleelephant" target="_blank"><i class="iconfont icon-github"></i></a></li>
-                          
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      	
-                        <li class="social-link"><a href="1132960613" target="_blank"><i class="iconfont icon-qq"></i></a></li>
-                          
-                           
-                      
-                           
-                      
-                           
-                      </ul>
-                    </nav>
-                    <div class="copyright">
-                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
-                  </div>
-                  
-              </footer>
-    </body>
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://Gentleelephant.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+  </body>
 </html>

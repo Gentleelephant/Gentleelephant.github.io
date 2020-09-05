@@ -1,239 +1,327 @@
-<!DOCTYPE html>
 <html>
-        <head>
-        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
-        <meta charset="utf-8">
-        <title>Aboy</title>
-        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
-        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
-        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
-         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
-         <script >hljs.initHighlightingOnLoad();</script>
-
-    </head>
-    <body>
-          <header class="header mdui-m-b-5">      
-            <div class="container  ">
-                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
-                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
-           
-            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
-                   
-                            <li><a href="/">首页</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/archives">文章</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/tags">分类</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/post/about">关于</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                  </nav>
-                </div>
-        </header>
-        <div class="mdui-container ">
-                <div class="mdui-row">
-                        <div class="mdui-col-md-8 mdui-col-offset-md-2 mdui-m-t-1">
-                         
-                                                         
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-29 17:07:50">2020-03-29</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/"> 项目第二步：前后端接口对接</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>网络请求使用axios，首先安装axios，在控制台下输入npm install axios如果在package.js中看到:
- &quot;dependencies&quot;: {
-    &quot;axios&quot;: &quo...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-23 20:12:51">2020-03-23</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/Project-001/">项目第一步：数据库及Security配置</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>一、数据库表
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aboy</title>
+<link rel="shortcut icon" href="https://Gentleelephant.github.io/favicon.ico?v=1599305822018">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Aboy - Atom Feed" href="https://Gentleelephant.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-二、SpringSecurity配置
-pom依赖
-&lt;dependency&gt;
-    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-    &lt;artifactId&...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/Project-001/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-21 22:11:28">2020-03-21</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/SpringSecurity-db/">基于数据库的认证</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>一、创建数据库以及表
-数据库中有三张表，role(角色)，user(用户)，user_role（关联）
+    <meta name="description" content="温故而知新" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Gentleelephant.github.io">
+  <img class="avatar" src="https://Gentleelephant.github.io/images/avatar.png?v=1599305822018" alt="">
+  </a>
+  <h1 class="site-title">
+    Aboy
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          文章
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          分类
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
 
-role表：
+    
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/xiang-mu-qian-hou-duan-jie-kou-dui-jie/">
+        <h2 class="post-title"> 项目第二步：前后端接口对接</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-29
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/5k2kHdC0A/" class="post-tag">
+            # Project
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/Project-001/">
+        <h2 class="post-title">项目第一步：数据库及Security配置</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-23
+        </span>
+        <span>
+          5 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/5k2kHdC0A/" class="post-tag">
+            # Project
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/SpringSecurity-db/">
+        <h2 class="post-title">基于数据库的认证</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-21
+        </span>
+        <span>
+          6 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/qIXyzIXRQ/" class="post-tag">
+            # SpringSecurity
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/httpsecurity-custom/">
+        <h2 class="post-title">SpringSecurity的配置（自定义拦截规则）</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-21
+        </span>
+        <span>
+          5 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/qIXyzIXRQ/" class="post-tag">
+            # SpringSecurity
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/springsecurity-chu-ti-yan/">
+        <h2 class="post-title">SpringSecurity初体验</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-21
+        </span>
+        <span>
+          1 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/qIXyzIXRQ/" class="post-tag">
+            # SpringSecurity
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/springboot-session/">
+        <h2 class="post-title">SpringBoot实现session共享</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-19
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/tJ-O9GGq4/" class="post-tag">
+            # Springboot
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/springboot-zheng-he-redis/">
+        <h2 class="post-title">SpringBoot整合Redis</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-17
+        </span>
+        <span>
+          2 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/tJ-O9GGq4/" class="post-tag">
+            # Springboot
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/redis-install/">
+        <h2 class="post-title">Redis安装</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-15
+        </span>
+        <span>
+          2 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/bUC8a8VGS/" class="post-tag">
+            # Redis
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/springboot-exception/">
+        <h2 class="post-title">SpringBoot异常处理策略</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-14
+        </span>
+        <span>
+          8 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/tJ-O9GGq4/" class="post-tag">
+            # Springboot
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://Gentleelephant.github.io/post/mybatis-one/">
+        <h2 class="post-title">第一个Mybatis程序</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-14
+        </span>
+        <span>
+          9 min read
+        </span>
+        
+          <a href="https://Gentleelephant.github.io/tag/8JCdxWuxG/" class="post-tag">
+            # Mybatis
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+</div>
 
-其中id为主键且自增，name是角色的name，namezh是中文名。
-user表：
+    
+        <div class="pagination-container">
+  
+    <a href="https://Gentleelephant.github.io/page/2/" class="prev-page">上一页</a>
+  
+  
+    <a href="https://Gentleelephant.github.io/page/4/" class="next-page">下一页</a>
+  
+</div>
 
-user是用户名，passwo...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/SpringSecurity-db/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-21 15:28:27">2020-03-21</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/httpsecurity-custom/">SpringSecurity的配置（自定义拦截规则）</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>一、简单的配置
-重写一个configure方法参数是AuthenticationManagerBuilder类型的,用来配置用户名和密码，而且还要添加一个密码编码器(Spring5之后密码必须要加密)。
-@Bean
-    Password...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/httpsecurity-custom/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-21 15:27:17">2020-03-21</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/springsecurity-chu-ti-yan/">SpringSecurity初体验</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>第一步：先创建一个springboot项目添加依赖
-&lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;art...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/springsecurity-chu-ti-yan/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-19 21:12:46">2020-03-19</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/springboot-session/">SpringBoot实现session共享</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>第一步：导入依赖
-&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/springboot-session/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-17 13:43:23">2020-03-17</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/springboot-zheng-he-redis/">SpringBoot整合Redis</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>
+    
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://Gentleelephant.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
 
-SpringBoot整合Redis前提要先进行配置
-
-
-
-配置让所有主机都可以访问
-
-
-
-
-配置密码，requirepass不要变，后面的root可以换为你自己设置的密码
-
-
-
-
-
-需要导入的依赖：
-     &lt;dependenc...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/springboot-zheng-he-redis/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-15 11:23:30">2020-03-15</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/redis-install/">Redis安装</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>一、编译安装(前提要有gcc/g++环境)
-
-
-进入官网复制链接：http://download.redis.io/releases/redis-5.0.8.tar.gz
-
-
-在Linux下使用wget http://download.re...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/redis-install/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-14 21:47:10">2020-03-14</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/springboot-exception/">SpringBoot异常处理策略</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>自定义异常处理
-在 Spring Boot 项目中 ，异常统一处理，可以使用 Spring 中 @ControllerAdvice 来统一处理，也可以自己来定义异常处理方案。Spring Boot 中，对异常的处理有一些默认的策略，我们分别...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/springboot-exception/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-14 19:52:52">2020-03-14</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/mybatis-one/">第一个Mybatis程序</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>Mybatis简介
-
-MyBatis 是一款优秀的持久层框架
-MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集的过程
-MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 实...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/mybatis-one/">Read More</a></div>
-                                </article>
-                                
-
-                                                            <nav class="mdui-m-t-5">
-                                
-                                <div class="index-yema mdui-float-left"><a href="https://Gentleelephant.github.io/page/2/">上一页</a></div>
-                                 
-                                
-                                <div class="index-yema mdui-float-right"><a href="https://Gentleelephant.github.io/page/4/">下一页</a></div>
-                                 
-                                </nav>     
-
-                        </div>
-                      </div>
-              </div>
-                <footer class="footer mdui-m-t-5 mdui-text-center">
-               <nav class="social-links">
-                      <ul>
-                      
-                      
-                           
-                      
-                           
-                      	
-                        <li class="social-link"><a href="https://github.com/Gentleelephant" target="_blank"><i class="iconfont icon-github"></i></a></li>
-                          
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      	
-                        <li class="social-link"><a href="1132960613" target="_blank"><i class="iconfont icon-qq"></i></a></li>
-                          
-                           
-                      
-                           
-                      
-                           
-                      </ul>
-                    </nav>
-                    <div class="copyright">
-                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
-                  </div>
-                  
-              </footer>
-    </body>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,64 +1,106 @@
-<!DOCTYPE html>
 <html>
-        <head>
-        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
-        <meta charset="utf-8">
-        <title>基于数据库的认证 | Aboy</title>
-        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
-        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
-        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
-         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
-         <script >hljs.initHighlightingOnLoad();</script>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>基于数据库的认证 | Aboy</title>
+<link rel="shortcut icon" href="https://Gentleelephant.github.io/favicon.ico?v=1599305822018">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基于数据库的认证 | Aboy - Atom Feed" href="https://Gentleelephant.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
-    </head>
-    <body>
-              <header class="header mdui-m-b-5">      
-            <div class="container  ">
-                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
-                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
-           
-            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
-                   
-                            <li><a href="/">首页</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/archives">文章</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/tags">分类</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/post/about">关于</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                  </nav>
-                </div>
-        </header>
-        <div class="mdui-container ">
-                <div class="mdui-row">
-                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
-                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">基于数据库的认证</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-03-21 22:11:28">2020-03-21 / 6 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h4 id="一-创建数据库以及表">一、创建数据库以及表</h4>
+
+
+    <meta name="description" content="一、创建数据库以及表
+数据库中有三张表，role(角色)，user(用户)，user_role（关联）
+
+role表：
+
+其中id为主键且自增，name是角色的name，namezh是中文名。
+user表：
+
+user是用户名，passwo..." />
+    <meta name="keywords" content="SpringSecurity" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Gentleelephant.github.io">
+  <img class="avatar" src="https://Gentleelephant.github.io/images/avatar.png?v=1599305822018" alt="">
+  </a>
+  <h1 class="site-title">
+    Aboy
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          文章
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          分类
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              基于数据库的认证
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-21
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://Gentleelephant.github.io/tag/qIXyzIXRQ/" class="post-tag">
+                  # SpringSecurity
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h4 id="一-创建数据库以及表">一、创建数据库以及表</h4>
 <p>数据库中有三张表，role(角色)，user(用户)，user_role（关联）</p>
 <figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321213935.png" alt="" loading="lazy"></figure>
 <p>role表：</p>
@@ -352,97 +394,99 @@ public class HelloController {
 <figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321221002.png" alt="" loading="lazy"></figure>
 <figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200321221037.png" alt="" loading="lazy"></figure>
 <p>可以看到在使用root用户登录之后可以访问到dba和admin下的资源，但是访问不到user下的资源。</p>
-</div>
-                                    <div class="mdui-divider mdui-m-b-2"></div>
-                                    <div class="mdui-row-xs-2 post-fenye">
-                                       
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/Project-001/">项目第一步：数据库及Security配置</a></div></div>
-                                        
-
-                                        
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/httpsecurity-custom/">SpringSecurity的配置（自定义拦截规则）</a></div> </div>
-                                       
-                                      </div>
-                                   
-                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
-                                    
-                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
- <div class="comment"></div>
-
-<script>
-      new Valine({
-            el: '.comment',
-
-            app_id: 'DyDP872v8jpwwGIDm44F1kcn-gzGzoHsz',
-
-
-            app_key: 'xtFwuWwsgHBpbgi5fNMHj6zH',
-
-
-            placeholder: '美好生活源于友善的评论，渴望进步的人，运气不会差',
-            
-            path: window.location.pathname,
-            pageSize: 30,
-            avatar:'mm', 
-       })
-    </script> 
-<script>
-    if(window.location.hash){
-        var checkExist = setInterval(function() {
-           if ($(window.location.hash).length) {
-              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
-              clearInterval(checkExist);
-           }
-        }, 100);
-    }
-</script>
-                                </article>
-
-                                    
-                        </div>
-                      </div>
-    
-                
 
               </div>
-                    <footer class="footer mdui-m-t-5 mdui-text-center">
-               <nav class="social-links">
-                      <ul>
-                      
-                      
-                           
-                      
-                           
-                      	
-                        <li class="social-link"><a href="https://github.com/Gentleelephant" target="_blank"><i class="iconfont icon-github"></i></a></li>
-                          
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      	
-                        <li class="social-link"><a href="1132960613" target="_blank"><i class="iconfont icon-qq"></i></a></li>
-                          
-                           
-                      
-                           
-                      
-                           
-                      </ul>
-                    </nav>
-                    <div class="copyright">
-                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
-                  </div>
-                  
-              </footer>
-    </body>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BB%A5%E5%8F%8A%E8%A1%A8">一、创建数据库以及表</a></li>
+<li><a href="#%E4%BA%8C-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">二、创建项目</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E7%BC%96%E5%86%99mybatis%E7%9A%84mapper%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%AE%9E%E7%8E%B0">第三步、编写Mybatis的Mapper接口和实现</a></li>
+<li><a href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-%E7%BC%96%E5%86%99userservice%E7%B1%BB%E4%BB%A5%E5%8F%8Asecurity%E9%85%8D%E7%BD%AE%E7%B1%BB">第四步、编写Userservice类以及Security配置类</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%BA%94%E6%AD%A5-%E7%BC%96%E5%86%99controller%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95">第五步、编写Controller进行测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Gentleelephant.github.io/post/httpsecurity-custom/">
+              <h3 class="post-title">
+                SpringSecurity的配置（自定义拦截规则）
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://Gentleelephant.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
 </html>
