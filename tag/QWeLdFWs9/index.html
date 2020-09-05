@@ -1,256 +1,242 @@
+<!DOCTYPE html>
 <html>
-  <head>
-  <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>前端 | Aboy</title>
-<link rel="shortcut icon" href="https://Gentleelephant.github.io/favicon.ico?v=1599305822018">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="前端 | Aboy - Atom Feed" href="https://Gentleelephant.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+       <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>前端 | Aboy</title>
+        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+          <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">文章</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">分类</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 mdui-m-t-1">
+                                                         
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-04-04 11:25:44">2020-04-04</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/">ES6字符串、数组、对象的扩展</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>字符串的扩展
+ES6中的字符串扩展，用得少，而且逻辑相对简单。如下：
 
 
+includes(str)：判断是否包含指定的字符串
 
-  <meta name="description" content="温故而知新" />
-  </head>
-  <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://Gentleelephant.github.io">
-  <img class="avatar" src="https://Gentleelephant.github.io/images/avatar.png?v=1599305822018" alt="">
-  </a>
-  <h1 class="site-title">
-    Aboy
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          文章
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          分类
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# 前端
-            </h2> 
-        </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/">
-        <h2 class="post-title">ES6字符串、数组、对象的扩展</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-04
-        </span>
-        <span>
-          4 min read
-        </span>
-        
-          <a href="https://Gentleelephant.github.io/tag/QWeLdFWs9/" class="post-tag">
-            # 前端
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">
-        <h2 class="post-title">ES6的promise、async等</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-04
-        </span>
-        <span>
-          8 min read
-        </span>
-        
-          <a href="https://Gentleelephant.github.io/tag/QWeLdFWs9/" class="post-tag">
-            # 前端
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/">
-        <h2 class="post-title">ES6函数扩展</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-04
-        </span>
-        <span>
-          6 min read
-        </span>
-        
-          <a href="https://Gentleelephant.github.io/tag/QWeLdFWs9/" class="post-tag">
-            # 前端
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://Gentleelephant.github.io/post/es6-bian-liang/">
-        <h2 class="post-title">ES6变量</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-04
-        </span>
-        <span>
-          10 min read
-        </span>
-        
-          <a href="https://Gentleelephant.github.io/tag/QWeLdFWs9/" class="post-tag">
-            # 前端
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://Gentleelephant.github.io/post/es6-de-jie-shao-he-huan-jing-pei-zhi/">
-        <h2 class="post-title">ES6的介绍和环境配置</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-04
-        </span>
-        <span>
-          6 min read
-        </span>
-        
-          <a href="https://Gentleelephant.github.io/tag/QWeLdFWs9/" class="post-tag">
-            # 前端
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/">
-        <h2 class="post-title">ES5中的一些扩展</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-04
-        </span>
-        <span>
-          5 min read
-        </span>
-        
-          <a href="https://Gentleelephant.github.io/tag/QWeLdFWs9/" class="post-tag">
-            # 前端
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/">
-        <h2 class="post-title">ES5中的严格模式</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-04
-        </span>
-        <span>
-          3 min read
-        </span>
-        
-          <a href="https://Gentleelephant.github.io/tag/QWeLdFWs9/" class="post-tag">
-            # 前端
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-</div>
+startsWith(str)：判断是否以指定字符串开头
 
-        <div class="pagination-container">
-  
-  
-</div>
 
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://Gentleelephant.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
+endsWith(str)：判断是否以指定字符...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/es6-zi-fu-chuan-shu-zu-dui-xiang-de/">Read More</a></div>
+                                </article>
+                                
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-04-04 11:24:49">2020-04-04</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">ES6的promise、async等</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>前言
+文本主要内容：
 
-      </div>
-    </div>
-  </body>
+
+Promise（比较重要）
+
+
+Symbol
+
+
+async函数
+
+
+Promise
+概述
+Promise对象: 代表了未来某个将要发生的事件(通常是一个异步操作)。
+ES6中的promise对象, 可以将异步操作...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/es6-de-promiseasync-deng/">Read More</a></div>
+                                </article>
+                                
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-04-04 11:24:11">2020-04-04</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/">ES6函数扩展</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>前言
+ES6在函数扩展方面，新增了很多特性。例如：
+
+
+箭头函数
+
+
+参数默认值
+
+
+参数结构赋值
+
+
+扩展运算符
+
+
+rest参数
+
+
+this绑定
+
+
+尾调用
+
+
+箭头函数
+定义和调用函数：（传统写法）
+function fn1(a, ...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/es6-han-shu-kuo-zhan/">Read More</a></div>
+                                </article>
+                                
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-04-04 11:23:08">2020-04-04</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/es6-bian-liang/">ES6变量</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>ES6 的变量声明
+ES6 中新增了 let 和 const 来定义变量：
+
+
+var：ES5 和 ES6中，定义全局变量（是variable的简写）。
+
+
+let：定义局部变量，替代 var。
+
+
+const：定义常量（定义后，不可修改）...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/es6-bian-liang/">Read More</a></div>
+                                </article>
+                                
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-04-04 11:22:37">2020-04-04</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/es6-de-jie-shao-he-huan-jing-pei-zhi/">ES6的介绍和环境配置</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>前言
+ECMAScript 是 JS 的语言标准。而 ES6 是新的 JS 语法标准。
+PS：严格来说，ECMAScript 还包括其他很多语言的语言标准。
+很多人在做业务选型的时候，会倾向于选jQuery。其实jQuery的语法是偏向于E...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/es6-de-jie-shao-he-huan-jing-pei-zhi/">Read More</a></div>
+                                </article>
+                                
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-04-04 11:21:49">2020-04-04</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/">ES5中的一些扩展</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>JSON 对象
+1、js对象(数组) --&gt; json对象(数组)：
+	JSON.stringify(obj/arr)
+
+2、json对象(数组) --&gt; js对象(数组)：
+	JSON.parse(json)
+
+上面这两个方法...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/es5-zhong-de-yi-xie-kuo-zhan/">Read More</a></div>
+                                </article>
+                                
+                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-04-04 11:20:23">2020-04-04</div>
+                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/">ES5中的严格模式</a></div>
+                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>ES的几个重要版本
+
+
+ES5 : 09年发布。
+
+
+ES6(ES2015) : 2015年发布，也称为ECMA2015。
+
+
+ES7(ES2016) : 2016年发布，也称为ECMA2016  (变化不大)。
+
+
+严格模式的理解
+概念
+...</p></div>
+                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/es5-zhong-de-yan-ge-mo-shi/">Read More</a></div>
+                                </article>
+                                
+
+                                                            <nav class="mdui-m-t-5">
+                                
+                                
+                                </nav>     
+
+                        </div>
+                      </div>
+              </div>
+                <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      	
+                        <li class="social-link"><a href="https://github.com/Gentleelephant" target="_blank"><i class="iconfont icon-github"></i></a></li>
+                          
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                    <div class="copyright">
+                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
 </html>

@@ -1,102 +1,64 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>树的遍历 | Aboy</title>
-<link rel="shortcut icon" href="https://Gentleelephant.github.io/favicon.ico?v=1599305822018">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="树的遍历 | Aboy - Atom Feed" href="https://Gentleelephant.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>树的遍历 | Aboy</title>
+        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
 
-
-
-    <meta name="description" content="N叉树的前序遍历（迭代）
-class Solution {
-    public List&lt;Integer&gt; preorder(Node root) {
-
-        Stack&lt;Node&gt; stack = ne..." />
-    <meta name="keywords" content="数据结构" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-  </head>
-  <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://Gentleelephant.github.io">
-  <img class="avatar" src="https://Gentleelephant.github.io/images/avatar.png?v=1599305822018" alt="">
-  </a>
-  <h1 class="site-title">
-    Aboy
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          文章
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          分类
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
-
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              树的遍历
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-09-01
-              </span>
-              <span>
-                4 min read
-              </span>
-              
-                <a href="https://Gentleelephant.github.io/tag/FGBaAImN0/" class="post-tag">
-                  # 数据结构
-                </a>
-              
-            </div>
-            
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <h4 id="n叉树的前序遍历迭代">N叉树的前序遍历（迭代）</h4>
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">文章</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">分类</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">树的遍历</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-09-01 16:36:40">2020-09-01 / 4 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h4 id="n叉树的前序遍历迭代">N叉树的前序遍历（迭代）</h4>
 <pre><code class="language-java">class Solution {
     public List&lt;Integer&gt; preorder(Node root) {
 
@@ -316,98 +278,95 @@ class Solution {
         return result;
     }
 </code></pre>
-
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#n%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3">N叉树的前序遍历（迭代）</a></li>
-<li><a href="#n%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86dfs">N叉树的前序遍历（dfs）</a></li>
-<li><a href="#n%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3">N叉树的后序遍历（迭代）</a></li>
-<li><a href="#n%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86dfs">N叉树的后序遍历（dfs）</a></li>
-<li><a href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3">二叉树的前序遍历（迭代）</a></li>
-<li><a href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3">二叉树的中序遍历（迭代）</a></li>
-<li><a href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3">二叉树的后序遍历迭代</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-              </div>
-            </div>
-          </article>
-        </div>
-
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://Gentleelephant.github.io/post/niu-ke-bian-cheng-ti-bst-pan-ding/">
-              <h3 class="post-title">
-                牛客编程题BST判定
-              </h3>
-            </a>
-          </div>
-        
-
-        
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://Gentleelephant.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
 </div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/dao-yu-wen-ti/">岛屿问题</a></div></div>
+                                        
 
-      </div>
-    </div>
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/niu-ke-bian-cheng-ti-bst-pan-ding/">牛客编程题BST判定</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+<script>
+      new Valine({
+            el: '.comment',
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+            app_id: 'DyDP872v8jpwwGIDm44F1kcn-gzGzoHsz',
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+            app_key: 'xtFwuWwsgHBpbgi5fNMHj6zH',
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
-  </body>
+            placeholder: '美好生活源于友善的评论，渴望进步的人，运气不会差',
+            
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      	
+                        <li class="social-link"><a href="https://github.com/Gentleelephant" target="_blank"><i class="iconfont icon-github"></i></a></li>
+                          
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                    <div class="copyright">
+                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
 </html>
