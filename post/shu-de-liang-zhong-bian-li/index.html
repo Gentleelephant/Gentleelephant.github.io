@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>树的两种遍历 | Aboy</title>
+        <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">文章</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">分类</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">树的两种遍历</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2020-09-06 12:52:07">2020-09-06 / 5 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p><em>二叉树的递归遍历没写~~</em></p>
+<h4 id="n叉树的前序遍历迭代">N叉树的前序遍历（迭代）</h4>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; preorder(Node root) {
+
+        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            res.add(temp.val);
+            // 把子节点逆序入栈
+            Collections.reverse(temp.children);
+            for(Node node:temp.children){
+                stack.push(node);
+            }
+        }
+
+        return res;
+
+    }
+}
+</code></pre>
+<h4 id="n叉树的前序遍历dfs">N叉树的前序遍历（dfs）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        dfs(root);
+        return res;
+
+    }
+    public void dfs(Node root){
+        if(root == null){
+            return;
+        }
+        for(Node n:root.children){
+            dfs(n);
+        }
+        res.add(root.val);
+    }
+}
+</code></pre>
+<h4 id="n叉树的后序遍历迭代">N叉树的后序遍历（迭代）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        if(root == null){
+            return res;
+        }
+        method(root);
+        Collections.reverse(res);
+        return res;
+
+    }
+    // 迭代
+    public void method(Node root){
+        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            res.add(temp.val);
+            for(Node n:temp.children){
+                stack.push(n);
+            }
+        }
+    }
+}
+</code></pre>
+<h4 id="n叉树的后序遍历dfs">N叉树的后序遍历（dfs）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        if(root == null){
+            return res;
+        }
+        method(root);
+        Collections.reverse(res);
+        return res;
+
+    }
+
+    // 递归
+    public void dfs(Node root){
+        if(root == null){
+            return;
+        }
+        for(Node n:root.children){
+            dfs(n);
+        }
+        res.add(root.val);
+    }
+ 
+}
+</code></pre>
+<h4 id="二叉树的前序遍历迭代">二叉树的前序遍历（迭代）</h4>
+<pre><code class="language-java"> public class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+ }
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            res.add(node.val);
+            if(node.right != null){
+                stack.push(node.right);
+            }
+            if(node.left != null){
+                stack.push(node.left);
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+<h4 id="二叉树的中序遍历迭代">二叉树的中序遍历（迭代）</h4>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return list;
+        }
+        TreeNode node = root;
+        while(!stack.isEmpty() || node != null){
+
+            // 中序遍历左中右
+            // 先把左子树节入栈
+            while(node != null){
+                stack.push(node);
+                node = node.left;
+            }
+
+            TreeNode temp = stack.pop();
+            // 中
+            list.add(temp.val);
+            // 右
+            node = temp.right;
+
+        }
+        return list;
+    }
+}
+</code></pre>
+<h4 id="二叉树的后序遍历迭代">二叉树的后序遍历迭代</h4>
+<pre><code class="language-java">public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        LinkedList&lt;Integer&gt; result = new LinkedList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
+                stack.push(root);
+                result.addFirst(root.val);
+                root = root.right;
+            } else {
+                root = stack.pop();
+                root = root.left;
+            }
+        }
+        return result;
+    }
+</code></pre>
+<p><strong>我自己的另一种实现是根据先序遍历（修改过）然后逆序比如：先序遍历是<mark>中左右</mark>我修改成<mark>中右左</mark>然后再把遍历的集合逆序就是后序遍历的<mark>左右中</mark>了</strong></p>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        stack.push(root);
+        // 中右左遍历
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            res.add(node.val);
+            if(node.left != null){
+                stack.push(node.left);
+            }
+            if(node.right != null){
+                stack.push(node.right);
+            }
+        }
+        // 然后逆序成左右中
+        Collections.reverse(res);
+        return res;
+    }
+}
+</code></pre>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> </div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/hua-dong-chuang-kou/">滑动窗口</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+            app_id: 'DyDP872v8jpwwGIDm44F1kcn-gzGzoHsz',
+
+
+            app_key: 'xtFwuWwsgHBpbgi5fNMHj6zH',
+
+
+            placeholder: '美好生活源于友善的评论，渴望进步的人，运气不会差',
+            
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      	
+                        <li class="social-link"><a href="https://github.com/Gentleelephant" target="_blank"><i class="iconfont icon-github"></i></a></li>
+                          
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                    <div class="copyright">
+                      <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> <br/> Theme <a href="https://github.com/shanbufun/gridea-theme-song" target="_blank"  title="宋"  >Song</a> by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >shanbufun</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
+</html>

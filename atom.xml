@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2020-09-05T11:43:02.920Z</updated>
+    <updated>2020-09-06T04:56:16.714Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,261 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[树的两种遍历]]></title>
+        <id>https://Gentleelephant.github.io/post/shu-de-liang-zhong-bian-li/</id>
+        <link href="https://Gentleelephant.github.io/post/shu-de-liang-zhong-bian-li/">
+        </link>
+        <updated>2020-09-06T04:52:07.000Z</updated>
+        <content type="html"><![CDATA[<p><em>二叉树的递归遍历没写~~</em></p>
+<h4 id="n叉树的前序遍历迭代">N叉树的前序遍历（迭代）</h4>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; preorder(Node root) {
+
+        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            res.add(temp.val);
+            // 把子节点逆序入栈
+            Collections.reverse(temp.children);
+            for(Node node:temp.children){
+                stack.push(node);
+            }
+        }
+
+        return res;
+
+    }
+}
+</code></pre>
+<h4 id="n叉树的前序遍历dfs">N叉树的前序遍历（dfs）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        dfs(root);
+        return res;
+
+    }
+    public void dfs(Node root){
+        if(root == null){
+            return;
+        }
+        for(Node n:root.children){
+            dfs(n);
+        }
+        res.add(root.val);
+    }
+}
+</code></pre>
+<h4 id="n叉树的后序遍历迭代">N叉树的后序遍历（迭代）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        if(root == null){
+            return res;
+        }
+        method(root);
+        Collections.reverse(res);
+        return res;
+
+    }
+    // 迭代
+    public void method(Node root){
+        Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            res.add(temp.val);
+            for(Node n:temp.children){
+                stack.push(n);
+            }
+        }
+    }
+}
+</code></pre>
+<h4 id="n叉树的后序遍历dfs">N叉树的后序遍历（dfs）</h4>
+<pre><code class="language-java">class Node {
+    public int val;
+    public List&lt;Node&gt; children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List&lt;Node&gt; _children) {
+        val = _val;
+        children = _children;
+    }
+}
+
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; postorder(Node root) {
+        if(root == null){
+            return res;
+        }
+        method(root);
+        Collections.reverse(res);
+        return res;
+
+    }
+
+    // 递归
+    public void dfs(Node root){
+        if(root == null){
+            return;
+        }
+        for(Node n:root.children){
+            dfs(n);
+        }
+        res.add(root.val);
+    }
+ 
+}
+</code></pre>
+<h4 id="二叉树的前序遍历迭代">二叉树的前序遍历（迭代）</h4>
+<pre><code class="language-java"> public class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+ }
+class Solution {
+    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            res.add(node.val);
+            if(node.right != null){
+                stack.push(node.right);
+            }
+            if(node.left != null){
+                stack.push(node.left);
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+<h4 id="二叉树的中序遍历迭代">二叉树的中序遍历（迭代）</h4>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return list;
+        }
+        TreeNode node = root;
+        while(!stack.isEmpty() || node != null){
+
+            // 中序遍历左中右
+            // 先把左子树节入栈
+            while(node != null){
+                stack.push(node);
+                node = node.left;
+            }
+
+            TreeNode temp = stack.pop();
+            // 中
+            list.add(temp.val);
+            // 右
+            node = temp.right;
+
+        }
+        return list;
+    }
+}
+</code></pre>
+<h4 id="二叉树的后序遍历迭代">二叉树的后序遍历迭代</h4>
+<pre><code class="language-java">public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        LinkedList&lt;Integer&gt; result = new LinkedList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
+                stack.push(root);
+                result.addFirst(root.val);
+                root = root.right;
+            } else {
+                root = stack.pop();
+                root = root.left;
+            }
+        }
+        return result;
+    }
+</code></pre>
+<p><strong>我自己的另一种实现是根据先序遍历（修改过）然后逆序比如：先序遍历是<mark>中左右</mark>我修改成<mark>中右左</mark>然后再把遍历的集合逆序就是后序遍历的<mark>左右中</mark>了</strong></p>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        if(root == null){
+            return res;
+        }
+        stack.push(root);
+        // 中右左遍历
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            res.add(node.val);
+            if(node.left != null){
+                stack.push(node.left);
+            }
+            if(node.right != null){
+                stack.push(node.right);
+            }
+        }
+        // 然后逆序成左右中
+        Collections.reverse(res);
+        return res;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[滑动窗口]]></title>
         <id>https://Gentleelephant.github.io/post/hua-dong-chuang-kou/</id>
@@ -1008,170 +1263,6 @@ public class MyHash01 {
 
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[RabbitMQ学习]]></title>
-        <id>https://Gentleelephant.github.io/post/rabbitmq-xue-xi/</id>
-        <link href="https://Gentleelephant.github.io/post/rabbitmq-xue-xi/">
-        </link>
-        <updated>2020-07-11T09:08:57.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="安装rabbitmq">安装rabbitmq</h4>
-<p>安装rabbitma我这里采用的是docker方式：</p>
-<p><code>docker run -d --hostname my-rabbit --name aboy-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management</code></p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155812.png" alt="image-20200711155812668" loading="lazy"></figure>
-<p>测试rabbitmq的管理端</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155902.png" alt="image-20200711155902615" loading="lazy"></figure>
-<p>显示这个页面就已经安装成功</p>
-<h4 id="手动创建一个queue">手动创建一个queue</h4>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155602.png" alt="image-20200711145424712" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711170502.png" alt="image-20200711145541980" loading="lazy"></figure>
-<h4 id="手动添加一个exchange">手动添加一个exchange</h4>
-<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155613.png" alt="image-20200711145738048" loading="lazy"></figure>
-<h4 id="exchange和queue进行绑定">exchange和queue进行绑定</h4>
-<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711155624.png" alt="image-20200711150314154" loading="lazy"></figure>
-<h4 id="编写配置文件">编写配置文件</h4>
-<pre><code class="language-properties"># rabbitmq基本配置
-spring.rabbitmq.username=guest
-spring.rabbitmq.password=guest
-spring.rabbitmq.addresses=47.97.221.113
-spring.rabbitmq.virtual-host=/
-spring.rabbitmq.port=5672
-
-
-# rabbitmq消费端配置
-# 并发数
-spring.rabbitmq.listener.simple.concurrency=5
-# manual为手工签收，auto为自动签收
-spring.rabbitmq.listener.simple.acknowledge-mode=manual
-spring.rabbitmq.listener.simple.max-concurrency=10
-# 限流
-spring.rabbitmq.listener.simple.prefetch=1
-</code></pre>
-<h4 id="编写代码测试发送消息">编写代码测试发送消息</h4>
-<p>一个简单的实体类</p>
-<pre><code class="language-java">public class Std implements Serializable {
-
-    private String id;
-
-    private String name;
-
-    // 存储消息发送的唯一标识
-    private String messageId;
-
-
-    public Std() {
-
-    }
-
-    public Std(String id, String name, String messageId) {
-        this.id = id;
-        this.name = name;
-        this.messageId = messageId;
-    }
-
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-}
-</code></pre>
-<p>消息发送类</p>
-<pre><code class="language-java">@Component
-public class RabbitSender {
-
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
-
-    /**
-     * exchange: rabbitmq的exchange
-     * routingkey:
-     * 消息体内容
-     * correlationData: 消息的唯一id
-     * @param std
-     * @throws Exception
-     */
-    public void sendStd(Std std) throws Exception{
-
-        CorrelationData correlationData = new CorrelationData();
-        correlationData.setId(std.getMessageId());
-        rabbitTemplate.convertAndSend(&quot;std-exchange&quot;, &quot;std.abc&quot;, std, correlationData);
-
-    }
-
-}
-</code></pre>
-<p>测试发送消息</p>
-<pre><code class="language-java">    @Autowired
-    private RabbitSender rabbitSender;
-
-    @Test
-    public void send() throws Exception{
-        Std std = new Std();
-        std.setId(&quot;123456789987&quot;);
-        std.setName(&quot;测试RabbitMQ&quot;);
-        std.setMessageId(System.currentTimeMillis() + &quot;$&quot; + UUID.randomUUID().toString());
-        rabbitSender.sendStd(std);
-    }
-</code></pre>
-<p>发送完毕查看rabbitmq管理端</p>
-<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711162927.png" alt="image-20200711162927205" loading="lazy"></figure>
-<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711170444.png" alt="image-20200711163059298" loading="lazy"></figure>
-<h4 id="读取消息">读取消息</h4>
-<pre><code class="language-java">@Component
-public class RabbitReveiver {
-
-    /**
-     *
-     * 如果知道消息是什么类型就可以用@Payload把参数定义成什么类型
-     * @param headers 定义消息头
-     * @param std
-     * @param channel：手工签收方式要依赖于Channel。
-     */
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = &quot;std-queue&quot;, durable = &quot;true&quot;),
-            exchange = @Exchange(name = &quot;std-exchange&quot;,durable = &quot;true&quot;,type = &quot;topic&quot;),
-            key = &quot;std.*&quot;)
-            )
-    @RabbitHandler // 标识,但并没有绑定,要用RabbitListener绑定
-    public void reveiverStdMessage(@Payload Std std,
-                                   @Headers Map&lt;String,Object&gt; headers,
-                                   Channel channel)throws Exception{
-        // 消费者操作
-        System.out.println(&quot;------------------收到消息,打印ID----------------&quot;);
-        System.out.println(&quot;ID：&quot; + std.getId());
-
-        Long deliveryTag = (Long)headers.get(AmqpHeaders.DELIVERY_TAG);
-        // 手工签收必须要确认
-        // false表示不支持批量签收
-        channel.basicAck(deliveryTag, false);
-    }
-
-}
-</code></pre>
-<figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711165952.png" alt="image-20200711165952494" loading="lazy"></figure>
-<p>成功读取到消息</p>
-<figure data-type="image" tabindex="10"><img src="https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200711170029.png" alt="image-20200711170029950" loading="lazy"></figure>
-<p>签收之后消息就没了</p>
 ]]></content>
     </entry>
 </feed>
