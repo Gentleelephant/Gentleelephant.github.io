@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>Aboy</title>
+        <title>删除mysql大表 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -14,7 +14,7 @@
 
     </head>
     <body>
-          <header class="header mdui-m-b-5">      
+              <header class="header mdui-m-b-5">      
             <div class="container  ">
                 <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://Gentleelephant.github.io">Aboy</a></div>
                 <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">温故而知新</div>
@@ -54,53 +54,80 @@
         </header>
         <div class="mdui-container ">
                 <div class="mdui-row">
-                        <div class="mdui-col-md-8 mdui-col-offset-md-2 mdui-m-t-1">
-                         
-                                                         
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-14 21:47:10">2020-03-14</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/springboot-exception/">SpringBoot异常处理策略</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>自定义异常处理
-在 Spring Boot 项目中 ，异常统一处理，可以使用 Spring 中 @ControllerAdvice 来统一处理，也可以自己来定义异常处理方案。Spring Boot 中，对异常的处理有一些默认的策略，我们分别...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/springboot-exception/">Read More</a></div>
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">删除mysql大表</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2021-02-16 15:25:49">2021-02-16 / 2 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h4 id="一-建立硬链接">一、建立硬链接</h4>
+<p>我这里的mysql是docker安装的，所以先进入mysql容器</p>
+<p><code>docker exec -it 容器ID /bin/bash</code></p>
+<p><code>cd /var/lib/mysql</code></p>
+<p>然后进入数据库对应的文件夹，在该文件夹下为**.frm和.ibd**文件建立硬链接</p>
+<p><code>ln xxx.frm xxx.frm.h</code></p>
+<p><code>ln xxx.ibd xxx.ibd.h</code></p>
+<p>好处是：硬链接就是增加了对文件的引用，只有对磁盘上文件的引用完全没有了的话，这个文件才能是删除的。当我们执行drop table 的时候，实际上只是删除了对tmplst.ibd的一个文件引用，我们 tmplst.ibd.h对物理文件的引用还是存在的，就不会执行OS级别的删除操作，就不会大量的IO操作。这种对线上mysql的影响降到很低。</p>
+<h4 id="二-删除表">二、删除表</h4>
+<p>mysql中使用drop命令：</p>
+<p><code>drop table 表名;</code></p>
+<h4 id="三-删除硬链接文件">三、删除硬链接文件</h4>
+<p>在硬盘上删除新建的硬链接。分别删除tmplst.frm.h和tmplst.ibd.h</p>
+<p><code>rm -rf xxx.frm.h</code></p>
+<p><code>rm -rf xxx.idb.h</code></p>
+<p>最后成功删除大表</p>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> </div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/shu-de-liang-zhong-bian-li/">树的两种遍历</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://Gentleelephant.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+            app_id: 'DyDP872v8jpwwGIDm44F1kcn-gzGzoHsz',
+
+
+            app_key: 'xtFwuWwsgHBpbgi5fNMHj6zH',
+
+
+            placeholder: '美好生活源于友善的评论，渴望进步的人，运气不会差',
+            
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
                                 </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-14 19:52:52">2020-03-14</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/mybatis-one/">第一个Mybatis程序</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>Mybatis简介
 
-MyBatis 是一款优秀的持久层框架
-MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集的过程
-MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 实...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/mybatis-one/">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2020-03-14 16:58:08">2020-03-14</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://Gentleelephant.github.io/post/controller-advice/">@ControllerAdvice注解的使用</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"><p>@ControllerAdvice ，这是一个非常有用的注解，顾名思义，这是一个增强的 Controller。使用这个 Controller ，可以实现三个方面的功能：
-
-全局异常处理
-全局数据绑定
-全局数据预处理
-
-灵活使用这三个功能，可...</p></div>
-                                    <div class="index-list-rm index-guo"><a href="https://Gentleelephant.github.io/post/controller-advice/">Read More</a></div>
-                                </article>
-                                
-
-                                                            <nav class="mdui-m-t-5">
-                                
-                                <div class="index-yema mdui-float-left"><a href="https://Gentleelephant.github.io/page/3/">上一页</a></div>
-                                 
-                                
-                                </nav>     
-
+                                    
                         </div>
                       </div>
+    
+                
+
               </div>
-                <footer class="footer mdui-m-t-5 mdui-text-center">
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
                <nav class="social-links">
                       <ul>
                       

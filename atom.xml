@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2021-02-15T04:56:37.645Z</updated>
+    <updated>2021-02-16T07:27:06.870Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,30 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[删除mysql大表]]></title>
+        <id>https://Gentleelephant.github.io/post/shan-chu-mysql-da-biao/</id>
+        <link href="https://Gentleelephant.github.io/post/shan-chu-mysql-da-biao/">
+        </link>
+        <updated>2021-02-16T07:25:49.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="一-建立硬链接">一、建立硬链接</h4>
+<p>我这里的mysql是docker安装的，所以先进入mysql容器</p>
+<p><code>docker exec -it 容器ID /bin/bash</code></p>
+<p><code>cd /var/lib/mysql</code></p>
+<p>然后进入数据库对应的文件夹，在该文件夹下为**.frm和.ibd**文件建立硬链接</p>
+<p><code>ln xxx.frm xxx.frm.h</code></p>
+<p><code>ln xxx.ibd xxx.ibd.h</code></p>
+<p>好处是：硬链接就是增加了对文件的引用，只有对磁盘上文件的引用完全没有了的话，这个文件才能是删除的。当我们执行drop table 的时候，实际上只是删除了对tmplst.ibd的一个文件引用，我们 tmplst.ibd.h对物理文件的引用还是存在的，就不会执行OS级别的删除操作，就不会大量的IO操作。这种对线上mysql的影响降到很低。</p>
+<h4 id="二-删除表">二、删除表</h4>
+<p>mysql中使用drop命令：</p>
+<p><code>drop table 表名;</code></p>
+<h4 id="三-删除硬链接文件">三、删除硬链接文件</h4>
+<p>在硬盘上删除新建的硬链接。分别删除tmplst.frm.h和tmplst.ibd.h</p>
+<p><code>rm -rf xxx.frm.h</code></p>
+<p><code>rm -rf xxx.idb.h</code></p>
+<p>最后成功删除大表</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[树的两种遍历]]></title>
         <id>https://Gentleelephant.github.io/post/shu-de-liang-zhong-bian-li/</id>
@@ -1164,103 +1188,6 @@ public class MyHash01 {
         System.out.println(myHash02.toString());
 //        System.out.println(&quot;结束&quot;);
     }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[线程池简单学习]]></title>
-        <id>https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/</id>
-        <link href="https://Gentleelephant.github.io/post/xian-cheng-chi-jian-dan-xue-xi/">
-        </link>
-        <updated>2020-07-13T05:46:03.000Z</updated>
-        <content type="html"><![CDATA[<h5 id="线程池介绍">线程池介绍</h5>
-<p><mark><a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485808&amp;idx=1&amp;sn=1013253533d73450cef673aee13267ab&amp;chksm=cea246bbf9d5cfad1c21316340a0ef1609a7457fea4113a1f8d69e8c91e7d9cd6285f5ee1490&amp;token=510053261&amp;lang=zh_CN&amp;scene=21#wechat_redirect">新手也能看懂的线程池学习总结</a></mark></p>
-<!-- ![image-20200713133311614](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133311.png)
-
-![image-20200713133518336](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133518.png)
-
-![image-20200713133539848](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133539.png)
-
-![image-20200713133607716](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133607.png)
-
-![image-20200713133638732](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133638.png)
-
-![image-20200713133653654](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133653.png)
-
-![image-20200713133747243](C:\Users\张鹏\AppData\Roaming\Typora\typora-user-images\image-20200713133747243.png)
-
-![image-20200713133801856](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133801.png)
-
-![image-20200713133837672](https://raw.githubusercontent.com/Gentleelephant/picgo/master/img/20200713133908.png) -->
-<h5 id="线程池测试首先定义任务实现runnable接口">线程池测试：首先定义任务（实现Runnable接口）</h5>
-<pre><code class="language-java">public class MyRunnable implements Runnable {
-
-    private String command;
-
-    public MyRunnable(String s) {
-        this.command = s;
-    }
-
-    @Override
-    public void run() {
-        System.out.println(Thread.currentThread().getName() + &quot; Start. Time = &quot; + new Date());
-        processCommand();
-        System.out.println(Thread.currentThread().getName() + &quot; End. Time = &quot; + new Date());
-    }
-
-    private void processCommand() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Override
-    public String toString() {
-        return this.command;
-    }
-}
-</code></pre>
-<h5 id="编写测试类">编写测试类</h5>
-<pre><code class="language-java">public class Demo {
-
-    private static final int CORE_POOL_SIZE = 5;	// 核心线程数线程数定义了最小可以同时运行的线程数量。
-    private static final int MAX_POOL_SIZE = 10;	// 当队列中存放的任务达到队列容量的时候，当前可以同时运行的线程数量变为最大线程数。
-    private static final int QUEUE_CAPACITY = 100;	// 当新任务来的时候会先判断当前运行的线程数量是否达到核心线程数，如果达到的话，信任就会被存放在队列中。
-    private static final long KEEP_ALIVE_TIME = 1L;	// 当线程数大于核心线程数时，多余的空闲线程存活的最长时间
-
-    public static void main(String[] args) {
-
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                CORE_POOL_SIZE,
-                MAX_POOL_SIZE,
-                KEEP_ALIVE_TIME,
-                TimeUnit.SECONDS,
-                new ArrayBlockingQueue&lt;&gt;(QUEUE_CAPACITY),
-                new ThreadPoolExecutor.CallerRunsPolicy()
-        );
-
-        for (int i = 0; i &lt; 10; i++) {
-            // 创建任务
-            Runnable worker = new MyRunnable(&quot;&quot; + i);
-            // 执行任务
-
-            executor.execute(worker);
-        }
-
-        // 终止线程
-        executor.shutdown();
-
-        while (!executor.isTerminated()){
-
-        }
-        System.out.println(&quot;结束所有线程&quot;);
-
-    }
-
 }
 </code></pre>
 ]]></content>
