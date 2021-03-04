@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>大文件分割并且作为数据导入到clickhouse | Aboy</title>
+        <title>初次运行Django项目出错 | Aboy</title>
         <link rel="stylesheet" href="https://Gentleelephant.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,25 +56,24 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">大文件分割并且作为数据导入到clickhouse</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2021-02-18 00:05:03">2021-02-18 / 1 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h3 id="将大文件分割并且作为数据导入到clickhouse">将大文件分割并且作为数据导入到clickhouse</h3>
-<h3 id="1-先将大文件分割">1. 先将大文件分割</h3>
-<p><code>split -l 行数 filename</code><br>
-将文件分为固定行数的文件</p>
-<h3 id="2-如果文件是dos格式的还需要转换成unix格式">2. 如果文件是dos格式的还需要转换成unix格式</h3>
-<p>使用vim打开文件 <code>:set fileformat=unix</code>，然后<code>:wq</code>保存</p>
-<h3 id="3-导入clickhouse">3. 导入clickhouse</h3>
-<p><code>cat 文件名| clickhouse-client --query=&quot;INSERT INTO 数据库.biaoming FORMAT TabSeparated&quot;</code></p>
+                                    <div class="post-title  mdui-m-b-1">初次运行Django项目出错</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2021-03-04 15:04:44">2021-03-04 / 1 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><p><code>ImportError: DLL load failed: 找不到指定的模块。</code></p>
+<p>可能原因是使用的Anaconda缺少<mark>sqlite3.dll</mark>文件</p>
+<p><strong>解决方法</strong>：</p>
+<p>在Anaconda中的DLLs文件家中添加sqlite3.dll文件,sqlite3.dll可以在<a href="https://sqlite.org/download.html">网址</a>下载</p>
+<p>接下来运行可能还出现一个问题<code>TypeError: argument 1 must be str, not WindowsPath</code></p>
+<p>那么可能原因是settings.py中，<strong>解决方法</strong>是更改DATABASES成如下代码：</p>
+<figure data-type="image" tabindex="1"><img src="https://zhangp-imag.oss-cn-beijing.aliyuncs.com/imagesimage-20210304150342681.png" alt="image-20210304150342681" loading="lazy"></figure>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://Gentleelephant.github.io/post/chu-ci-yun-xing-django-xiang-mu-chu-cuo/">初次运行Django项目出错</a></div></div>
+                                        <div class="mdui-col"> </div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/shan-chu-mysql-da-biao/">删除mysql大表</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://Gentleelephant.github.io/post/da-wen-jian-fen-ge-bing-qie-zuo-wei-shu-ju-dao-ru-dao-clickhouse/">大文件分割并且作为数据导入到clickhouse</a></div> </div>
                                        
                                       </div>
                                    

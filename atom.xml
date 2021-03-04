@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Gentleelephant.github.io</id>
     <title>Aboy</title>
-    <updated>2021-02-17T16:06:52.012Z</updated>
+    <updated>2021-03-04T07:05:49.654Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Gentleelephant.github.io"/>
     <link rel="self" href="https://Gentleelephant.github.io/atom.xml"/>
@@ -10,6 +10,21 @@
     <logo>https://Gentleelephant.github.io/images/avatar.png</logo>
     <icon>https://Gentleelephant.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Aboy</rights>
+    <entry>
+        <title type="html"><![CDATA[初次运行Django项目出错]]></title>
+        <id>https://Gentleelephant.github.io/post/chu-ci-yun-xing-django-xiang-mu-chu-cuo/</id>
+        <link href="https://Gentleelephant.github.io/post/chu-ci-yun-xing-django-xiang-mu-chu-cuo/">
+        </link>
+        <updated>2021-03-04T07:04:44.000Z</updated>
+        <content type="html"><![CDATA[<p><code>ImportError: DLL load failed: 找不到指定的模块。</code></p>
+<p>可能原因是使用的Anaconda缺少<mark>sqlite3.dll</mark>文件</p>
+<p><strong>解决方法</strong>：</p>
+<p>在Anaconda中的DLLs文件家中添加sqlite3.dll文件,sqlite3.dll可以在<a href="https://sqlite.org/download.html">网址</a>下载</p>
+<p>接下来运行可能还出现一个问题<code>TypeError: argument 1 must be str, not WindowsPath</code></p>
+<p>那么可能原因是settings.py中，<strong>解决方法</strong>是更改DATABASES成如下代码：</p>
+<figure data-type="image" tabindex="1"><img src="https://zhangp-imag.oss-cn-beijing.aliyuncs.com/imagesimage-20210304150342681.png" alt="image-20210304150342681" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[大文件分割并且作为数据导入到clickhouse]]></title>
         <id>https://Gentleelephant.github.io/post/da-wen-jian-fen-ge-bing-qie-zuo-wei-shu-ju-dao-ru-dao-clickhouse/</id>
@@ -939,36 +954,6 @@ class TreeNode{
     }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[快速排序]]></title>
-        <id>https://Gentleelephant.github.io/post/kuai-su-pai-xu/</id>
-        <link href="https://Gentleelephant.github.io/post/kuai-su-pai-xu/">
-        </link>
-        <updated>2020-07-30T03:00:52.000Z</updated>
-        <content type="html"><![CDATA[<pre><code class="language-java">private void quickSort(int[] nums, int start, int end){
-        if (start &gt;= end) {
-            return;
-        }
-        int i = start;
-        int j = end;
-        int key = nums[i];
-        while (i &lt; j) {
-            while (i &lt; j &amp;&amp; nums[j] &gt;= key) {
-                j--;
-            }
-            nums[i] = nums[j];
-            while (i &lt; j &amp;&amp; nums[i] &lt;= key) {
-                i++;
-            }
-            nums[j] = nums[i];
-        }
-        nums[i] = key;
-        quickSort(nums, start, i - 1);
-        quickSort(nums, i + 1, end);
-    }
-    ```</code></pre>
 ]]></content>
     </entry>
 </feed>
